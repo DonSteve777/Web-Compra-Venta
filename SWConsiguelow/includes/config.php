@@ -43,12 +43,25 @@ define('BD_HOST', 'localhost');
 define('BD_NAME', 'consiguelowdb');
 define('BD_USER', 'consiguelowdb');
 define('BD_PASS', 'consiguelowdb');
+define("R_PATH", __DIR__);
+define("F_PATH", R_PATH.'/images');
+define("H_FILE", false);
 
-/*Database de Nestor
-define('BD_HOST', 'localhost');
-define('BD_NAME', 'tiendaonline');
-define('BD_USER', 'root');
-define('BD_PASS', '');
+##################################################
+#              File configuration                #
+##################################################
+# F_SIZE:	The maximum file size in KB or MB	 #
+#			Example: 512K / 2M					 #
+#												 #
+#			WARNING: Make sure to check the		 #
+#			values of 'post_max_size' and		 #
+#			'upload_max_filesize' in your		 #
+#			php.ini file! This setting should	 #
+#			not be larger than either of those!	 #
+##################################################
+
+define("F_SIZE", "4M");
+
 /**
  * Configuración del soporte de UTF-8, localización (idioma y país) y zona horaria
  */

@@ -191,13 +191,10 @@ class Producto
         <td><?php echo $fila['nombre']; ?></td>
         <td><?php echo $fila['descripcion']; ?></td>
         <td><?php echo $fila['precio']; ?></td>
-        <td><?php echo $fila['unidadesDisponibles'];?></td>
         <td><?php echo $fila['talla']; ?></td>
         <td><?php echo $fila['color']; ?></td>
         <td><?php echo $fila['categoria']; ?></td>
-        <td><?php echo $fila['reseña']; ?></td>
-        <td><?php echo $fila['agotado']; ?></td>
-        <td><?php echo $fila['numEstrellas']; ?></td>
+
         </tr>
         <?php
             }
@@ -216,13 +213,13 @@ class Producto
 
 
     
-    public static function añadeProd($nombreProd, $descripcion, $precio,$unidades, $unidadesDisponibles,$tallasDisponibles,$coloresDisponibles,$talla,$color,$categoria,$reseña,$agotado,$numEstrellas,$imagen) //atributos productos
+    public static function añadeProd($nombreProd, $descripcion, $precio,$unidades,$talla,$color,$categoria,$imagen) //atributos productos
     {
         $producto = self::buscaProducto($nombreProd);
         if ($producto) {
             return false;
         }
-        $producto = new Producto($nombreProd, $descripcion, $precio,$unidades, $unidadesDisponibles, $tallasDisponibles, $coloresDisponibles, $talla, $color, $categoria, $reseña, $agotado, $numEstrellas, $imagen);
+        $producto = new Producto($nombreProd, $descripcion, $precio,$unidades, $talla, $color, $categoria, $imagen);
         return self::guardaProd($producto);
     }
     
@@ -239,21 +236,16 @@ class Producto
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO `productos`  (`nombre`,`descripcion`,`precio`,`unidades`,`unidadesDisponibles`, `tallasDisponibles`,`coloresDisponibles`, `talla`, `color`, `categoria`,`agotado`,`reseña`,`numEstrellas`, `imagen`) 
-		 VALUES('%s', '%s', '%f', '%d','%d', '%s', '%s', '%s', '%s', '%s', '%b', '%s', '%d','%s')"
+        $query=sprintf("INSERT INTO `productos`  (`nombre`,`descripcion`,`precio`,`unidades`, `talla`, `color`, `categoria`, `imagen`) 
+		 VALUES('%s', '%s', '%f', '%d', '%s', '%s', '%s', '%s')"
             , $conn->real_escape_string($producto->nombre)
             , $conn->real_escape_string($producto->descripcion)
             , $conn->real_escape_string($producto->precio)
             , $conn->real_escape_string($producto->unidades)
-            , $conn->real_escape_string($producto->unidadesDisponibles)
-			, $conn->real_escape_string($producto->tallasDisponibles)
-			, $conn->real_escape_string($producto->coloresDisponibles)
 			, $conn->real_escape_string($producto->talla)
 			, $conn->real_escape_string($producto->color)
 			, $conn->real_escape_string($producto->categoria)
-			, $conn->real_escape_string($producto->agotado)
-			, $conn->real_escape_string($producto->reseña)
-			,$conn->real_escape_string($producto->numEstrellas)
+
             ,$conn->real_escape_string($producto->imagen)); // hay que insertar una imagen
         if ( $conn->query($query) ) {
             $producto->id = $conn->insert_id;
@@ -271,20 +263,15 @@ class Producto
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("UPDATE productos P SET nombre = '%s', descripcion='%s', precio='%f', unidades='%d, unidadesDisponibles ='%d', tallasDisponibles ='%s', coloresDisponibles ='%s', talla ='%s', color ='%s', categoria ='%s', reseña ='%s', agotado ='%b', numEstrellas ='%d', imagen ='%s' WHERE P.id=%i"
+        $query=sprintf("UPDATE productos P SET nombre = '%s', descripcion='%s', precio='%f', unidades='%d, talla ='%s', color ='%s', categoria ='%s', imagen ='%s' WHERE P.id=%i"
             , $conn->real_escape_string($producto->nombre)
             , $conn->real_escape_string($producto->descripcion)
             , $conn->real_escape_string($producto->precio)
             , $conn->real_escape_string($producto->unidades)
-            , $conn->real_escape_string($producto->unidadesDisponibles)
-            , $conn->real_escape_string($producto->tallasDisponibles)
-            , $conn->real_escape_string($producto->coloresDisponibles)
             , $conn->real_escape_string($producto->talla)
             , $conn->real_escape_string($producto->color)
             , $conn->real_escape_string($producto->categoria)
-            , $conn->real_escape_string($producto->reseña)
-            , $conn->real_escape_string($producto->agotado)
-            , $conn->real_escape_string($producto->numEstrellas)
+
             , $conn->real_escape_string($producto->imagen)
             , $producto->id);
         if ( $conn->query($query) ) {
@@ -310,43 +297,25 @@ class Producto
 
     private $precio;
 	
-    private $unidadesDisponibles;
-	
-    private $tallasDisponibles;
-	
-    private $coloresDisponibles;
-	
     private $talla;
 	
     private $color;
 	
     private $categoria;
-	
-    private $agotado;
-	
-    private $reseña;
-
-    private $numEstrellas;
-	
+		
     private $imagen;
 
     private $unidades;
 
-    private function __construct($nombreProd, $descripcion, $precio,$unidades, $unidadesDisponibles, $tallasDisponibles, $coloresDisponibles, $talla, $color, $categoria, $reseña, $agotado, $numEstrellas, $imagen)
+    private function __construct($nombreProd, $descripcion, $precio,$unidades, $talla, $color, $categoria, $imagen)
     {
         $this->nombre = $nombreProd;
         $this->descripcion = $descripcion;
         $this->precio = $precio;
         $this->unidades = $unidades;
-        $this->unidadesDisponibles = $unidadesDisponibles;
-		$this->tallasDisponibles= $tallasDisponibles;
-        $this->coloresDisponibles = $coloresDisponibles;
         $this->talla = $talla;
         $this->color = $color;
 		$this->categoria= $categoria;
-        $this->agotado = $agotado;
-        $this->reseña = $reseña;
-        $this->numEstrellas = $numEstrellas;
 		$this->imagen = $imagen;
     }
 
@@ -373,21 +342,6 @@ class Producto
     {
         return $this->precio;
     }
-    
-    public function tallasDisponibles()
-    {
-        return $this->tallasDisponibles; 
-    }
-
-    public function unidadesDisponibles()
-    {
-        return $this->unidadesDisponibles;
-    }
-
-    public function coloresDisponibles()
-    {
-        return $this->coloresDisponibles;
-    }
 
     public function talla()
     {
@@ -399,26 +353,12 @@ class Producto
         return $this->categoria;
     }
 
-    public function agotado()
-    {
-        return $this->agotado;
-    }
-
 
     public function color()
     {
         return $this->color;
     }
 
-    public function reseña()
-    {
-        return $this->reseña;
-    }
-    
-    public function numEstrellas()
-    {
-        return $this->numEstrellas;
-    }
 
     public function imagen()
     {

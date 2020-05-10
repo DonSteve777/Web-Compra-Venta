@@ -66,7 +66,50 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+
+
+--
+-- Estructura de tabla para la tabla `productos`
+--
+
+CREATE TABLE `productos` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `idVendedor` int(9) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion` varchar(500) NOT NULL,
+  `precio` decimal(4,2) NOT NULL,
+  `unidades` int(10) UNSIGNED NOT NULL,
+  `unidadesDisponibles` int(10) NOT NULL,
+  `tallasDisponibles` varchar(12) NOT NULL,
+  `coloresDisponibles` varchar(15) NOT NULL,
+  `talla` varchar(3) NOT NULL,
+  `color` varchar(12) NOT NULL,
+  `categoria` varchar(20) NOT NULL,
+  `agotado` tinyint(1) NOT NULL,
+  `reseña` text DEFAULT NULL,
+  `numEstrellas` tinyint(3) DEFAULT NULL,
+  `imagen` longblob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id`, `idVendedor`, `nombre`, `descripcion`, `precio`, `unidades`, `unidadesDisponibles`, `tallasDisponibles`, `coloresDisponibles`, `talla`, `color`, `categoria`, `agotado`, `reseña`, `numEstrellas`, `imagen`) VALUES
+ (1, 1, 'Cascos Sanson', 'Cascos musica', '40.99', 0, 15, '1', '3', 'DEF', 'Blanco', 'electronica', 0, 'ninguna', 0, 0x0);
+
+
+ 
+CREATE TABLE `uploads` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(64) NOT NULL,
+    `original_name` VARCHAR(64) NOT NULL,
+    `mime_type` VARCHAR(20) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+
+ /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
@@ -74,7 +117,7 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `carrito`
 --
-
+/*
 CREATE TABLE `carrito` (
   `idCarrito` int(10) NOT NULL,
   `idProducto` int(10) UNSIGNED NOT NULL,
@@ -195,35 +238,5 @@ CREATE TABLE `pedidos` (
 
 INSERT INTO `pedidos` (`numero`, `fecha`, `cliente`, `producto`, `nombreProducto`, `idPago`, `cantidad`, `idMensajero`, `pagado`) VALUES
 (1, '2020-03-12', '50258495', 1, '', 1, 1, 1, 0);
-
+*/
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `productos`
---
-
-CREATE TABLE `productos` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `idVendedor` int(9) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `descripcion` varchar(500) NOT NULL,
-  `precio` decimal(4,2) NOT NULL,
-  `unidades` int(10) UNSIGNED NOT NULL,
-  `unidadesDisponibles` int(10) NOT NULL,
-  `tallasDisponibles` varchar(12) NOT NULL,
-  `coloresDisponibles` varchar(15) NOT NULL,
-  `talla` varchar(3) NOT NULL,
-  `color` varchar(12) NOT NULL,
-  `categoria` varchar(20) NOT NULL,
-  `agotado` tinyint(1) NOT NULL,
-  `reseña` text DEFAULT NULL,
-  `numEstrellas` tinyint(3) DEFAULT NULL,
-  `imagen` longblob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `productos`
---
-
-INSERT INTO `productos` (`id`, `idVendedor`, `nombre`, `descripcion`, `precio`, `unidades`, `unidadesDisponibles`, `tallasDisponibles`, `coloresDisponibles`, `talla`, `color`, `categoria`, `agotado`, `reseña`, `numEstrellas`, `imagen`) VALUES
- (1, 1, 'Cascos Sanson', 'Cascos musica', '40.99', 0, 15, '1', '3', 'DEF', 'Blanco', 'electronica', 0, 'ninguna', 0, 0x0);

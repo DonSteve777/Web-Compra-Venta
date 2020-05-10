@@ -1,11 +1,12 @@
-<?php namespace es\fdi\ucm\aw;
-//require_once __DIR__.'/Form.php';
-//require_once __DIR__.'/Usuario.php';
+<?php 
+namespace es\fdi\ucm\aw;
+use es\fdi\ucm\aw\ImageUpload;
 
 class FormularioVender extends Form
 {
     public function __construct() {
-        parent::__construct('formVender');
+        $opciones['enctype'] = 'multipart/form-data';
+        parent::__construct('formVender', $opciones );
     }
     
     protected function generaCamposFormulario($datos)
@@ -16,13 +17,7 @@ class FormularioVender extends Form
         $talla='';
         $color='';
         $categoria ='';
-        $reseña ='';
-        $agotado = '';
         $unidades='';
-        $unidadesDisponibles='';
-        $tallasDisponibles = '';
-        $coloresDisponibles = '';
-        $numEstrellas = '';
         $imagen = '';
 
         if ($datos) {
@@ -30,15 +25,9 @@ class FormularioVender extends Form
             $descripcion = isset($datos['descripcion']) ? $datos['descripcion'] : $descripcion;
             $precio = isset($datos['precio']) ? $datos['precio'] : $precio;
             $unidades = isset($datos['unidades']) ? $datos['unidades'] : $unidades;
-            $tallasDisponibles = isset($datos['tallasDisponibles']) ? $datos['tallasDisponibles'] : $tallasDisponibles;
-            $unidadesDisponibles = isset($datos['unidadesDisponibles']) ? $datos['unidadesDisponibles'] : $unidadesDisponibles;
-            $coloresDisponibles = isset($datos['coloresDisponibles']) ? $datos['coloresDisponibles'] : $coloresDisponibles;
             $talla = isset($datos['talla']) ? $datos['talla'] : $talla;
             $color = isset($datos['color']) ? $datos['color'] : $color;
             $categoria = isset($datos['categoria']) ? $datos['categoria'] : $categoria;
-            $agotado = isset($datos['agotado']) ? $datos['agotado'] : $agotado;
-            $reseña = isset($datos['reseña']) ? $datos['reseña'] : $reseña;
-            $numEstrellas = isset($datos['numEstrellas']) ? $datos['numEstrellas'] : $numEstrellas;
             $imagen = isset($datos['imagen']) ? $datos['imagen'] : $imagen;
         }
         $html = <<<EOF
@@ -67,7 +56,8 @@ class FormularioVender extends Form
         $unidades =array();
         
         $nombreProd = isset($datos['nombre']) ? $datos['nombre'] : null;
-                
+
+   
         if ( empty($nombreProd) ) {
             $result[] = "El nombre del producto no puede estar vacío";
         }
@@ -102,57 +92,20 @@ class FormularioVender extends Form
         if ( empty($color) ) {
             $result[] = "El color no puede estar vacía.";
         }
-
-        $tallasDisponibles = $talla;
-
-        if ( empty($tallasDisponibles) ) {
-            $result[] = "No hay tallas disponibles";
-        }
-
-        $unidadesDisponibles = $unidades;
-
-        if ( empty($unidadesDisponibles) ) {
-            $result[] = "No hay unidades disponibles";
-        }
-        
-        $coloresDisponibles = $color;
-
-        if ( empty($coloresDisponibles) ) {
-            $result[] = "No hay colores disponibles";
-        }
-        
+                
         $categoria = isset($datos['categoria']) ? $datos['categoria'] : null;
 
         if ( empty($categoria) ) {
             $result[] = "La categoria no puede estar vacía.";
         }
-        
-        $reseña = isset($datos['tallasDisponibles']) ? $datos['tallasDisponibles'] : null;
 
-        if ( empty($tallasDisponibles) ) {
-            $result[] = "No hay tallas disponibles";
-        }
+        $imgupload = new ImageUpload($_FILES); 
+        $imgid = $imgupload->uploadImages();
+      
         
-        $agotado = isset($datos['tallasDisponibles']) ? $datos['tallasDisponibles'] : null;
-
-        if ( empty($tallasDisponibles) ) {
-            $result[] = "No hay tallas disponibles";
-        }
-        
-        $numEstrellas = isset($datos['tallasDisponibles']) ? $datos['tallasDisponibles'] : null;
-
-        if ( empty($tallasDisponibles) ) {
-            $result[] = "No hay tallas disponibles";
-        }
-        
-        $imagen = isset($datos['talla']) ? $datos['talla'] : null;
-
-        if ( empty($talla) ) {
-            $result[] = "La imagen no puede estar vacía.";
-        }
 
        if (count($result) === 0) {
-            $producto = Producto::añadeProd($nombreProd, $descripcion, $precio,$unidades,$unidadesDisponibles,$tallasDisponibles,$coloresDisponibles,$talla,$color,$categoria,$reseña,$agotado,$numEstrellas,$imagen);
+            $producto = Producto::añadeProd($nombreProd, $descripcion, $precio,$unidades,$talla,$color,$categoria,$imagen);
             if ( ! $producto ) {
                 // No se da pistas a un posible atacante
                 $result[] = "No se ha podido añadir el producto";
@@ -160,4 +113,6 @@ class FormularioVender extends Form
         }
         return $result;
     }
+
+
 }
