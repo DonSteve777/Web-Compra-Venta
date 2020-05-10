@@ -2,6 +2,7 @@
 namespace es\fdi\ucm\aw;
 use es\fdi\ucm\aw\ImageUpload;
 
+
 class FormularioVender extends Form
 {
     public function __construct() {
@@ -28,7 +29,7 @@ class FormularioVender extends Form
             $talla = isset($datos['talla']) ? $datos['talla'] : $talla;
             $color = isset($datos['color']) ? $datos['color'] : $color;
             $categoria = isset($datos['categoria']) ? $datos['categoria'] : $categoria;
-            $imagen = isset($datos['imagen']) ? $datos['imagen'] : $imagen;
+            //$imagen = isset($datos['imagen']) ? $datos['imagen'] : $imagen;
         }
         $html = <<<EOF
         <fieldset>
@@ -41,7 +42,7 @@ class FormularioVender extends Form
             <p><label>Talla</label> <input type="text" name="talla" value="$talla"/></p>
             <p><label>Color del producto:</label> <input type="text" name="color" value="$color"/></p>
             <p><label>Categoria</label> <input type="text" name="categoria" value="$categoria"/></p>
-            <p><label>Imagen</label> <input type="file" name="imagen" value="$imagen"/></p>
+            <p><label>Imagen</label> <input type="file" name="imagen"/></p>
             <button type="submit" name="sell">Vender</button>
         </fieldset>
         EOF;
@@ -99,13 +100,11 @@ class FormularioVender extends Form
             $result[] = "La categoria no puede estar vacía.";
         }
 
-        $imgupload = new ImageUpload($_FILES); 
-        $imgid = $imgupload->uploadImages();
-      
-        
+        $imgupload = new ImageUpload($_FILES);
+        $img = $imgupload->uploadImages();
 
        if (count($result) === 0) {
-            $producto = Producto::añadeProd($nombreProd, $descripcion, $precio,$unidades,$talla,$color,$categoria,$imagen);
+            $producto = Producto::añadeProd($nombreProd, $descripcion, $precio,$unidades,$talla,$color,$categoria,$img->id());
             if ( ! $producto ) {
                 // No se da pistas a un posible atacante
                 $result[] = "No se ha podido añadir el producto";

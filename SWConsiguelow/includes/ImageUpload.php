@@ -1,9 +1,10 @@
 <?php
 namespace es\fdi\ucm\aw;
+use es\fdi\ucm\aw\Imagen;
+
 
 Class ImageUpload {
 
-    private $mtype;
     private $folder = F_PATH;
     private $f_size = F_SIZE;
     private $files = array();
@@ -67,10 +68,14 @@ Class ImageUpload {
             if($this->check_img_mime($file_tmp)){
                 // Checks the size of the the image
                 if($this->check_img_size($file_tmp)){
-                    move_uploaded_file($file_tmp, $target.time().$file_name);
+					$src = $target.time().$file_name;
+					move_uploaded_file($file_tmp, $src );
+					$imagen = new Imagen($file_name, $src, $file_type); 
+					$imagen = Imagen::inserta($imagen);	//setea el id
                 }
             }
-       // }*/
+	   // }*/
+	   return $imagen;
     }
 
 
