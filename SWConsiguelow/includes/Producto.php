@@ -130,13 +130,10 @@ class Producto
         <td><?php echo $fila['nombre']; ?></td>
         <td><?php echo $fila['descripcion']; ?></td>
         <td><?php echo $fila['precio']; ?></td>
-        <td><?php echo $fila['unidadesDisponibles'];?></td>
         <td><?php echo $fila['talla']; ?></td>
         <td><?php echo $fila['color']; ?></td>
         <td><?php echo $fila['categoria']; ?></td>
-        <td><?php echo $fila['reseña']; ?></td>
-        <td><?php echo $fila['agotado']; ?></td>
-        <td><?php echo $fila['numEstrellas']; ?></td>
+ 
         </tr>
         <?php
             }
@@ -213,13 +210,13 @@ class Producto
 
 
     
-    public static function añadeProd($nombreProd, $descripcion, $precio,$unidades,$talla,$color,$categoria,$imagen) //atributos productos
+    public static function añadeProd($nombreProd, $vendedor, $descripcion, $precio,$unidades,$talla,$color,$categoria) //atributos productos
     {
-        $producto = self::buscaProducto($nombreProd);
+       /* $producto = self::buscaProducto($nombreProd);
         if ($producto) {
             return false;
-        }
-        $producto = new Producto($nombreProd, $descripcion, $precio,$unidades, $talla, $color, $categoria, $imagen);
+        }*/
+        $producto = new Producto($nombreProd, $vendedor, $descripcion, $precio,$unidades, $talla, $color, $categoria);
         return self::guardaProd($producto);
     }
     
@@ -236,22 +233,22 @@ class Producto
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO `productos`  (`nombre`,`descripcion`,`precio`,`unidades`, `talla`, `color`, `categoria`, `imagen`) 
-		 VALUES('%s', '%s', '%f', '%d', '%s', '%s', '%s', '%s')"
+        var_dump($producto->vendedor);
+        $query=sprintf("INSERT INTO `productos`  (`nombre`, `idVendedor`, `descripcion`,`precio`,`unidades`, `talla`, `color`, `categoria`) 
+		 VALUES('%s','%i', '%s', '%f', '%d', '%s', '%s', '%s')"
             , $conn->real_escape_string($producto->nombre)
+            , $conn->real_escape_string($producto->vendedor)
             , $conn->real_escape_string($producto->descripcion)
             , $conn->real_escape_string($producto->precio)
             , $conn->real_escape_string($producto->unidades)
 			, $conn->real_escape_string($producto->talla)
 			, $conn->real_escape_string($producto->color)
-			, $conn->real_escape_string($producto->categoria)
+			, $conn->real_escape_string($producto->categoria));
 
-            ,$conn->real_escape_string($producto->imagen)); // hay que insertar una imagen
         if ( $conn->query($query) ) {
             $producto->id = $conn->insert_id;
-            echo "Producto añadido con exito";
-            exit();
-           // $producto->idVendedor = $conn->id;
+            var_dump($producto->id);
+     
         } else {
             echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
@@ -259,7 +256,7 @@ class Producto
         return $producto;
     }
     
-    private static function actualizaProd($producto)
+   /* private static function actualizaProd($producto)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -285,13 +282,13 @@ class Producto
         }
         
         return $producto;
-    }
-	
-	//filas tabla productos
-    
+    }*/
+	    
     private $id;
 
     private $nombre;
+
+    private $vendedor;
 
     private $descripcion;
 
@@ -302,21 +299,19 @@ class Producto
     private $color;
 	
     private $categoria;
-		
-    private $imagen;
 
     private $unidades;
 
-    private function __construct($nombreProd, $descripcion, $precio,$unidades, $talla, $color, $categoria, $imagen)
+    private function __construct($nombreProd, $vendedor, $descripcion, $precio,$unidades, $talla, $color, $categoria)
     {
         $this->nombre = $nombreProd;
+        $this->vendedor = $vendedor;
         $this->descripcion = $descripcion;
         $this->precio = $precio;
         $this->unidades = $unidades;
         $this->talla = $talla;
         $this->color = $color;
 		$this->categoria= $categoria;
-		$this->imagen = $imagen;
     }
 
     public function id()
@@ -327,6 +322,12 @@ class Producto
     public function nombre()
     {
         return $this->nombre;
+    }
+
+    
+    public function vendedor()
+    {
+        return $this->vendedor;
     }
 
 	public function descripcion()
@@ -359,9 +360,4 @@ class Producto
         return $this->color;
     }
 
-
-    public function imagen()
-    {
-        return $this->imagen;
-    }
 }

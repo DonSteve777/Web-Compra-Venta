@@ -8,6 +8,7 @@ class FormularioVender extends Form
     public function __construct() {
         $opciones['enctype'] = 'multipart/form-data';
         parent::__construct('formVender', $opciones );
+
     }
     
     protected function generaCamposFormulario($datos)
@@ -19,7 +20,7 @@ class FormularioVender extends Form
         $color='';
         $categoria ='';
         $unidades='';
-        $imagen = '';
+        $imgUpload='';
 
         if ($datos) {
             $nombreProd = isset($datos['nombre']) ? $datos['nombre'] : $nombreProd;
@@ -29,7 +30,7 @@ class FormularioVender extends Form
             $talla = isset($datos['talla']) ? $datos['talla'] : $talla;
             $color = isset($datos['color']) ? $datos['color'] : $color;
             $categoria = isset($datos['categoria']) ? $datos['categoria'] : $categoria;
-            //$imagen = isset($datos['imagen']) ? $datos['imagen'] : $imagen;
+            $imgUpload = isset($datos['imagen']) ? $datos['imagen'] : $imgUpload;
         }
         $html = <<<EOF
         <fieldset>
@@ -42,7 +43,7 @@ class FormularioVender extends Form
             <p><label>Talla</label> <input type="text" name="talla" value="$talla"/></p>
             <p><label>Color del producto:</label> <input type="text" name="color" value="$color"/></p>
             <p><label>Categoria</label> <input type="text" name="categoria" value="$categoria"/></p>
-            <p><label>Imagen</label> <input type="file" name="imagen"/></p>
+            <p><label>Imagen</label> <input type="file" name="imagen" value="$imgUpload"/></p>
             <button type="submit" name="sell">Vender</button>
         </fieldset>
         EOF;
@@ -53,11 +54,8 @@ class FormularioVender extends Form
     protected function procesaFormulario($datos)
     {
         $result = array();
-
-        $unidades =array();
         
         $nombreProd = isset($datos['nombre']) ? $datos['nombre'] : null;
-
    
         if ( empty($nombreProd) ) {
             $result[] = "El nombre del producto no puede estar vacío";
@@ -100,11 +98,11 @@ class FormularioVender extends Form
             $result[] = "La categoria no puede estar vacía.";
         }
 
-        $imgupload = new ImageUpload($_FILES);
-        $img = $imgupload->uploadImages();
-
        if (count($result) === 0) {
-            $producto = Producto::añadeProd($nombreProd, $descripcion, $precio,$unidades,$talla,$color,$categoria,$img->id());
+            $idvendedor = $_SESSION['userid'];
+            $producto = Producto::añadeProd($nombreProd, $idvendedor, $descripcion, $precio,$unidades,$talla,$color,$categoria);
+            $imgupload = new ImageUpload($_FILES, $producto->id());
+            $result[] = $imgupload->uploadImages();
             if ( ! $producto ) {
                 // No se da pistas a un posible atacante
                 $result[] = "No se ha podido añadir el producto";

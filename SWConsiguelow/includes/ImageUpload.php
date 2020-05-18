@@ -7,10 +7,12 @@ Class ImageUpload {
 
     private $folder = F_PATH;
     private $f_size = F_SIZE;
-    private $files = array();
+	private $files = array();
+	private $productId;
     
-    public function __construct($files){
-        $this->files = $files;
+    public function __construct($files, $productId){
+		$this->files = $files;
+		$this->$productId = $productId;
     }
 
     private function check_img_size($tmpname){
@@ -55,7 +57,7 @@ Class ImageUpload {
     
     /* Handles the uploading of images */
 	public  function uploadImages(){
-        
+        $result = array();
         $target = 'C:\xampp\htdocs\gitLocal\SWConsiguelo\SWConsiguelow\data\productos\\';
        /* foreach($this->files['imagen']['tmp_name'] as $value)
         {*/
@@ -70,12 +72,11 @@ Class ImageUpload {
                 if($this->check_img_size($file_tmp)){
 					$src = $target.time().$file_name;
 					move_uploaded_file($file_tmp, $src );
-					$imagen = new Imagen($file_name, $src, $file_type); 
+					$imagen = new Imagen($productId, $file_name, $src, $file_type); 
 					$imagen = Imagen::inserta($imagen);	//setea el id
                 }
             }
-	   // }*/
-	   return $imagen;
+	   return $result;
     }
 
 

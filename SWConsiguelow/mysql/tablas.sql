@@ -73,39 +73,44 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `productos` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `idVendedor` int(9) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
+  `idVendedor` int(11) NOT NULL,
   `descripcion` varchar(500) NOT NULL,
   `precio` decimal(4,2) NOT NULL,
   `unidades` int(10) UNSIGNED NOT NULL,
   `talla` varchar(3) NOT NULL,
   `color` varchar(12) NOT NULL,
   `categoria` varchar(20) NOT NULL,
-  `imagen` INT(11),
   PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `productos`
+    ADD CONSTRAINT fk_vendedor
+    FOREIGN KEY (`idVendedor`)
+    REFERENCES `usuarios`(`id`);
 
 --
 -- Volcado de datos para la tabla `productos`
 --
 
-/*INSERT INTO `productos` (`id`, `idVendedor`, `nombre`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`, `imagen`) VALUES
- (1, 1, 'Cascos Sanson', 'Cascos musica', '40.99', 0, 'DEF', 'Blanco', 'electronica', 1);*/
+/*INSERT INTO `productos` (`id`, `idVendedor`, `nombre`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`) VALUES
+ (1, 1, 'Cascos Sanson', 'Cascos musica', '40.99', 0, 'DEF', 'Blanco', 'electronica');*/
 
  
 CREATE TABLE `uploads` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `producto` int(11) NOT NULL,
     `name` VARCHAR(64) NOT NULL,
     `original_name` VARCHAR(64) NOT NULL,
     `mime_type` VARCHAR(20) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-ALTER TABLE `productos`
-    ADD CONSTRAINT fk_imagen
-    FOREIGN KEY (`imagen`)
-    REFERENCES `uploads`(`id`);
+ALTER TABLE `uploads`
+    ADD CONSTRAINT fk_product
+    FOREIGN KEY (`producto`)
+    REFERENCES `productos`(`id`);
 
 
  /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
