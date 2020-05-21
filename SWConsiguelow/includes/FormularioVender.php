@@ -32,32 +32,39 @@ class FormularioVender extends Form
             $categoria = isset($datos['categoria']) ? $datos['categoria'] : $categoria;
             $imgUpload = isset($datos['imagen']) ? $datos['imagen'] : $imgUpload;
         }
-        $html = <<<EOF
-        <fieldset>
+       $html =<<<EOF
+            <fieldset>
             <link rel="stylesheet" href="styles/style.css">
             <legend>Producto, descripcion y precio</legend>
-            <p><label>Nombre del producto:</label> <input type="text" name="nombre" value="$nombreProd"/></p>
-            <p><label>Descripcion</label> <input type="text" name="descripcion" value="$descripcion"/></p>
-            <p><label>Precio del producto:</label> <input type="text" name="precio" value="$precio"/></p>
-            <p><label>Unidades:</label> <input type="text" name="unidades" value="$unidades"/></p>
-            <p><label>Talla</label> <input type="text" name="talla" value="$talla"/></p>
-            <p><label>Color del producto:</label> <input type="text" name="color" value="$color"/></p>
-            <p><label>Categoria</label> <input type="text" name="categoria" value="$categoria"/></p>
-            <p><label>Imagen</label> <input type="file" name="imagen" value="$imgUpload"/></p>
+            <p><label>Nombre del producto:</label> 
+            <input type="text" name="nombre" value="$nombreProd"/></p>
+            <p><label>Descripcion</label> 
+            <input type="text" name="descripcion" value="$descripcion"/></p>
+            <p><label>Precio del producto:</label> 
+            <input type="text" name="precio" value="$precio"/></p>
+            <p><label>Unidades:</label> 
+            <input type="text" name="unidades" value="$unidades"/></p>
+            <p><label>Talla</label> 
+            <input type="text" name="talla" value="$talla"/></p>
+            <p><label>Color del producto:</label> 
+            <input type="text" name="color" value="$color"/></p>
+            <p><label>Categoria</label> 
+            <input type="text" name="categoria" value="$categoria"/></p>
+            <p><label>Imagen</label> 
+            <input type="file" name="imagen" value="$imgUpload"/></p>
             <button type="submit" name="sell">Vender</button>
-        </fieldset>
-        EOF;
+            </fieldset>
+EOF;
         return $html;
     }
     
 
     protected function procesaFormulario($datos)
     {
-        $result = array();
-        
+       $result = array();
         $nombreProd = isset($datos['nombre']) ? $datos['nombre'] : null;
    
-        if ( empty($nombreProd) ) {
+        if (empty($nombreProd)) {
             $result[] = "El nombre del producto no puede estar vacío";
         }
         
@@ -102,7 +109,7 @@ class FormularioVender extends Form
             $idvendedor = $_SESSION['userid'];
             $producto = Producto::añadeProd($nombreProd, $idvendedor, $descripcion, $precio,$unidades,$talla,$color,$categoria);
             $imgupload = new ImageUpload($_FILES, $producto->id());
-            $result[] = $imgupload->uploadImages();
+            $result = $imgupload->uploadImages();
             if ( ! $producto ) {
                 // No se da pistas a un posible atacante
                 $result[] = "No se ha podido añadir el producto";
@@ -110,6 +117,5 @@ class FormularioVender extends Form
         }
         return $result;
     }
-
 
 }

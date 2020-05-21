@@ -1,7 +1,5 @@
 <?php
 namespace es\fdi\ucm\aw;
-//require_once __DIR__.'/Form.php';
-//require_once __DIR__.'/Usuario.php';*/
 
 class FormularioRegistro extends Form
 {
@@ -132,6 +130,7 @@ EOF;
                 $_SESSION['login'] = true;
                 $_SESSION['username'] = $nombreUsuario;
                 $result = 'index.php';
+                $_SESSION['userid'] = $user->id();
             }
         }
         return $result;

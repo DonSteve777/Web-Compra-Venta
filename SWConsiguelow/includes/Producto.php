@@ -233,9 +233,8 @@ class Producto
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        var_dump($producto->vendedor);
         $query=sprintf("INSERT INTO `productos`  (`nombre`, `idVendedor`, `descripcion`,`precio`,`unidades`, `talla`, `color`, `categoria`) 
-		 VALUES('%s','%i', '%s', '%f', '%d', '%s', '%s', '%s')"
+		 VALUES('%s','%d', '%s', '%f', '%d', '%s', '%s', '%s')"
             , $conn->real_escape_string($producto->nombre)
             , $conn->real_escape_string($producto->vendedor)
             , $conn->real_escape_string($producto->descripcion)
@@ -247,7 +246,6 @@ class Producto
 
         if ( $conn->query($query) ) {
             $producto->id = $conn->insert_id;
-            var_dump($producto->id);
      
         } else {
             echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);

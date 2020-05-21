@@ -2,11 +2,6 @@
     <nav>
     <ul class="menu">
             <li><a href="index.php?">Inicio</a></li>
-            <li><a href="detalles.php">Detalles</a></li>
-            <li><a href="bocetos.php">Bocetos</a></li>
-            <li><a href="planificacion.php">Planificación</a></li>
-            <li><a href="miembros.php">Miembros</a></li>
-            <li><a href="contacto.php">Contacto</a></li> 
             <li><a href="vender.php">Vender</a></li>
             <li><a href="mostrarProducto.php">Mostrar productos</a></li>  
             <li><a href="filtrar.php">Filtrar productos</a></li>  

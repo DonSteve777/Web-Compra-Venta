@@ -7,14 +7,9 @@
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
 
 CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `dni` varchar(9) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `nombreUsuario` varchar(15) NOT NULL,
@@ -25,53 +20,13 @@ CREATE TABLE `usuarios` (
   `ciudad` varchar(12) NOT NULL,
   `codigo postal` varchar(5) NOT NULL,
   `carrito` int(15) NOT NULL,
-  `tarjeta credito` int(20) UNSIGNED NOT NULL
+  `tarjeta credito` int(20) UNSIGNED NOT NULL, 
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Indexes for table `usuario`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
-
-
-
---
--- Dumping data for table `usuario`
---
-INSERT INTO `usuarios` (`dni`, `nombre`, `nombreUsuario`, `password`, `direccion`, `email`, `telefono`, `ciudad`, `codigo postal`, `carrito`, `tarjeta credito`) VALUES
-('50258495', 'Nestor', 'nestorUser', 'nestorpass', 'C/Abaco 25, 3ºD.', 'nestor@ucm.es', '917588789', 'Madrid', '20080', 0, 45121545);
-
-
-
--- phpMyAdmin SQL Dump
--- version 5.0.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 30-04-2020 a las 13:13:37
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.2
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-
-
---
 -- Estructura de tabla para la tabla `productos`
 --
-
 CREATE TABLE `productos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
@@ -82,41 +37,24 @@ CREATE TABLE `productos` (
   `talla` varchar(3) NOT NULL,
   `color` varchar(12) NOT NULL,
   `categoria` varchar(20) NOT NULL,
-  PRIMARY KEY(id)
+  PRIMARY KEY(`id`),
+  FOREIGN KEY (`idVendedor`) REFERENCES `usuarios`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-ALTER TABLE `productos`
-    ADD CONSTRAINT fk_vendedor
-    FOREIGN KEY (`idVendedor`)
-    REFERENCES `usuarios`(`id`);
 
 --
 -- Volcado de datos para la tabla `productos`
 --
-
-/*INSERT INTO `productos` (`id`, `idVendedor`, `nombre`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`) VALUES
- (1, 1, 'Cascos Sanson', 'Cascos musica', '40.99', 0, 'DEF', 'Blanco', 'electronica');*/
+/*INSERT INTO `productos` (`nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`) VALUES ('Cascos Sanson', 1, 'Cascos musica', '40.99', 0, 'DEF', 'Blanco', 'electronica')*/
 
  
 CREATE TABLE `uploads` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `producto` int(11) NOT NULL,
     `name` VARCHAR(64) NOT NULL,
-    `original_name` VARCHAR(64) NOT NULL,
     `mime_type` VARCHAR(20) NOT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-
-ALTER TABLE `uploads`
-    ADD CONSTRAINT fk_product
-    FOREIGN KEY (`producto`)
-    REFERENCES `productos`(`id`);
-
-
- /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`producto`) REFERENCES `productos`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Estructura de tabla para la tabla `carrito`
