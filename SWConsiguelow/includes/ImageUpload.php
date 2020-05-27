@@ -5,7 +5,7 @@ use es\fdi\ucm\aw\Imagen;
 
 Class ImageUpload {
 
-    private $folder = F_PATH;
+   private $folder = F_PATH;
     private $f_size = F_SIZE;
 	private $files = array();
 	private $productId;
@@ -72,7 +72,7 @@ Class ImageUpload {
     /* Handles the uploading of images */
 	public  function uploadImages(){
         $result = array();
-        $target = 'C:\xampp\htdocs\gitLocal\SWConsiguelo\SWConsiguelow\data\productos\\';
+        //$target = 'C:\xampp\htdocs\gitLocal\SWConsiguelo\SWConsiguelow\data\productos\\';
        /* foreach($this->files['imagen']['tmp_name'] as $value)
         {*/
             $file_size =$this->files['imagen']['size'];//[$key];
@@ -83,7 +83,7 @@ Class ImageUpload {
             if($this->check_img_mime($file_tmp)){
                 // Checks the size of the the image
                 if($this->check_img_size($file_tmp)){
-					$src = $this->tempnam_sfx($target, ".tmp");
+					$src = $this->tempnam_sfx($this->folder, ".tmp");	//habrá que ponerles el formato para visualizarlas
 					move_uploaded_file($file_tmp, $src );
 					$imagen = new Imagen($this->productId, $src, $file_type); 
 					$imagen = Imagen::inserta($imagen);	//setea el id

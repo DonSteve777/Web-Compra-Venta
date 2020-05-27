@@ -44,8 +44,7 @@ define('BD_NAME', 'consiguelowdb');
 define('BD_USER', 'consiguelowdb');
 define('BD_PASS', 'consiguelowdb');
 define("R_PATH", __DIR__);
-define("F_PATH", R_PATH.'/images');
-define("H_FILE", false);
+define("F_PATH", R_PATH.'\..\data\productos\\');
 
 ##################################################
 #              File configuration                #

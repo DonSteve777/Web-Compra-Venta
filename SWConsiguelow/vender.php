@@ -25,8 +25,13 @@ use es\fdi\ucm\aw\FormularioVender;
             <div id="contenido">
                 <h2>Subir un producto</h2>
             <?php 
-                $form = new FormularioVender(); $form->gestiona();
-            ?>
+                if (isset( $_SESSION['login'] ) && $_SESSION['login']== true ){
+                    $form = new FormularioVender(); $form->gestiona();
+                }
+                else{
+                    header("Location: login.php");        
+                }
+                                ?>
             </div>
             <?php
        require("includes/common/sidebarDer.php");
