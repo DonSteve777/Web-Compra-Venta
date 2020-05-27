@@ -1,5 +1,7 @@
 <?php
 namespace es\fdi\ucm\aw;
+//require_once __DIR__.'/Form.php';
+//require_once __DIR__.'/Usuario.php';
 
 class FormularioFiltrar extends Form
 {
@@ -10,17 +12,19 @@ class FormularioFiltrar extends Form
     protected function generaCamposFormulario($datos)
     {
         $nombreProd = '';
-        $nombreCat='';
+        $precioProd ='';
+        $nombreCategoria='';
         if ($datos) {
             $nombreProd = isset($datos['nombre']) ? $datos['nombre'] : $nombreProd;
-            $nombreCat = isset($datos['tipo']) ? $datos['tipo'] : $nombreCat;
+            $precioProd = isset($datos['precio']) ? $datos['precio'] : $precioProd;
+            $nombreCategoria = isset($datos['precio']) ? $datos['precio'] : $nombreCategoria;
         }
         $html = <<<EOF
         <fieldset>
             <legend>Buscar un producto</legend></br>
             <form method="post" action="Producto.php">
-            <p><label>Filtrar por nombre:</label> <input type="text" name="nombre" value="$nombreProd"/></p>
-            <p><label>Filtrar por categoria:</label> <input type="text" name="tipo" value="$nombreCat"/></p>
+            <p><label>Filtrar por nombre:</label> <input type="text" name="nombre"/></p>
+            <p><label>Filtrar por categoria:</label> <input type="text" name="categoria"/></p>
             <button type="submit" name="search">Buscar</button>
             </form>
         </fieldset>
@@ -34,19 +38,19 @@ class FormularioFiltrar extends Form
         $result = array();
         
         $nombreProd = isset($datos['nombre']) ? $datos['nombre'] : null;
-        $nombreCat = isset($datos['tipo']) ? $datos['tipo'] : null;
+        $nombreCategoria = isset($datos['tipo']) ? $datos['tipo'] : null;
                 
-       if ( empty($nombreProd) && empty($nombreCat)) {
+      /*  if ( empty($nombreProd) && empty($nombreCategoria)) {
             $result[] = "Debes rellenar al menos algun campo para filtrar";
-        }
+        }*/
         
         if (count($result) === 0) {
-            if(strlen($nombreProd)>0){
-             Producto::muestraProductosPorNombre($nombreProd);
-            }
-            elseif (strlen($nombreCat)>0){
-             Producto::muestraProductosPorCat();
-            }
+            $producto = Producto::muestraProductosPorNombre($nombreProd);
+            //$categoria = Categoria::buscaCat($nombreCategoria);
+            if ( !$producto ) {
+                // No se da pistas a un posible atacante
+                $result[] = "No existen productos";
+        }
     }
         return $result;
     }

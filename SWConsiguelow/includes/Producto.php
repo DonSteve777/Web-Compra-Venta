@@ -10,7 +10,7 @@ class Producto
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM Productos P WHERE P.nombre = '%s'", $conn->real_escape_string($nombreProd));
+        $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '%s'", $conn->real_escape_string($nombreProd));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
@@ -19,6 +19,12 @@ class Producto
                 $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['precio'],$fila['unidades'], $fila['unidadesDisponibles'],$fila['tallasDisponibles'],$fila['coloresDisponibles'],$fila['talla'],$fila['color'],$fila['categoria'],$fila['reseña'],$fila['agotado'],$fila['numEstrellas'],$fila['imagen']);
                 $producto->id = $fila['id'];
                 $result = $producto;
+                /*if($producto->unidadesDisponibles>0){
+                    $producto->agotado = false;
+                }
+                else{
+                    $producto->agotado=true;
+                }*/
             }
             $rs->free();
         } else {
@@ -28,24 +34,57 @@ class Producto
         return $result;
     }
 
-    public static function muestraProds(){ //funcion que muestra todos los productos disponibles
+    public static function muestraProductos()
+    {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM Productos P");
+        $query = sprintf("SELECT * FROM productos P"); //$conn->real_escape_string($producto);
         $rs = $conn->query($query);
         $result = false;
-        $i=0;
+        ?>
+        <centre>
+        <table>
+        <thead>
+            <tr>
+                 <th>Imagen</th>
+                 <th>Nombre</th>
+                 <th>Descripcion</th>
+                 <th>Precio</th>
+                 <th>Unidades</th>
+                 <th>Talla</th>
+                 <th>Color</th>
+                 <th>Categoria</th>
+                 <th>Reseña</th>
+                 <th>Agotado</th>
+                 <th>Numero Estrellas</th>
+            </tr>
+        </thead>
+        <tbody>
+         <?php
         if ($rs) {
-            if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                $claves = array_keys($array);
-                foreach($claves as $clave){
-                    $arrayauxliar[$i][$clave]=$array[$clave];
-                }           
-                $i++;
-                $prod = $arrayauxliar;
-                $result = $prod;
+           // if ( $rs->num_rows >= 1) {
+               while( $fila = $rs->fetch_assoc()){
+                ?>
+        <tr>
+        <td><img src="<?php echo $fila['imagen']; ?>" width='85' height='85'/></td>
+        <td><?php echo $fila['nombre']; ?></td>
+        <td><?php echo $fila['descripcion']; ?></td>
+        <td><?php echo $fila['precio']; ?></td>
+        <td><?php echo $fila['unidadesDisponibles'];?></td>
+        <td><?php echo $fila['talla']; ?></td>
+        <td><?php echo $fila['color']; ?></td>
+        <td><?php echo $fila['categoria']; ?></td>
+        <td><?php echo $fila['reseña']; ?></td>
+        <td><?php echo $fila['agotado']; ?></td>
+        <td><?php echo $fila['numEstrellas']; ?></td>
+        </tr>
+        <?php
             }
+        ?>
+            </tbody>
+            </table>
+            </centre>
+            <?php
             $rs->free();
         } else {
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
@@ -53,55 +92,56 @@ class Producto
         }
         return $result;
     }
-}
 
-    public static function muestraProductosPorNombre($nombreProd)
+    public static function muestraProductosPorNombre()
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $nombreProd = $_POST['nombre'];
         $query = sprintf("SELECT * FROM productos P WHERE p.nombre = '$nombreProd'");$conn->real_escape_string($nombreProd);
         $rs = $conn->query($query);
-        $i=0;
-        if ($rs) {
-            if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                $claves = array_keys($array);
-                foreach($claves as $clave){
-                    $arrayauxliar[$i][$clave]=$array[$clave];
-                } 
-                $i++;
-                $prod = $arrayauxliar;
-                $result = $prod;
-                }
-            $rs->free();
-            }   
-        } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        return $result;
-    }
-
-    public static function muestraProductosPorCat($nombreCat){
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM productos P WHERE P.categoria = '$nombreCat'");$conn->real_escape_string($nombreCat);
-        $rs = $conn->query($query);
         $result = false;
-        $i=0;
+        ?>
+        <centre>
+        <table>
+        <thead>
+            <tr>
+                 <th>Imagen</th>
+                 <th>Nombre</th>
+                 <th>Descripcion</th>
+                 <th>Precio</th>
+                 <th>Unidades</th>
+                 <th>Talla</th>
+                 <th>Color</th>
+                 <th>Categoria</th>
+                 <th>Reseña</th>
+                 <th>Agotado</th>
+                 <th>Numero Estrellas</th>
+            </tr>
+        </thead>
+        <tbody>
+         <?php
         if ($rs) {
-            if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                $claves = array_keys($array);
-                foreach($claves as $clave){
-                    $arrayauxliar[$i][$clave]=$array[$clave];
-                }           
-                $i++;
-                $prod = $arrayauxliar;
-                $result = $prod;
-                }
+           // if ( $rs->num_rows >= 1) {
+               while( $fila = $rs->fetch_assoc()){
+                ?>
+        <tr>
+        <td><img src="<?php echo $fila['imagen']; ?>" width='85' height='85'/></td>
+        <td><?php echo $fila['nombre']; ?></td>
+        <td><?php echo $fila['descripcion']; ?></td>
+        <td><?php echo $fila['precio']; ?></td>
+        <td><?php echo $fila['talla']; ?></td>
+        <td><?php echo $fila['color']; ?></td>
+        <td><?php echo $fila['categoria']; ?></td>
+ 
+        </tr>
+        <?php
             }
+        ?>
+            </tbody>
+            </table>
+            </centre>
+            <?php
             $rs->free();
         } else {
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
@@ -109,29 +149,57 @@ class Producto
         }
         return $result;
     }
-
 
 
     public static function muestraProductosPorPrecioDesc($producto)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM Productos P ORDER BY P.precio DESC"); $conn->real_escape_string($producto);
+        $query = sprintf("SELECT * FROM productos P ORDER BY P.precio DESC"); $conn->real_escape_string($producto);
         $rs = $conn->query($query);
         $result = false;
-        $i=0;
+        ?>
+        <centre>
+        <table>
+        <thead>
+            <tr>
+                 <th>Imagen</th>
+                 <th>Nombre</th>
+                 <th>Descripcion</th>
+                 <th>Precio</th>
+                 <th>Unidades</th>
+                 <th>Talla</th>
+                 <th>Color</th>
+                 <th>Categoria</th>
+                 <th>Reseña</th>
+                 <th>Agotado</th>
+                 <th>Numero Estrellas</th>
+            </tr>
+        </thead>
+        <tbody>
+         <?php
         if ($rs) {
-            if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                $claves = array_keys($array);
-                foreach($claves as $clave){
-                    $arrayauxliar[$i][$clave]=$array[$clave];
-                }           
-                $i++;
-                $prod = $arrayauxliar;
-                $result = $prod;
-                }
+           // if ( $rs->num_rows >= 1) {
+               while( $fila = $rs->fetch_assoc()){
+                ?>
+        <tr>
+        <td><img src="<?php echo $fila['imagen']; ?>" width='85' height='85' /></td>
+         <!-- <td><img height="50px" src="data:image/jpeg;base64,<?php echo base64_encode($fila['imagen']); ?>"/></td>muestro la imagen-->
+        <td><?php echo $fila['nombre']; ?></td>
+        <td><?php echo $fila['descripcion']; ?></td>
+        <td><?php echo $fila['precio']; ?></td>
+        <td><?php echo $fila['talla']; ?></td>
+        <td><?php echo $fila['color']; ?></td>
+        <td><?php echo $fila['categoria']; ?></td>
+
+        </tr>
+        <?php
             }
+        ?>
+            </tbody>
+            </table>
+            </centre>
+            <?php
             $rs->free();
         } else {
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
@@ -190,7 +258,7 @@ class Producto
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("UPDATE Productos P SET nombre = '%s', descripcion='%s', precio='%f', unidades='%d, unidadesDisponibles ='%d', tallasDisponibles ='%s', coloresDisponibles ='%s', talla ='%s', color ='%s', categoria ='%s', reseña ='%s', agotado ='%b', numEstrellas ='%d', imagen ='%s' WHERE P.id=%i"
+        $query=sprintf("UPDATE productos P SET nombre = '%s', descripcion='%s', precio='%f', unidades='%d, talla ='%s', color ='%s', categoria ='%s', imagen ='%s' WHERE P.id=%i"
             , $conn->real_escape_string($producto->nombre)
             , $conn->real_escape_string($producto->descripcion)
             , $conn->real_escape_string($producto->precio)

@@ -1,14 +1,15 @@
-
 <?php
+use es\fdi\ucm\aw\Producto;
+
 require_once __DIR__.'/includes/config.php';
-use es\fdi\ucm\aw\FormularioCarrito;
 ?>
+
 
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="styles/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Añadir un producto al carrito</title>
+        <title>Mostrar producto</title>
     </head>
 
     <body>
@@ -17,11 +18,13 @@ use es\fdi\ucm\aw\FormularioCarrito;
                 require("includes/common/cabecera.php");
             ?>
             <div id="contenido">
-                <h1>Añadir producto</h1>
+                <h1>Mostrando productos</h1>
             <?php 
-                $form = new FormularioCarrito(); $form->gestiona();
+                $producto = '';
+                $producto = Producto::muestraProductos();
             ?>
             </div>
         </div>  
     </body>
 </html>
+
