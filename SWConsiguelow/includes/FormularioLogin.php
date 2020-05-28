@@ -51,6 +51,7 @@ EOF;
             } else {
                 $_SESSION['login'] = true;
                 $_SESSION['username'] = $nombreUsuario;
+                $_SESSION['userid'] = $usuario->id();
                 //$_SESSION['esAdmin'] = strcmp($usuario->rol(), 'admin') == 0 ? true : false;
                 $result = 'index.php';
             }

@@ -1,8 +1,5 @@
 <?php
 namespace es\fdi\ucm\aw;
-//require_once __DIR__ . '/Aplicacion.php';
-require_once __DIR__ . '/funciones.inc';
-
 
 class Usuario
 {
