@@ -1,14 +1,11 @@
-<?php 
-namespace es\fdi\ucm\aw;
-use es\fdi\ucm\aw\ImageUpload;
-
+<?php namespace es\fdi\ucm\aw;
+//require_once __DIR__.'/Form.php';
+//require_once __DIR__.'/Usuario.php';
 
 class FormularioVender extends Form
 {
     public function __construct() {
-        $opciones['enctype'] = 'multipart/form-data';
-        parent::__construct('formVender', $opciones );
-
+        parent::__construct('formVender');
     }
     
     protected function generaCamposFormulario($datos)
@@ -19,52 +16,59 @@ class FormularioVender extends Form
         $talla='';
         $color='';
         $categoria ='';
+        $reseña ='';
+        $agotado = '';
         $unidades='';
-        $imgUpload='';
+        $unidadesDisponibles='';
+        $tallasDisponibles = '';
+        $coloresDisponibles = '';
+        $numEstrellas = '';
+        $imagen = '';
 
         if ($datos) {
             $nombreProd = isset($datos['nombre']) ? $datos['nombre'] : $nombreProd;
             $descripcion = isset($datos['descripcion']) ? $datos['descripcion'] : $descripcion;
             $precio = isset($datos['precio']) ? $datos['precio'] : $precio;
             $unidades = isset($datos['unidades']) ? $datos['unidades'] : $unidades;
+            $tallasDisponibles = isset($datos['tallasDisponibles']) ? $datos['tallasDisponibles'] : $tallasDisponibles;
+            $unidadesDisponibles = isset($datos['unidadesDisponibles']) ? $datos['unidadesDisponibles'] : $unidadesDisponibles;
+            $coloresDisponibles = isset($datos['coloresDisponibles']) ? $datos['coloresDisponibles'] : $coloresDisponibles;
             $talla = isset($datos['talla']) ? $datos['talla'] : $talla;
             $color = isset($datos['color']) ? $datos['color'] : $color;
             $categoria = isset($datos['categoria']) ? $datos['categoria'] : $categoria;
-            $imgUpload = isset($datos['imagen']) ? $datos['imagen'] : $imgUpload;
+            $agotado = isset($datos['agotado']) ? $datos['agotado'] : $agotado;
+            $reseña = isset($datos['reseña']) ? $datos['reseña'] : $reseña;
+            $numEstrellas = isset($datos['numEstrellas']) ? $datos['numEstrellas'] : $numEstrellas;
+            $imagen = isset($datos['imagen']) ? $datos['imagen'] : $imagen;
         }
-       $html =<<<EOF
-            <fieldset>
+        $html = <<<EOF
+        <fieldset>
             <link rel="stylesheet" href="styles/style.css">
             <legend>Producto, descripcion y precio</legend>
-            <p><label>Nombre del producto:</label> 
-            <input type="text" name="nombre" value="$nombreProd"/></p>
-            <p><label>Descripcion</label> 
-            <input type="text" name="descripcion" value="$descripcion"/></p>
-            <p><label>Precio del producto:</label> 
-            <input type="text" name="precio" value="$precio"/></p>
-            <p><label>Unidades:</label> 
-            <input type="text" name="unidades" value="$unidades"/></p>
-            <p><label>Talla</label> 
-            <input type="text" name="talla" value="$talla"/></p>
-            <p><label>Color del producto:</label> 
-            <input type="text" name="color" value="$color"/></p>
-            <p><label>Categoria</label> 
-            <input type="text" name="categoria" value="$categoria"/></p>
-            <p><label>Imagen</label> 
-            <input type="file" name="imagen" value="$imgUpload"/></p>
+            <p><label>Nombre del producto:</label> <input type="text" name="nombre" value="$nombreProd"/></p>
+            <p><label>Descripcion</label> <input type="text" name="descripcion" value="$descripcion"/></p>
+            <p><label>Precio del producto:</label> <input type="text" name="precio" value="$precio"/></p>
+            <p><label>Unidades:</label> <input type="text" name="unidades" value="$unidades"/></p>
+            <p><label>Talla</label> <input type="text" name="talla" value="$talla"/></p>
+            <p><label>Color del producto:</label> <input type="text" name="color" value="$color"/></p>
+            <p><label>Categoria</label> <input type="text" name="categoria" value="$categoria"/></p>
+            <p><label>Imagen</label> <input type="file" name="imagen" value="$imagen"/></p>
             <button type="submit" name="sell">Vender</button>
-            </fieldset>
-EOF;
+        </fieldset>
+        EOF;
         return $html;
     }
     
 
     protected function procesaFormulario($datos)
     {
-       $result = array();
+        $result = array();
+
+        $unidades =array();
+        
         $nombreProd = isset($datos['nombre']) ? $datos['nombre'] : null;
-   
-        if (empty($nombreProd)) {
+                
+        if ( empty($nombreProd) ) {
             $result[] = "El nombre del producto no puede estar vacío";
         }
         
@@ -98,18 +102,57 @@ EOF;
         if ( empty($color) ) {
             $result[] = "El color no puede estar vacía.";
         }
-                
+
+        $tallasDisponibles = $talla;
+
+        if ( empty($tallasDisponibles) ) {
+            $result[] = "No hay tallas disponibles";
+        }
+
+        $unidadesDisponibles = $unidades;
+
+        if ( empty($unidadesDisponibles) ) {
+            $result[] = "No hay unidades disponibles";
+        }
+        
+        $coloresDisponibles = $color;
+
+        if ( empty($coloresDisponibles) ) {
+            $result[] = "No hay colores disponibles";
+        }
+        
         $categoria = isset($datos['categoria']) ? $datos['categoria'] : null;
 
         if ( empty($categoria) ) {
             $result[] = "La categoria no puede estar vacía.";
         }
+        
+        $reseña = isset($datos['tallasDisponibles']) ? $datos['tallasDisponibles'] : null;
+
+        if ( empty($tallasDisponibles) ) {
+            $result[] = "No hay tallas disponibles";
+        }
+        
+        $agotado = isset($datos['tallasDisponibles']) ? $datos['tallasDisponibles'] : null;
+
+        if ( empty($tallasDisponibles) ) {
+            $result[] = "No hay tallas disponibles";
+        }
+        
+        $numEstrellas = isset($datos['tallasDisponibles']) ? $datos['tallasDisponibles'] : null;
+
+        if ( empty($tallasDisponibles) ) {
+            $result[] = "No hay tallas disponibles";
+        }
+        
+        $imagen = isset($datos['talla']) ? $datos['talla'] : null;
+
+        if ( empty($talla) ) {
+            $result[] = "La imagen no puede estar vacía.";
+        }
 
        if (count($result) === 0) {
-            $idvendedor = $_SESSION['userid'];
-            $producto = Producto::añadeProd($nombreProd, $idvendedor, $descripcion, $precio,$unidades,$talla,$color,$categoria);
-            $imgupload = new ImageUpload($_FILES, $producto->id());
-            $result = $imgupload->uploadImages();
+            $producto = Producto::añadeProd($nombreProd, $descripcion, $precio,$unidades,$unidadesDisponibles,$tallasDisponibles,$coloresDisponibles,$talla,$color,$categoria,$reseña,$agotado,$numEstrellas,$imagen);
             if ( ! $producto ) {
                 // No se da pistas a un posible atacante
                 $result[] = "No se ha podido añadir el producto";
@@ -117,5 +160,4 @@ EOF;
         }
         return $result;
     }
-
 }

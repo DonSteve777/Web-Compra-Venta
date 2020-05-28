@@ -1,5 +1,8 @@
 <?php
 namespace es\fdi\ucm\aw;
+//require_once __DIR__ . '/Aplicacion.php';
+require_once __DIR__ . '/funciones.inc';
+
 
 class Usuario
 {
@@ -18,7 +21,7 @@ class Usuario
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM usuarios U WHERE U.nombreUsuario = '%s'", $conn->real_escape_string($nombreUsuario));
+        $query = sprintf("SELECT * FROM Usuarios U WHERE U.nombreUsuario = '%s'", $conn->real_escape_string($nombreUsuario));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
@@ -27,11 +30,6 @@ class Usuario
                 $user = new Usuario($fila['nombre'], $fila['nombreUsuario'], $fila['password'], $fila['dni'],  $fila['direccion'],  $fila['email'],  $fila['telefono'],  $fila['ciudad'],  $fila['codigo postal'],  $fila['carrito'], $fila['tarjeta credito'] );
                 $user->id = $fila['id'];
                 $result = $user;
-              /*  echo "busca usuario <br>"; 
-                echo $result->password;
-                echo "<br>";
-                echo $result->nombreUsuario;
-                echo "<br>";*/
             }
             $rs->free();
         } else {
@@ -49,6 +47,33 @@ class Usuario
         }
         $user = new Usuario($nombre, $nombreUsuario, self::hashPassword($password),  $dni, $direccion, $email, $telefono, $ciudad, $codigoPostal, $tarjetaCredito);
         return self::guarda($user);
+    }
+    
+
+    public static function muestraInfo($usuario){
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM Usuarios U WHERE U.nombreUsuario = '$usuario'", $conn->real_escape_string($usuario));
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            if ( $rs->num_rows == 1) {
+                $fila = $rs->fetch_assoc();
+                $array[0]['usuario'] = $fila['nombreUsuario'];
+                $array[0]['direccion'] = $fila['direccion'];
+                $array[0]['telefono'] = $fila['telefono'];
+                $array[0]['email'] = $fila['email'];
+                $array[0]['cp'] = $fila['codigo postal'];
+                $array[0]['ciudad'] = $fila['ciudad'];
+                $user= $array;
+                $result = $user;
+            }
+            $rs->free();
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $result;
     }
 
     
@@ -96,7 +121,7 @@ class Usuario
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("UPDATE usuarios U SET nombre='%s', password='%s', nombreUsuario='%s',  dni='%s', direccion='%s', email='%s', telefono='%s', ciudad='%s', codigo postal='%s', carrito='%i', trajeta credito='%i'   WHERE U.id=%i"
+        $query=sprintf("UPDATE Usuarios U SET nombre='%s', password='%s', nombreUsuario='%s',  dni='%s', direccion='%s', email='%s', telefono='%s', ciudad='%s', codigo postal='%s', carrito='%i', trajeta credito='%i'   WHERE U.id=%i"
             , $conn->real_escape_string($usuario->nombreUsuario)
             , $conn->real_escape_string($usuario->nombre)
             , $conn->real_escape_string($usuario->password)

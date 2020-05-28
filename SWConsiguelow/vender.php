@@ -5,11 +5,9 @@ use es\fdi\ucm\aw\FormularioVender;
 
 <html>
     <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vender</title>
-    <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" type="text/css" href="styles/style.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Subir un producto</title>
     </head>
 
     <body>
@@ -17,26 +15,20 @@ use es\fdi\ucm\aw\FormularioVender;
             <?php
                 require("includes/common/cabecera.php");
             ?>
-            <div id="flex-container">
-     <?php
-        require("includes/common/sidebarIzq.php");
-
-    ?> 
             <div id="contenido">
-                <h2>Subir un producto</h2>
+                <h1>Subir un producto</h1>
             <?php 
-                if (isset( $_SESSION['login'] ) && $_SESSION['login']== true ){
-                    $form = new FormularioVender(); $form->gestiona();
+                if(!isset($_SESSION['login'])){
+                   echo '<script type="text/javascript">
+                    alert("No puedes subir un producto si no has hecho login antes, se te mandará a login");
+                    window.location.assign("login.php");
+                    </script>';
                 }
                 else{
-                    header("Location: login.php");        
+                $form = new FormularioVender(); $form->gestiona();
                 }
-                                ?>
+            ?>
             </div>
-            <?php
-       require("includes/common/sidebarDer.php");
-       ?>
-        </div> 
-        </div> 
+        </div>  
     </body>
 </html>

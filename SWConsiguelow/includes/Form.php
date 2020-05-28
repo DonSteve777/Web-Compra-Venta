@@ -21,12 +21,6 @@ abstract class Form
     private $action;
 
     /**
-     * @var string ow the form-data should be encoded when submitting it to the server.
-     */
-    private $enctype;
-
-
-    /**
      * Crea un nuevo formulario.
      *
      * Posibles opciones:
@@ -57,18 +51,13 @@ abstract class Form
     {
         $this->formId = $formId;
 
-        $opcionesPorDefecto = array( 'action' => null, 'enctype' => null );
+        $opcionesPorDefecto = array( 'action' => null, );
         $opciones = array_merge($opcionesPorDefecto, $opciones);
 
-        $this->enctype   = $opciones['enctype'];
         $this->action   = $opciones['action'];
         
         if ( !$this->action ) {
             $this->action = htmlentities($_SERVER['PHP_SELF']);
-        }
-
-        if ( !$this->enctype ) {
-            $this->enctype = 'application/x-www-form-urlencoded';
         }
     }
   
@@ -142,7 +131,7 @@ abstract class Form
 
         $html= $this->generaListaErrores($errores);
 
-        $html .= '<form method="POST" action="'.$this->action.'" id="'.$this->formId.'" enctype="'.$this->enctype.'">';
+        $html .= '<form method="POST" action="'.$this->action.'" id="'.$this->formId.'" >';
         $html .= '<input type="hidden" name="action" value="'.$this->formId.'" />';
 
         $html .= $this->generaCamposFormulario($datos);

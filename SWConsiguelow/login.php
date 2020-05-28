@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__.'/includes/config.php';
+require_once __DIR__.'/includes/FormularioLogin.php';
 use es\fdi\ucm\aw\FormularioLogin;
 ?>
 
