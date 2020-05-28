@@ -15,18 +15,6 @@ Class ImageUpload {
 		$this->productId = $productId;
 	}
 	
-	/* Creates a file with a random name */
-	private function tempnam_sfx($path, $suffix){
-		do {
-			$file = $path."/".mt_rand().$suffix;
-			$fp = @fopen($file, 'x');
-		}
-		while(!$fp);
-
-		fclose($fp);
-		return $file;
-	}
-	
 
     private function check_img_size($tmpname){
 		$size_conf = substr(F_SIZE, -1);
@@ -77,15 +65,16 @@ Class ImageUpload {
         {*/
             $file_size =$this->files['imagen']['size'];//[$key];
             $file_tmp =$this->files['imagen']['tmp_name'];//[$key];
-            $file_type=$this->files['imagen']['type'];//[$key];  
+			$file_type=$this->files['imagen']['type'];//[$key];  
+			$bdname= mt_rand().".tmp";
 
             // Checks the true MIME type of the file
             if($this->check_img_mime($file_tmp)){
                 // Checks the size of the the image
                 if($this->check_img_size($file_tmp)){
-					$src = $this->tempnam_sfx($this->folder, ".tmp");	//habrá que ponerles el formato para visualizarlas
+					$src = $this->folder."/".$bdname;	//habrá que ponerles el formato para visualizarlas
 					move_uploaded_file($file_tmp, $src );
-					$imagen = new Imagen($this->productId, $src, $file_type); 
+					$imagen = new Imagen($this->productId, $bdname, $file_type); 
 					$imagen = Imagen::inserta($imagen);	//setea el id
                 }
             }
