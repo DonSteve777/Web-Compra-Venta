@@ -91,8 +91,7 @@ class Usuario
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        //console_log($usuario);
-        $query=sprintf("INSERT INTO `usuarios` (`dni`, `nombre`, `nombreUsuario`, `password`, `direccion`, `email`, `telefono`, `ciudad`, `codigo postal`, `carrito`, `tarjeta credito`) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%i', '%i')"
+        $query=sprintf("INSERT INTO `usuarios` (`dni`, `nombre`, `nombreUsuario`, `password`, `direccion`, `email`, `telefono`, `ciudad`, `codigo postal`, `carrito`, `tarjeta credito`) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d')"
             , $conn->real_escape_string($usuario->dni)    
             , $conn->real_escape_string($usuario->nombre)
             , $conn->real_escape_string($usuario->nombreUsuario)

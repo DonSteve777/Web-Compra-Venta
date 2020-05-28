@@ -20,7 +20,7 @@ CREATE TABLE `usuarios` (
   `ciudad` varchar(12) NOT NULL,
   `codigo postal` varchar(5) NOT NULL,
   `carrito` int(15) NOT NULL,
-  `tarjeta credito` int(20) UNSIGNED NOT NULL, 
+  `tarjeta credito` int(20) NOT NULL, 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
