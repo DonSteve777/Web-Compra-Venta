@@ -24,7 +24,7 @@ class FormularioFiltrar extends Form
             <button type="submit" name="search">Buscar</button>
             </form>
         </fieldset>
-        EOF;
+EOF;
         return $html;
     }
     
