@@ -38,13 +38,15 @@ spl_autoload_register(function ($class) {
 /**
  * Parámetros de conexión a la BD
  */
-//define('BD_HOST', 'vm05.db.swarm.test');
 define('BD_HOST', 'localhost');
 define('BD_NAME', 'consiguelowdb');
 define('BD_USER', 'consiguelowdb');
 define('BD_PASS', 'consiguelowdb');
 define("R_PATH", __DIR__);
 define("F_PATH", R_PATH.'\..\data\productos\\');
+define("IMG_PATH", R_PATH.'\..\img\\');
+//define('BD_HOST', 'vm05.db.swarm.test');
+//define("IMG_PATH", R_PATH.'/..\img/');
 //define("F_PATH", R_PATH.'/../data/productos/');
 
 

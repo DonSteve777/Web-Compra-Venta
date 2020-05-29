@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace es\fdi\ucm\aw;
 use es\fdi\ucm\aw\ImageUpload;
 
@@ -8,7 +8,6 @@ class FormularioVender extends Form
     public function __construct() {
         $opciones['enctype'] = 'multipart/form-data';
         parent::__construct('formVender', $opciones );
-
     }
     
     protected function generaCamposFormulario($datos)

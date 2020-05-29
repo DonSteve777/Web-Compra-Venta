@@ -84,8 +84,10 @@ abstract class Form
             if ( is_array($result) ) {
                 echo $this->generaFormulario($result, $_POST);
             } else {
-                header('Location: '.$result);
-                exit();
+                echo '<script type="text/javascript">
+                    alert("Producto subido");
+                    window.location.assign("index.php");
+                    </script>';
             }
         }  
     }
