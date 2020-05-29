@@ -2,7 +2,7 @@
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\FormularioVender;
 ?>
-
+<!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="styles/style.css" />
@@ -17,7 +17,7 @@ use es\fdi\ucm\aw\FormularioVender;
             ?>
             <div id="contenido">
                 <h1>Subir un producto</h1>
-            <?php 
+<?php 
                 if(!isset($_SESSION['login'])){
                    echo '<script type="text/javascript">
                     alert("No puedes subir un producto si no has hecho login antes, se te mandará a login");
@@ -25,7 +25,7 @@ use es\fdi\ucm\aw\FormularioVender;
                     </script>';
                 }
                 else{
-                $form = new FormularioVender(); $form->gestiona();
+                    $form = new FormularioVender(); $form->gestiona();
                 }
             ?>
             </div>

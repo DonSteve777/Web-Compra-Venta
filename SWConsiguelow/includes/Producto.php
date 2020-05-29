@@ -10,7 +10,7 @@ class Producto
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM Productos P WHERE P.nombre = '%s'", $conn->real_escape_string($nombreProd));
+        $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '%s'", $conn->real_escape_string($nombreProd));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
@@ -31,7 +31,7 @@ class Producto
     public static function muestraProds(){ //funcion que muestra todos los productos disponibles
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM Productos P");
+        $query = sprintf("SELECT * FROM productos P");
         $rs = $conn->query($query);
         $result = false;
         $i=0;
@@ -60,7 +60,7 @@ class Producto
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $nombreProd = $_POST['nombre'];
-        $query = sprintf("SELECT * FROM productos P WHERE p.nombre = '$nombreProd'");$conn->real_escape_string($nombreProd);
+        $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '$nombreProd'");$conn->real_escape_string($nombreProd);
         $rs = $conn->query($query);
         $i=0;
         if ($rs) {
@@ -116,7 +116,7 @@ class Producto
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM Productos P ORDER BY P.precio DESC"); $conn->real_escape_string($producto);
+        $query = sprintf("SELECT * FROM productos P ORDER BY P.precio DESC"); $conn->real_escape_string($producto);
         $rs = $conn->query($query);
         $result = false;
         $i=0;

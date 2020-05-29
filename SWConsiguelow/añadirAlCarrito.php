@@ -33,6 +33,7 @@ require_once __DIR__.'/includes/config.php';
             }
      }
     header("Location: ./vistaCarrito.php");
+    exit();
 }
     else{
         echo '<script type="text/javascript">

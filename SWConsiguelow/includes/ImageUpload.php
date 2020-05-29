@@ -16,7 +16,7 @@ Class ImageUpload {
 	}
 	
 
-    private function check_img_size($tmpname){
+    private function check_img_size($file_size){
 		$size_conf = substr(F_SIZE, -1);
 		$max_size = (int)substr(F_SIZE, 0, -1);
 
@@ -34,7 +34,7 @@ Class ImageUpload {
 				$max_size = 1024000;
 		}
 
-		if(filesize($tmpname) > $max_size){
+		if($file_size > $max_size){
 			return false;
 		} else {
 			return true;
@@ -71,14 +71,35 @@ Class ImageUpload {
             // Checks the true MIME type of the file
             if($this->check_img_mime($file_tmp)){
                 // Checks the size of the the image
-                if($this->check_img_size($file_tmp)){
-					$src = $this->folder."/".$bdname;	//habrá que ponerles el formato para visualizarlas
+                if($this->check_img_size($file_size)){
+					$src = $this->folder.$bdname;	//habrá que ponerles el formato para visualizarlas
 					move_uploaded_file($file_tmp, $src );
 					$imagen = new Imagen($this->productId, $bdname, $file_type); 
 					$imagen = Imagen::inserta($imagen);	//setea el id
                 }
             }
 	   return $result;
+	}
+
+	/* Show the image in the browser */
+	public function showImage($id){
+		$imagen = Imagen::findById($id);
+
+		try{
+			$this->stmt->execute();
+			$result = $this->stmt->fetch(PDO::FETCH_ASSOC);
+		}
+		catch(PDOException $e){
+			array_push($this->error, $e->getMessage());
+			$this->obj->error = $this->error;
+			return $this->obj;
+		}
+
+		$newfile = $result['original_name'];
+
+		/* Send headers and file to visitor for display */
+		header("Content-Type: " . $result['mime_type']);
+		readfile(F_PATH.'/'.$result['name']);
 	}
 	
 	/*uploading multiple files

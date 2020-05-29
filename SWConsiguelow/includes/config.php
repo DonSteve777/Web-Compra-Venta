@@ -45,6 +45,8 @@ define('BD_USER', 'consiguelowdb');
 define('BD_PASS', 'consiguelowdb');
 define("R_PATH", __DIR__);
 define("F_PATH", R_PATH.'\..\data\productos\\');
+//define("F_PATH", R_PATH.'/../data/productos/');
+
 
 ##################################################
 #              File configuration                #

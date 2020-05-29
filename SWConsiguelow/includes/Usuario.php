@@ -8,7 +8,6 @@ class Usuario
     {
         $user = self::buscaUsuario($nombreUsuario);
         if ($user && $user->compruebaPassword($password)) {
-            echo "dentro del if";
             return $user;
         }
         return false;

@@ -36,6 +36,31 @@ class Imagen
         return $imagen;
     }
 
+
+    public static function findById($id)
+    {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM uploads U WHERE U.id = '%d'", $conn->real_escape_string($id));
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            if ( $rs->num_rows == 1) {
+                $fila = $rs->fetch_assoc();
+                $user = new Imagen($fila['productid'], $fila['nombre'], $fila['password'], $fila['mime_type'] );
+                $user->id = $fila['id'];
+                $result = $user;
+            }
+            $rs->free();
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $result;
+    }
+
+
+
     public function id()
     {
         return $this->id;
