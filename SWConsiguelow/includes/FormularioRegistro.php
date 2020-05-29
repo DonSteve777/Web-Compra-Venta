@@ -129,6 +129,7 @@ EOF;
                 $_SESSION['login'] = true;
                 $_SESSION['username'] = $nombreUsuario;
                 $result = 'index.php';
+                $_SESSION['userid'] = $user->id();
             }
         }
         return $result;
