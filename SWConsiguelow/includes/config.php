@@ -12,7 +12,7 @@ define('BD_PASS', 'consiguelowdb');
 define("R_PATH", __DIR__);
 define("F_PATH", R_PATH.'\..\data\productos\\');
 define("IMG_PATH", R_PATH.'\..\img\\');
-define('RUTA_APP', '/SWConsiguelow/');
+define('RUTA_APP', '');
 //define('BD_HOST', 'vm05.db.swarm.test');
 //define("IMG_PATH", R_PATH.'/..\img/');
 //define("F_PATH", R_PATH.'/../data/productos/');

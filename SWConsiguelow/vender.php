@@ -1,7 +1,18 @@
 <?php
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\FormularioVender;
+if(!isset($_SESSION['login'])){
+    echo '<script type="text/javascript">
+     alert("No puedes subir un producto si no has hecho login antes, se te mandará a login");
+     window.location.assign("login.php");
+     </script>';
+ }
+ else{
+ $form = new FormularioVender(); 
+ $html = $form->gestiona();
+ }
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,17 +27,10 @@ use es\fdi\ucm\aw\FormularioVender;
             ?>
             <div id="contenido">
                 <h1>Subir un producto</h1>
-<?php
-               if(!isset($_SESSION['login'])){
-                   echo '<script type="text/javascript">
-                    alert("No puedes subir un producto si no has hecho login antes, se te mandará a login");
-                    window.location.assign("login.php");
-                    </script>';
-                }
-                else{
-                $form = new FormularioVender(); $form->gestiona();
-                }
-            ?>
+                <?php
+                    echo $html;
+                ?>
+
                         </div>
         </div>  
     </body>

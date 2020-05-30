@@ -5,57 +5,65 @@ namespace es\fdi\ucm\aw;
 
 class FormularioLogin extends Form
 {
-    public function __construct() {
-        parent::__construct('formLogin');
-    }
-    
-    protected function generaCamposFormulario($datos)
-    {
-        $nombreUsuario = '';
-        if ($datos) {
-            $nombreUsuario = isset($datos['nombreUsuario']) ? $datos['nombreUsuario'] : $nombreUsuario;
-        }
-        $html = <<<EOF
-        <fieldset>
-            <legend>Usuario y contraseña</legend>
-            <p><label>Nombre de usuario:</label> <input type="text" name="nombreUsuario" value="$nombreUsuario"/></p>
-            <p><label>Password:</label> <input type="password" name="password" /></p>
-            <button type="submit" name="login">Entrar</button>
-        </fieldset>
-EOF;
-        return $html;
-    }
-    
 
-    protected function procesaFormulario($datos)
-    {
-        $result = array();
-        
-        $nombreUsuario = isset($datos['nombreUsuario']) ? $datos['nombreUsuario'] : null;
-                
-        if ( empty($nombreUsuario) ) {
-            $result[] = "El nombre de usuario no puede estar vacío";
-        }
-        
-        $password = isset($datos['password']) ? $datos['password'] : null;
-        
-        if ( empty($password) ) {
-            $result[] = "El password no puede estar vacío.";
-        }
-        
-        if (count($result) === 0) {
-            $usuario = Usuario::login($nombreUsuario, $password);
-            if ( ! $usuario ) {
-                // No se da pistas a un posible atacante
-                $result[] = "El usuario o el password no coinciden";
-            } else {
-                $_SESSION['login'] = true;
-                $_SESSION['username'] = $nombreUsuario;
-                $_SESSION['userid'] = $usuario->id();
-                //$_SESSION['esAdmin'] = strcmp($usuario->rol(), 'admin') == 0 ? true : false;
-                $result = 'index.php';
-            }
-        }
-        return $result;
+  const HTML5_EMAIL_REGEXP = '^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$';
+
+  public function __construct()
+  {
+    parent::__construct('formLogin');
+  }
+  
+  protected function generaCamposFormulario ($datos)
+  {
+    $username = 'user@example.org';
+    $password = '12345';
+    if ($datos) {
+      $username = isset($datos['username']) ? $datos['username'] : $username;
+      /* Similar a la comparación anterior pero con el operador ?? de PHP 7 */
+      $password = $datos['password'] ?? $password;
     }
+
+    $camposFormulario=<<<EOF
+		<fieldset>
+		  <legend>Usuario y contraseña</legend>
+		  <p><label>Name:</label> <input type="text" name="username" value="$username"/></p>
+		  <p><label>Password:</label> <input type="password" name="password" value="$password"/><br /></p>
+		  <button type="submit">Entrar</button>
+		</fieldset>
+EOF;
+    return $camposFormulario;
+  }
+
+  /**
+   * Procesa los datos del formulario.
+   */
+  protected function procesaFormulario($datos)
+  {
+    $result = array();
+    $ok = true;
+    $username = $datos['username'] ?? '' ;
+    if ( !$username /*|| ! mb_ereg_match(self::HTML5_EMAIL_REGEXP, $username)*/ ) {
+      $result[] = 'El nombre de usuario no es válido';
+      $ok = false;
+    }
+
+    $password = $datos['password'] ?? '' ;
+    if ( ! $password ||  mb_strlen($password) < 4 ) {
+      $result[] = 'La contraseña no es válida';
+      $ok = false;
+    }
+
+    if ( $ok ) {
+      $user = Usuario::login($username, $password);
+      if ( $user ) {
+        // SEGURIDAD: Forzamos que se genere una nueva cookie de sesión por si la han capturado antes de hacer login
+        session_regenerate_id(true);
+        Aplicacion::getSingleton()->login($user);
+        $result = Aplicacion::getSingleton()->resuelve('/index.php');
+      }else {
+        $result[] = 'El usuario o la contraseña es incorrecta';
+      }
+    }
+    return $result;
+  }
 }

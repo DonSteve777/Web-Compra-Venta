@@ -42,7 +42,7 @@ EOF;
         
         if (count($result) === 0) {
             if(strlen($nombreProd)>0){
-             Producto::muestraProductosPorNombre($nombreProd);
+                $result=Producto::muestraProductosPorNombre($nombreProd);
             }
             elseif (strlen($nombreCat)>0){
              Producto::muestraProductosPorCat();

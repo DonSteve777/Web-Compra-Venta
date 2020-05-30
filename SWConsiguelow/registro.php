@@ -2,9 +2,10 @@
 require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/FormularioRegistro.php';
 use es\fdi\ucm\aw\FormularioRegistro;
-
-
-?><!DOCTYPE html>
+$form = new FormularioRegistro(); 
+$html = $form->gestiona();
+?>
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="styles/style.css" />
@@ -23,7 +24,7 @@ use es\fdi\ucm\aw\FormularioRegistro;
 	<div id="contenido">
 		<h1>Registro de usuario</h1>
 <?php 
-    $form = new FormularioRegistro(); $form->gestiona();
+    echo $html;
 ?>
 	</div>
 

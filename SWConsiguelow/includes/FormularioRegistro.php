@@ -126,10 +126,8 @@ EOF;
             if ( ! $user ) {
                 $result[] = "El usuario ya existe";
             } else {
-                $_SESSION['login'] = true;
-                $_SESSION['username'] = $nombreUsuario;
-                $_SESSION['userid'] = $user->id();
-                $result = 'index.php';
+                Aplicacion::getSingleton()->login($user);
+                $result = Aplicacion::getSingleton()->resuelve('/index.php');
             }
         }
         return $result;

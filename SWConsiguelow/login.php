@@ -2,8 +2,9 @@
 require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/FormularioLogin.php';
 use es\fdi\ucm\aw\FormularioLogin;
-?>
 
+$form = new FormularioLogin(); $html = $form->gestiona();
+?>
 
 <!DOCTYPE html>
 <html>
@@ -20,9 +21,10 @@ use es\fdi\ucm\aw\FormularioLogin;
             ?>
             <div id="contenido">
                 <h1>Acceso al sistema</h1>
-            <?php 
-                $form = new FormularioLogin(); $form->gestiona();
+                <?php 
+                echo $html; 
             ?>
+      
             </div>
         </div>  
     </body>
