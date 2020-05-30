@@ -16,6 +16,7 @@
 <div id="container">
 
     <?php
+    //phpinfo();
         require("includes/common/cabecera.php");
         ?>
         <div id="flex-container">
