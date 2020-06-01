@@ -68,7 +68,6 @@ class Form
   
   public function gestiona()
   {
-    
     if ( ! $this->formularioEnviado($_POST) ) {
       return $this->generaFormulario();
     } else {
@@ -93,6 +92,7 @@ class Form
         } else {
           if ( ! $this->ajax ) {
             header('Location: '.$result);
+            //header('Location: '.'index.php');
           } else {
             return $result;
           }
@@ -126,6 +126,8 @@ class Form
    */
   private function formularioEnviado(&$params)
   {
+    
+    //echo  ($params['action'] ?? '') == $this->formId;
     return ($params['action'] ?? '') == $this->formId;
   } 
 

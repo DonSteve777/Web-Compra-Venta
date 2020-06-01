@@ -127,7 +127,8 @@ EOF;
                 $result[] = "El usuario ya existe";
             } else {
                 Aplicacion::getSingleton()->login($user);
-                $result = Aplicacion::getSingleton()->resuelve('/index.php');
+                $result = 'index.php';
+                //$result = Aplicacion::getSingleton()->resuelve('/index.php');
             }
         }
         return $result;
