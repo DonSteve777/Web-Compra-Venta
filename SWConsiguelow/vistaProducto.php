@@ -31,7 +31,6 @@ require_once __DIR__.'/includes/config.php';
                 Precio: <?php echo $fila['precio'];?></br>
                 Categoria: <?php echo $fila['categoria'];?></br>
                 <a href="./añadirCarrito.php?nombre=<?php echo $fila['nombre'];?>">Añadir al carrito</a>
-
                 </br>
                 <?php  
                 }
