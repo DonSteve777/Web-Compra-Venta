@@ -85,21 +85,24 @@ Class ImageUpload {
 	public function showImage($id){
 		$imagen = Imagen::findById($id);
 
-		try{
-			$this->stmt->execute();
-			$result = $this->stmt->fetch(PDO::FETCH_ASSOC);
-		}
-		catch(PDOException $e){
-			array_push($this->error, $e->getMessage());
-			$this->obj->error = $this->error;
-			return $this->obj;
-		}
+		  /* Send headers and file to visitor for display */
+		  header("Content-Type: " . $imagen->mime_type());
+		  readfile(F_PATH.$imagen->nombre());
+	}
 
-		$newfile = $result['original_name'];
-
-		/* Send headers and file to visitor for display */
-		header("Content-Type: " . $result['mime_type']);
-		readfile(F_PATH.'/'.$result['name']);
+	public static function getSource($id){
+		$imagen = Imagen::findById($id);
+		$result='';
+		$len = strlen ( $imagen->nombre() );
+		$noFormat = substr($imagen->nombre(), 0, $len-4);
+		if ($imagen->mime_type() == 'image/png' ){
+			$result = F_PATH.$noFormat.'.png';
+		}
+		
+		$imageSrc =<<<EOF
+		 <img src="data/productos/250569272.tmp" alt="Girl in a jacket">
+EOF;
+		return $imageSrc;
 	}
 	
 	/*uploading multiple files

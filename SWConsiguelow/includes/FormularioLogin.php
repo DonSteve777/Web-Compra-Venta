@@ -22,7 +22,6 @@ class FormularioLogin extends Form
       /* Similar a la comparación anterior pero con el operador ?? de PHP 7 */
       $password = $datos['password'] ?? $password;
     }
-
     $camposFormulario=<<<EOF
 		<fieldset>
 		  <legend>Usuario y contraseña</legend>
