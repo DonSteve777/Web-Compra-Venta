@@ -5,7 +5,7 @@ class Imagen
 {
     private $id;
     private $nombre;
-    private $original_name;
+   // private $original_name;
     private $mime_type;
 
 
@@ -47,9 +47,9 @@ class Imagen
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
-                $user = new Imagen($fila['productid'], $fila['nombre'], $fila['password'], $fila['mime_type'] );
-                $user->id = $fila['id'];
-                $result = $user;
+                $img = new Imagen($fila['producto'], $fila['name'], $fila['mime_type']);
+                $img->id = $id;
+                $result = $img;
             }
             $rs->free();
         } else {
