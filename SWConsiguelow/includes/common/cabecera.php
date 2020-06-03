@@ -10,7 +10,7 @@
             <?php
             if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
                 ?>
-                <li>Bienvenido, <?php echo $_SESSION['username'];?><a href="vistaUsuario.php">Usuario</a></li><li><a href="vistaCarrito.php">Carrito</li><li><a href="logout.php">(salir)</a></li>
+                <li>Bienvenido, <?php echo $_SESSION['nombre'];?><a href="vistaUsuario.php">Usuario</a></li><a href="vistaAdmin.php">Admin</a></li><li><a href="vistaCarrito.php">Carrito</li><li><a href="logout.php">(salir)</a></li>
             <?php
             } else {
             ?>

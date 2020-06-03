@@ -27,9 +27,9 @@ use es\fdi\ucm\aw\Usuario;
                  }
                  else{
                      ?>
-                    <li>Mostrando datos del usuario: <?php echo $_SESSION['username'];?></li></br>
+                    <li>Mostrando datos del usuario: <?php echo $_SESSION['nombre'];?></li></br>
                     <?php
-                    $usuario = $_SESSION['username'];
+                    $usuario = $_SESSION['nombre'];
                     $result = Usuario::muestraInfo($usuario);
                     $array = $result;
                     foreach($array as $key => $fila){

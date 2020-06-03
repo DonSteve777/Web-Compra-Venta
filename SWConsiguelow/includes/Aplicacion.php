@@ -94,17 +94,17 @@ class Aplicacion
   public function login(Usuario $user)
   {
     $_SESSION['login'] = true;
-    $_SESSION['username'] = $user->nombreUsuario();
-    $_SESSION['userid'] = $user->id();
-    //$_SESSION['roles'] = $user->roles();
+    $_SESSION['nombre'] = $user->nombreUsuario();
+    $_SESSION['roles'] = $user->roles();
+    
   }
 
   public function logout()
   {
     //Doble seguridad: unset + destroy
     unset($_SESSION['login']);
-    unset($_SESSION['username']);
-    //unset($_SESSION['roles']);
+    unset($_SESSION['nombre']);
+    unset($_SESSION['roles']);
 
 
     session_destroy();
