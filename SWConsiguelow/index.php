@@ -24,6 +24,10 @@
         require("includes/common/sidebarIzq.php");
     ?>      
     <div id="contenido">
+    <form action="filtrar.php" method="GET">
+    <input id="search" name="search" type="text" value='' placeholder="Type here">
+    <input id="submit" type="submit" value="Search">
+    </form>
                 
                 <p>Cada vez más gente compra mediante <strong>internet</strong>, debido a que hay muchísima
                     variedad de productos y es mucho mas cómodo, ya que no hay que moverse
