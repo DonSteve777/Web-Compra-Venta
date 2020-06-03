@@ -6,9 +6,9 @@ namespace es\fdi\ucm\aw;
  */
 
 define('BD_HOST', 'localhost');
-define('BD_NAME', 'consiguelowdb');
-define('BD_USER', 'consiguelowdb');
-define('BD_PASS', 'consiguelowdb');
+define('BD_NAME', 'consiguelow');
+define('BD_USER', 'consiguelow');
+define('BD_PASS', 'consiguelow');
 define("R_PATH", __DIR__);
 define("F_PATH", R_PATH.'\..\data\productos\\');
 define("IMG_PATH", R_PATH.'\..\img\\');

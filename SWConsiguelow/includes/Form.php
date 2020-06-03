@@ -81,6 +81,7 @@ class Form
             return $this->generaHtmlErrores($errores);
           }
       } else  {
+        
         $result = $this->procesaFormulario($_POST);
         if ( is_array($result) ) {
           // Error al procesar el formulario, volvemos a mostrarlo

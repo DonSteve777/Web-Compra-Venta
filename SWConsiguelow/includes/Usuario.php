@@ -1,17 +1,37 @@
 <?php
 namespace es\fdi\ucm\aw;
+use es\fdi\ucm\aw\Aplicacion as App;
 
 class Usuario
 {
 
-    public static function login($nombreUsuario, $password)
+    /*public static function login($nombreUsuario, $password)
     {
         $user = self::buscaUsuario($nombreUsuario);
         if ($user && $user->compruebaPassword($password)) {
             return $user;
         }
         return false;
-    }
+    }*/
+
+    public static function login($nombreUsuario, $password)
+  {
+    $user = self::buscaUsuario($nombreUsuario);
+    if ($user && $user->compruebaPassword($password)) {
+      $app = App::getSingleton();
+      $conn = $app->conexionBd();
+      $query = sprintf("SELECT R.nombre FROM RolesUsuario RU, Roles R WHERE RU.rol = R.id AND RU.usuario=%s", $conn->real_escape_string($user->id));
+      $rs = $conn->query($query);
+      if ($rs) {
+        while($fila = $rs->fetch_assoc()) { 
+          $user->addRol($fila['nombre']);
+        }
+        $rs->free();
+      }
+      return $user;
+    }    
+    return false;
+  }
 
     public static function buscaUsuario($nombreUsuario)
     {
@@ -164,6 +184,8 @@ class Usuario
 
     private $nombreUsuario;
 
+    private $roles;
+
 
     private function __construct($nombre, $nombreUsuario, $password,  $dni, $direccion, $email, $telefono, $ciudad, $codigoPostal, $tarjetaCredito )
     {
@@ -178,6 +200,7 @@ class Usuario
         $this->codigoPostal = $codigoPostal;
         $this->carrito = 0; //new carrito
         $this->tarjetaCredito = $tarjetaCredito;
+        $this->roles = [];
     }
 
     public function id()
@@ -188,6 +211,16 @@ class Usuario
     public function password()
     {
         return $this->password;
+    }
+
+    public function addRol($role)
+    {
+    $this->roles[] = $role;
+     }
+
+    public function roles()
+     {
+      return $this->roles;
     }
 
     public function nombreUsuario()
