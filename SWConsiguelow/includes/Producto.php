@@ -73,7 +73,6 @@ class Producto
                 $i++;
                 $prod = $arrayauxliar;
                 $result = $prod;
-                $html =$result
                 }
             $rs->free();
             }   
@@ -81,7 +80,7 @@ class Producto
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
-        return $html;
+        return $result;
     }
 
     public static function muestraProductosPorCat($nombreCat){
