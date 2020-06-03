@@ -90,8 +90,10 @@ Class ImageUpload {
 		  readfile(F_PATH.$imagen->nombre());
 	}
 
-	public static function getSource($id){
-		$imagen = Imagen::findById($id);
+	public static function getSource(){
+		$id = $_GET['id'];
+		var_dump($id);
+		/*$imagen = Imagen::findById($id);
 		$result='';
 		$len = strlen ( $imagen->nombre() );
 		$noFormat = substr($imagen->nombre(), 0, $len-4);
@@ -101,8 +103,8 @@ Class ImageUpload {
 		
 		$imageSrc =<<<EOF
 		 <img src="data/productos/250569272.tmp" alt="Girl in a jacket">
-EOF;
-		return $imageSrc;
+EOF;*/
+		return $id;
 	}
 	
 	/*uploading multiple files

@@ -5,7 +5,7 @@ require_once __DIR__.'/includes/Imagen.php';
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\imageUpload;
 
-$html = ImageUpload::getSource($_GET['id']);
+$html = ImageUpload::getSource();
 ?>
 
 
