@@ -4,7 +4,7 @@ require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\FormularioFiltrar;
 
 $form = new FormularioFiltrar(); 
-$hmtl = $form->gestiona();
+ $html = $form->gestiona();
 ?>
 
 <html>
