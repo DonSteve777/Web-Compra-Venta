@@ -38,21 +38,44 @@ class Producto
         if ($rs) {
             if ( $rs->num_rows > 0) {
                 while ($array=$rs->fetch_array()){
-                $claves = array_keys($array);
-                foreach($claves as $clave){
-                    $arrayauxliar[$i][$clave]=$array[$clave];
-                }           
-                $i++;
-                $prod = $arrayauxliar;
-                $result = $prod;
-            }
-            $rs->free();
-        } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
+                    $claves = array_keys($array);
+                    foreach($claves as $clave){
+                        $arrayauxliar[$i][$clave]=$array[$clave];
+                    }           
+                    $i++;
+                    $prod = $arrayauxliar;
+                    $result = $prod;
+                }
+                $rs->free();
+            } else {
+                echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+                exit();
+        } 
+
+        $array = $result;
+        $html;
+        foreach($array as $key => $fila){
+            $id =  $fila['id'];
+            $imgSrc = ImageUpload::getSource($id);
+            $descripcion = $fila['descripcion'];
+            $precio= $fila['precio'];
+            $categoria=$fila['categoria'];
+            $nombre = $fila['nombre'];
+
+            $html.=<<<EOF
+            <ul>
+                <li>IdProd:$id</li>
+                <li> Nombre Producto: $nombre</li>
+                <li>Descripcion: $descripcion</li>
+                <li>Precio: $precio</li>
+                <li>Categoria: $categoria</li>
+                <li><a href="./añadirCarrito.php?nombre=$nombre">Añadir al carrito</a></li>
+                <li>$imgSrc</li>
+            </ul>
+EOF;
         }
-        return $result;
     }
+    return $html;
 }
 
     public static function muestraProductosPorNombre($nombreProd)

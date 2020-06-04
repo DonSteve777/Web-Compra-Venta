@@ -37,26 +37,24 @@ class Imagen
     }
 
 
-    public static function findById($id)
+    public static function findByProductId($productid)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM uploads U WHERE U.id = '%d'", $conn->real_escape_string($id));
+        $query = sprintf("SELECT * FROM uploads U WHERE U.producto = '%d'", $conn->real_escape_string($productid));
         $rs = $conn->query($query);
-        $result = false;
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
                 $img = new Imagen($fila['producto'], $fila['name'], $fila['mime_type']);
-                $img->id = $id;
-                $result = $img;
+                $img->id = $fila['id'];
             }
             $rs->free();
         } else {
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
-        return $result;
+        return $img;
     }
 
 

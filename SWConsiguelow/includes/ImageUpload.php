@@ -90,21 +90,24 @@ Class ImageUpload {
 		  readfile(F_PATH.$imagen->nombre());
 	}
 
-	public static function getSource(){
-		$id = $_GET['id'];
-		var_dump($id);
-		/*$imagen = Imagen::findById($id);
+	public static function getSource($idProducto){
+		//$id = $_GET['id'];
+		//var_dump($id);
+		$imagen = Imagen::findByProductId($idProducto);
 		$result='';
+		$imgname = $imagen->nombre(); 
+		$result =<<<EOF
+		 <img src="data/productos/$imgname" alt="Girl in a jacket">
+EOF;
+		return $result;
+	}
+
+	public function cambiaFormato(){
 		$len = strlen ( $imagen->nombre() );
 		$noFormat = substr($imagen->nombre(), 0, $len-4);
 		if ($imagen->mime_type() == 'image/png' ){
 			$result = F_PATH.$noFormat.'.png';
 		}
-		
-		$imageSrc =<<<EOF
-		 <img src="data/productos/250569272.tmp" alt="Girl in a jacket">
-EOF;*/
-		return $id;
 	}
 	
 	/*uploading multiple files
