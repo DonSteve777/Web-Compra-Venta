@@ -8,7 +8,7 @@ class Categoria
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM categoria c WHERE c.nombre = '%s'", $conn->real_escape_string($nombreCat));
+        $query = sprintf("SELECT * FROM categorias c WHERE c.nombre = '%s'", $conn->real_escape_string($nombreCat));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
@@ -25,6 +25,32 @@ class Categoria
         }
         return $result;
     }
+
+    public static function findAll()
+    {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM categorias");
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            if ( $rs->num_rows > 0) {
+                while ($array=$rs->fetch_array()){
+                $claves = array_keys($array);
+                foreach($claves as $clave){
+                    $arrayauxliar[$i][$clave]=$array[$clave];
+                }           
+                $i++;
+                $result = $arrayauxliar;
+            }
+            $rs->free();
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $result;
+    }
+}
 
     public static function crea($nombreCat,$descripcion)
     {
@@ -49,7 +75,7 @@ class Categoria
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO `categoria` (`nombre`, `descripcion`) 
+        $query=sprintf("INSERT INTO `categorias` (`nombre`, `descripcion`) 
         VALUES('%s','%s')"
             , $conn->real_escape_string($categoria->nombre)    
             , $conn->real_escape_string($categoria->descripcion));

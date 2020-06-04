@@ -96,6 +96,8 @@ class Aplicacion
     $_SESSION['login'] = true;
     $_SESSION['nombre'] = $user->nombreUsuario();
     $_SESSION['roles'] = $user->roles();
+    $_SESSION['userid'] = $user->id();
+
     
   }
 

@@ -22,8 +22,15 @@ CREATE TABLE `usuarios` (
   `carrito` int(15) NOT NULL,
   `tarjeta credito` int(20) NOT NULL, 
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
+CREATE TABLE `categorias` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(20) NOT NULL ,
+  `descripcion` VARCHAR(100) NOT NULL ,
+  PRIMARY KEY (`id`)
+) 
+ENGINE = InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 -- Estructura de tabla para la tabla `productos`
 --
@@ -36,17 +43,12 @@ CREATE TABLE `productos` (
   `unidades` int(10) UNSIGNED NOT NULL,
   `talla` varchar(3) NOT NULL,
   `color` varchar(12) NOT NULL,
-  `categoria` varchar(20) NOT NULL,
+  `categoria` INT(11) NOT NULL,
   PRIMARY KEY(`id`),
+  FOREIGN KEY (`categoria`) REFERENCES `categorias`(`id`),
   FOREIGN KEY (`idVendedor`) REFERENCES `usuarios`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `productos`
---
-/*INSERT INTO `productos` (`nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`) VALUES ('Cascos Sanson', 1, 'Cascos musica', '40.99', 0, 'DEF', 'Blanco', 'electronica')*/
-
- 
 CREATE TABLE `uploads` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `producto` int(11) NOT NULL,
@@ -54,53 +56,37 @@ CREATE TABLE `uploads` (
     `mime_type` VARCHAR(20) NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`producto`) REFERENCES `productos`(`id`))
-  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 
-CREATE TABLE `categoria` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(20) NOT NULL ,
-  `descripcion` VARCHAR(100) NOT NULL ,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`nombre`) REFERENCES `productos`(`categoria`),
-  INDEX (`nombre`)
-) 
-  ENGINE = InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
-
-
-CREATE TABLE IF NOT EXISTS `Roles` (
+CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(15) COLLATE utf8mb4_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE IF NOT EXISTS `RolesUsuario` (
+CREATE TABLE IF NOT EXISTS `rolesUsuario` (
   `usuario` int(11) NOT NULL,
   `rol` int(11) NOT NULL,
   PRIMARY KEY (`usuario`,`rol`),
   KEY `rol` (`rol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-ALTER TABLE `RolesUsuario`
-  ADD CONSTRAINT `RolesUsuario_usuario` FOREIGN KEY (`usuario`) REFERENCES `Usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `RolesUsuario_rol` FOREIGN KEY (`rol`) REFERENCES `Roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `rolesUsuario`
+  ADD CONSTRAINT `RolesUsuario_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `RolesUsuario_rol` FOREIGN KEY (`rol`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Insertar valores en tabla Roles
---
 
 INSERT INTO `Roles` (`id`, `nombre`) VALUES
 (1, 'user'),
 (2, 'admin');
 
---Valor user y admin al usuario 1
---
+
 INSERT INTO `RolesUsuario` (`usuario`, `rol`) VALUES
 (1, 1),
 (1, 2);
 
--- Valor user a usuario 2
---
+
 INSERT INTO `RolesUsuario` (`usuario`, `rol`) VALUES
 (2, 1);
 --

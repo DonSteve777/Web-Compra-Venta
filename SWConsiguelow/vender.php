@@ -30,7 +30,6 @@ if(!isset($_SESSION['login'])){
                 <?php
                     echo $html;
                 ?>
-
                         </div>
         </div>  
     </body>

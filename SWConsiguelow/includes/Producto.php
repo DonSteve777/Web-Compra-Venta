@@ -73,7 +73,7 @@ class Producto
                 $i++;
                 $prod = $arrayauxliar;
                 $result = $prod;
-                $html =$result
+                $html =$result;
                 }
             $rs->free();
             }   

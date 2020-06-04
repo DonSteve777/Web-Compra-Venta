@@ -31,6 +31,19 @@ class FormularioVender extends Form
             $categoria = isset($datos['categoria']) ? $datos['categoria'] : $categoria;
             $imgUpload = isset($datos['imagen']) ? $datos['imagen'] : $imgUpload;
         }
+        $cat = Categoria::findAll();
+        $select =<<<EOF
+        <select class="category" name="categoria">
+        <option selected="selected">elige categoría</option>
+EOF;
+        foreach($cat as $item){
+            $nombre = $item['nombre'];
+            $id = $item['id'];
+        $select .= <<<EOF
+            <option value="$id"> $nombre</option>
+EOF;
+        }
+ 
        $html =<<<EOF
             <fieldset>
             <link rel="stylesheet" href="styles/style.css">
@@ -44,11 +57,19 @@ class FormularioVender extends Form
             <p><label>Unidades:</label> 
             <input type="text" name="unidades" value="$unidades"/></p>
             <p><label>Talla</label> 
-            <input type="text" name="talla" value="$talla"/></p>
+            <select name="talla">
+                <option value="Not sizeable">Not sizeable</option>
+                <option value="xs">xs</option>
+                <option value="s">s</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+            </select>
             <p><label>Color del producto:</label> 
             <input type="text" name="color" value="$color"/></p>
             <p><label>Categoria</label> 
-            <input type="text" name="categoria" value="$categoria"/></p>
+            $select;
+            </select>
             <p><label>Imagen</label> 
             <input type="file" name="imagen" value="$imgUpload"/></p>
             <button type="submit" name="sell">Vender</button>
@@ -99,6 +120,7 @@ EOF;
         }
                 
         $categoria = isset($datos['categoria']) ? $datos['categoria'] : null;
+        $categoria = intval($categoria);
 
         if ( empty($categoria) ) {
             $result[] = "La categoria no puede estar vacía.";
