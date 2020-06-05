@@ -1,20 +1,20 @@
 <?php
+use es\fdi\ucm\aw\Categoria;
+
 require_once __DIR__.'/includes/config.php';
-use es\fdi\ucm\aw\Producto;
 
 
-function searchByName($nombreProd = NULL)
+function listadoCategorias()
 {
-    $nombreProd=$_GET['search'];
   $html = '';
-  $html.= '<li>Estas buscando el producto '.$nombreProd;
+  $html.= '<li>Categorias ya creadas';
   $html .= '</li>';
-  $prod = Producto::muestraProdPorNombre($nombreProd);
-  foreach($prod as $p) {
-    $html .= '<li>'.$p->descripcion();
+  $cat= Categoria::muestraCats();
+  foreach($cat as $c) {
+    $html .= '<li>'.$c->nombre();
+    $html .= '</li>';
   }
-  $html .= '</li>';
-  return $html;
+      return $html;
 }
 ?>
 
@@ -22,7 +22,7 @@ function searchByName($nombreProd = NULL)
     <head>
         <link rel="stylesheet" type="text/css" href="styles/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Busqueda</title>
+        <title>Pedidos de un usuario</title>
     </head>
 
     <body>
@@ -31,11 +31,11 @@ function searchByName($nombreProd = NULL)
                 require("includes/common/cabecera.php");
             ?>
             <div id="contenido">
-                <h1>Filtrado</h1>
-             <h2>Resultados del filtrado...</h2></br>
-             <?php
-                echo searchByName();   
+                <h1>Categorias existentes</h1>
+                <?php
+                echo listadoCategorias();   
             ?>
+                </br>
             </div>
         </div>  
     </body>

@@ -55,6 +55,7 @@ class Categoria
         $query = sprintf("SELECT * FROM categorias");
         $rs = $conn->query($query);
         $result = false;
+        $i=0;
         if ($rs) {
             if ( $rs->num_rows > 0) {
                 while ($array=$rs->fetch_array()){
@@ -73,6 +74,25 @@ class Categoria
         return $result;
     }
 }
+
+        public static function muestraCats()
+        {
+        $result = [];
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM categorias");
+        $rs = $conn->query($query);
+        if ($rs) {
+            while($fila = $rs->fetch_assoc()) {
+            $cat=new Categoria($fila['nombre'],$fila['descripcion']);
+            $cat->id=$fila['id'];
+            $result[] = $cat;
+            }
+            $rs->free();
+        }
+        return $result;
+        }
+
 
     public static function crea($nombreCat,$descripcion)
     {

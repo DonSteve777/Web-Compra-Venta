@@ -37,7 +37,7 @@ $html = Producto::muestraProds();
 
     <?php
 
-        echo $html;     
+        echo $html;    
         ?>
             </div>
     <?php
