@@ -59,18 +59,25 @@ class Producto
             $imgSrc = ImageUpload::getSource($id);
             $descripcion = $fila['descripcion'];
             $precio= $fila['precio'];
-            $categoria=$fila['categoria'];
+            $categoria = Categoria::findById($fila['categoria'])->nombre();
             $nombre = $fila['nombre'];
 
             $html.=<<<EOF
             <ul>
-                <li>IdProd:$id</li>
                 <li> Nombre Producto: $nombre</li>
                 <li>Descripcion: $descripcion</li>
                 <li>Precio: $precio</li>
                 <li>Categoria: $categoria</li>
-                <li><a href="./añadirCarrito.php?nombre=$nombre">Añadir al carrito</a></li>
                 <li>$imgSrc</li>
+                <button type="button"
+                    <a href="./añadirCarrito.php?nombre=$nombre"></a>
+                    Añadir al carrito
+                </button>
+                <button type="button"
+                <a href="./añadirCarrito.php?nombre=$nombre"></a>
+                Añadir al carrito
+            </button>
+                
             </ul>
 EOF;
         }

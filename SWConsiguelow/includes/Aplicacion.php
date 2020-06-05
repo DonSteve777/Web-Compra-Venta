@@ -97,8 +97,6 @@ class Aplicacion
     $_SESSION['nombre'] = $user->nombreUsuario();
     $_SESSION['roles'] = $user->roles();
     $_SESSION['userid'] = $user->id();
-
-    
   }
 
   public function logout()
@@ -107,7 +105,7 @@ class Aplicacion
     unset($_SESSION['login']);
     unset($_SESSION['nombre']);
     unset($_SESSION['roles']);
-
+    unset($_SESSION['userid']);
 
     session_destroy();
     session_start();

@@ -26,6 +26,28 @@ class Categoria
         return $result;
     }
 
+    public static function findById($id)
+    {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM categorias c WHERE c.id = '%d'", $conn->real_escape_string($id));
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            if ( $rs->num_rows == 1) {
+                $fila = $rs->fetch_assoc();
+                $cat = new Categoria($fila['nombre'],$fila['descripcion']);
+                $cat->id = $fila['id'];
+                $result = $cat;
+            }
+            $rs->free();
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $result;
+    }
+
     public static function findAll()
     {
         $app = Aplicacion::getSingleton();

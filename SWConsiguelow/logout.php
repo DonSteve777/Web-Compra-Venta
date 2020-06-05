@@ -1,5 +1,9 @@
 <?php
-require_once __DIR__.'/includes/config.php'; ?>
+require_once __DIR__.'/includes/config.php'; 
+use es\fdi\ucm\aw\Aplicacion as App;
+
+App::getSingleton()->logout();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,11 +19,7 @@ require_once __DIR__.'/includes/config.php'; ?>
             <div id="contenido">
                 <h1>Cerrar sesion</h1>
             <?php
-            unset($_SESSION['username']);
-            unset($_SESSION['login']);
-            //unset($_SESSION['esAdmin']);
-            session_destroy();
-            echo 'Tu sesión ha finalizado'; 
+                echo 'Tu sesión ha finalizado'; 
              ?>
             </div>
         </div>
