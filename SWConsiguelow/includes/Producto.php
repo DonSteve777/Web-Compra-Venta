@@ -85,11 +85,12 @@ EOF;
     return $html;
 }
 
-    public static function muestraProductosPorNombre($nombreProd)
+    /*public static function muestraProductosPorNombre($nombreProd)
     {
+        $result = [];
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $nombreProd = $_POST['nombre'];
+        $nombreProd = $_GET['nombre'];
         $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '$nombreProd'");$conn->real_escape_string($nombreProd);
         $rs = $conn->query($query);
         $i=0;
@@ -102,8 +103,7 @@ EOF;
                 } 
                 $i++;
                 $prod = $arrayauxliar;
-                $result = $prod;
-                $html =$result;
+                $result[] = $prod;
                 }
             $rs->free();
             }   
@@ -111,8 +111,26 @@ EOF;
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
-        return $html;
+        return $result;
+    }*/
+
+    public static function muestraProdPorNombre($nombreProd = NULL)
+  {
+    $result = [];
+    $app = Aplicacion::getSingleton();
+    $conn = $app->conexionBd();
+    $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '$nombreProd'");$conn->real_escape_string($nombreProd);
+    $rs = $conn->query($query);
+    if ($rs) {
+      while($fila = $rs->fetch_assoc()) {
+        $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria']);
+        $prod->id=$fila['id'];
+        $result[] = $prod;
+      }
+      $rs->free();
     }
+    return $result;
+  }
 
     public static function muestraProductosPorCat($nombreCat){
         $app = Aplicacion::getSingleton();
