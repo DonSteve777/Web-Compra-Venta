@@ -33,14 +33,9 @@ $html = Producto::muestraProds();
     <input id="search" name="search" type="text" value='' placeholder="Type here">
     <input id="submit" type="submit" value="Search">
     </form>
-    <button type="button">
-                    <a href="vender.php?id=5"></a>
-                    Añadir al carrito
-                </button>
-
     <?php
 
-        echo $html;     
+        echo $html;    
         ?>
             </div>
     <?php

@@ -43,7 +43,7 @@ use es\fdi\ucm\aw\Usuario;
                      }
                     }
                     ?>
-                    <li>Pedidos del usuario: <?php echo $_SESSION['username'];?></li></br>
+                    <li>Pedidos del usuario: <?php echo $_SESSION['nombre'];?></li></br>
                     <a href="vistaPedidos.php">Pedidos</a>
             </div>
         </div>

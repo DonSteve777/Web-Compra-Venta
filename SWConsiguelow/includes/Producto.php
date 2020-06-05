@@ -53,7 +53,7 @@ class Producto
         } 
 
       
-        $html;
+        $html='';
         foreach($prod as $key => $fila){
             $id =  $fila['id'];
             $imgSrc = ImageUpload::getSource($id);
@@ -133,6 +133,7 @@ EOF;
     }
     return $result;
   }
+
 
     public static function muestraProductosPorCat($nombreCat){
         $app = Aplicacion::getSingleton();

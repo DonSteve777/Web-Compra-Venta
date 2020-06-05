@@ -1,1 +1,1 @@
-DROP DATABASE consiguelowdb;
+DROP DATABASE consiguelow;
