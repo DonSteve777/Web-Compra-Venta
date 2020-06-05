@@ -97,7 +97,7 @@ Class ImageUpload {
 		$result='';
 		$imgname = $imagen->nombre(); 
 		$result =<<<EOF
-		 <img src="data/productos/$imgname" alt="Girl in a jacket">
+		 <img src="data/productos/$imgname" alt="Girl in a jacket" width="250" height="200">
 EOF;
 		return $result;
 	}

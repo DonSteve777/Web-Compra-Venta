@@ -1,9 +1,10 @@
 <?php
-    require_once __DIR__.'/includes/config.php';
-    use es\fdi\ucm\aw\Producto;
+require_once __DIR__.'/includes/config.php';
+use es\fdi\ucm\aw\Producto;
 
     
 $html = Producto::muestraProds();
+
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +29,17 @@ $html = Producto::muestraProds();
         require("includes/common/sidebarIzq.php");
     ?>      
     <div id="contenido">
+    <form action="filtrar.php" method="GET">
+    <input id="search" name="search" type="text" value='' placeholder="Type here">
+    <input id="submit" type="submit" value="Search">
+    </form>
+    <button type="button">
+                    <a href="vender.php?id=5"></a>
+                    Añadir al carrito
+                </button>
+
     <?php
+
         echo $html;     
         ?>
             </div>

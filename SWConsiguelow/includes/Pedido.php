@@ -5,35 +5,16 @@
 class Pedido
 {
 
-    public static function buscaPedido($nombrePedido)
-    {
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM Pedidos P WHERE P.nombre = '%s'", $conn->real_escape_string($nombrePedido));
-        $rs = $conn->query($query);
-        $result = false;
-        if ($rs) {
-            if ( $rs->num_rows == 1) {
-                $fila = $rs->fetch_assoc();
-                $pedido = new Pedido($fila['fecha'], $fila['idCliente'], $fila['idProd'],$fila['nombreProd'], $fila['pagado']);
-                $pedido->idPedido = $fila['idPedido'];
-                $result = $pedido;
-            }
-            $rs->free();
-        } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        return $result;
-    }
+    
+
 
     public static function muestraPedidos()
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $user = $_SESSION['username'];
+        $user = $_SESSION['userid'];
         //$query = sprintf("SELECT * FROM Pedidos pd JOIN Usuarios u ON u.id = pd.idCliente"); $conn->real_escape_string($user);
-        $query = sprintf("SELECT * FROM Pedidos P JOIN Usuarios U ON P.idCliente = U.id"); $conn->real_escape_string($user);
+        $query = sprintf("SELECT * FROM pedidos P JOIN usuarios U ON P.idCliente = U.id"); $conn->real_escape_string($user);
         $rs = $conn->query($query);
         $result = false;
         $i=0;
@@ -82,12 +63,9 @@ class Pedido
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO `pedidos` (`fecha`,`idCliente`,`idProd`,`nombreProd`,`pagado`) 
-		 VALUES('%i', '%i', '%i', '%i','%i')"
-            , $conn->real_escape_string($pedido->fecha)
-            , $conn->real_escape_string($pedido->idCliente)
-            , $conn->real_escape_string($pedido->idProd)
-            , $conn->real_escape_string($pedido->nombreProd)
+        $query=sprintf("INSERT INTO `pedidos` (`producto`,`pagado`) 
+		 VALUES('%d', '%d')"
+            , $conn->real_escape_string($pedido->producto)
             , $conn->real_escape_string($pedido->pagado));
         if ( $conn->query($query) ) {
             $pedido->idPedido= $conn->insert_id;
@@ -101,90 +79,36 @@ class Pedido
         return $pedido;
     }
     
-    private static function actualizaPedido($pedido)
-    {
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $query=sprintf("UPDATE pedidos P SET nombre = '%s', descripcion='%s', precio='%f', unidades='%d, unidadesDisponibles ='%d', tallasDisponibles ='%s', coloresDisponibles ='%s', talla ='%s', color ='%s', categoria ='%s', reseña ='%s', agotado ='%b', numEstrellas ='%d', imagen ='%s' WHERE P.id=%i"
-            , $conn->real_escape_string($pedido->nombre)
-            , $conn->real_escape_string($pedido->descripcion)
-            , $conn->real_escape_string($pedido->precio)
-            , $conn->real_escape_string($pedido->unidades)
-            , $conn->real_escape_string($pedido->unidadesDisponibles)
-            , $conn->real_escape_string($pedido->tallasDisponibles)
-            , $conn->real_escape_string($pedido->coloresDisponibles)
-            , $conn->real_escape_string($pedido->talla)
-            , $conn->real_escape_string($pedido->color)
-            , $conn->real_escape_string($pedido->categoria)
-            , $conn->real_escape_string($pedido->reseña)
-            , $conn->real_escape_string($pedido->agotado)
-            , $conn->real_escape_string($pedido->numEstrellas)
-            , $conn->real_escape_string($pedido->imagen)
-            , $pedido->id);
-        if ( $conn->query($query) ) {
-            if ( $conn->affected_rows != 1) {
-                echo "No se ha podido actualizar el pedido: " . $pedido->id;
-                exit();
-            }
-        } else {
-            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        
-        return $pedido;
-    }
-
 	
     //filas tabla pedido
     
-    private $idPedido;
+    private $id;
 
-    private $fecha;
+    private $producto;
 
-    private $idProd;
-
-    private $idCliente;
-	
-    private $nombreProd;
-	
     private $pagado;
+
 	
-    private function __construct($fecha, $idProd, $idCliente,$nombreProd, $pagado)
+    private function __construct($producto, $pagado)
     {
-        $this->fecha = $fecha;
-        $this->idProd = $idProd;
-        $this->idCliente = $idCliente;
-        $this->nombreProd = $nombreProd;
+
         $this->pagado = $pagado;
+        $this->producto = $producto;
     }
 
-    public function idPedido()
+    public function id()
     {
-        return $this->idPedido;
+        return $this->id;
     }
 
-    public function nombreProd()
-    {
-        return $this->nombreProd;
-    }
-
-	public function idCliente()
-    {
-        return $this->idCliente;
-    }
-
-	public function fecha()
-    {
-        return $this->fecha;
-    }
     public function pagado()
     {
         return $this->pagado;
     }
     
-    public function idProd()
+    public function producto()
     {
-        return $this->idProd; 
+        return $this->producto; 
     }
 
 }

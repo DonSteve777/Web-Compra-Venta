@@ -44,7 +44,7 @@ class Producto
                     }           
                     $i++;
                     $prod = $arrayauxliar;
-                    $result = $prod;
+                   
                 }
                 $rs->free();
             } else {
@@ -52,16 +52,16 @@ class Producto
                 exit();
         } 
 
-        $array = $result;
+      
         $html;
-        foreach($array as $key => $fila){
+        foreach($prod as $key => $fila){
             $id =  $fila['id'];
             $imgSrc = ImageUpload::getSource($id);
             $descripcion = $fila['descripcion'];
             $precio= $fila['precio'];
             $categoria = Categoria::findById($fila['categoria'])->nombre();
             $nombre = $fila['nombre'];
-
+            echo '<a href="#?id=5"></a>';
             $html.=<<<EOF
             <ul>
                 <li> Nombre Producto: $nombre</li>
@@ -69,15 +69,17 @@ class Producto
                 <li>Precio: $precio</li>
                 <li>Categoria: $categoria</li>
                 <li>$imgSrc</li>
-                <button type="button"
-                    <a href="./añadirCarrito.php?nombre=$nombre"></a>
-                    Añadir al carrito
-                </button>
-                <button type="button"
-                <a href="./añadirCarrito.php?nombre=$nombre"></a>
-                Añadir al carrito
-            </button>
-                
+               
+                    <a href="index.php?id=$id&pagado=false">
+                    <button type="button">
+                        Añadir al carrito</a>
+                        </button></a>
+
+                        <a href="index.php?id=$id&pagado=true">
+                        <button type="button">
+                            Comprar</a>
+                            </button></a>
+
             </ul>
 EOF;
         }

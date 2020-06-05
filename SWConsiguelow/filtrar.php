@@ -3,7 +3,7 @@ require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
 
 
-function listadoMensajesRecursivo($nombreProd = NULL)
+function searchByName($nombreProd = NULL)
 {
     $nombreProd=$_GET['search'];
   $html = '';
@@ -31,7 +31,7 @@ function listadoMensajesRecursivo($nombreProd = NULL)
                 <h1>Filtrado</h1>
              <h2>Resultados del filtrado...</h2></br>
              <?php
-                echo listadoMensajesRecursivo();   
+                echo searchByName();   
             ?>
             </div>
         </div>  
