@@ -5,9 +5,6 @@
 class Pedido
 {
 
-    
-
-
     public static function muestraPedidos()
     {
         $app = Aplicacion::getSingleton();
@@ -59,14 +56,16 @@ class Pedido
         return self::insertaPedido($pedido);
     }
     
-    private static function insertaPedido($pedido)
+    public static function insertaPedido($pedido)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO `pedidos` (`producto`,`pagado`) 
-		 VALUES('%d', '%d')"
+        $query=sprintf("INSERT INTO `pedidos` (`producto`,`pagado`, `comprador`) 
+		 VALUES('%d', '%d', '%d')"
             , $conn->real_escape_string($pedido->producto)
-            , $conn->real_escape_string($pedido->pagado));
+            , $conn->real_escape_string($pedido->pagado)
+            , $conn->real_escape_string($pedido->comprador)
+        );
         if ( $conn->query($query) ) {
             $pedido->idPedido= $conn->insert_id;
             echo "pedido añadido con exito";
@@ -87,13 +86,15 @@ class Pedido
     private $producto;
 
     private $pagado;
+    private $comprador;
 
 	
-    private function __construct($producto, $pagado)
+    public function __construct($producto, $pagado, $comprador)
     {
 
         $this->pagado = $pagado;
         $this->producto = $producto;
+        $this->comprador = $comprador;
     }
 
     public function id()
@@ -109,6 +110,11 @@ class Pedido
     public function producto()
     {
         return $this->producto; 
+    }
+
+    public function comprador()
+    {
+        return $this->comprador; 
     }
 
 }

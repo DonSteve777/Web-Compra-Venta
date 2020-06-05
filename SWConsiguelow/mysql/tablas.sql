@@ -80,8 +80,10 @@ CREATE TABLE `pedidos` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `producto` int(11) NOT NULL,
     `pagado` TINYINT(1) NOT NULL,
+    `comprador` int(11) NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`producto`) REFERENCES `productos`(`id`))
+    FOREIGN KEY (`producto`) REFERENCES `productos`(`id`),
+    FOREIGN KEY (`comprador`) REFERENCES `usuarios`(`id`))
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 INSERT INTO `Roles` (`id`, `nombre`) VALUES

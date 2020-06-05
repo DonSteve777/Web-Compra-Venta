@@ -70,13 +70,13 @@ class Producto
                 <li>Categoria: $categoria</li>
                 <li>$imgSrc</li>
                
-                    <a href="index.php?id=$id&pagado=false">
-                    <button type="button">
+                    <a href="añadirPedido.php?id=$id&pagado=0">
+                    <button type="button" id="addCart" >
                         Añadir al carrito</a>
                         </button></a>
 
-                        <a href="index.php?id=$id&pagado=true">
-                        <button type="button">
+                        <a href="añadirPedido.php?id=$id&pagado=1">
+                        <button type="button" id="addCart">
                             Comprar</a>
                             </button></a>
 
