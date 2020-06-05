@@ -1,2 +1,2 @@
-CREATE USER 'consiguelowdb'@'localhost' IDENTIFIED BY 'consiguelowdb';
-GRANT ALL PRIVILEGES ON `consiguelowdb`.* TO 'consiguelowdb'@'localhost';
+CREATE USER 'consiguelow'@'localhost' IDENTIFIED BY 'consiguelow';
+GRANT ALL PRIVILEGES ON `consiguelow`.* TO 'consiguelow'@'localhost';

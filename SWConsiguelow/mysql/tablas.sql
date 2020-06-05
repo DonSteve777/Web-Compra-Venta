@@ -86,6 +86,7 @@ CREATE TABLE `pedidos` (
     FOREIGN KEY (`comprador`) REFERENCES `usuarios`(`id`))
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
+/*
 INSERT INTO `Roles` (`id`, `nombre`) VALUES
 (1, 'user'),
 (2, 'admin');
@@ -97,7 +98,7 @@ INSERT INTO `RolesUsuario` (`usuario`, `rol`) VALUES
 
 
 INSERT INTO `RolesUsuario` (`usuario`, `rol`) VALUES
-(2, 1);
+(2, 1);*/
 --
 -- Estructura de tabla para la tabla `carrito`
 --
