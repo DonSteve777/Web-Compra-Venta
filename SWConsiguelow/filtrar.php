@@ -1,8 +1,7 @@
-
 <?php
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
-use es\fdi\ucm\aw\Aplicacion;
+
 
 function listadoMensajesRecursivo($nombreProd = NULL)
 {

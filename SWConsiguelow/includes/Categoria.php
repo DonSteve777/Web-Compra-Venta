@@ -8,7 +8,7 @@ class Categoria
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM categoria c WHERE c.nombre = '%s'", $conn->real_escape_string($nombreCat));
+        $query = sprintf("SELECT * FROM categorias c WHERE c.nombre = '%s'", $conn->real_escape_string($nombreCat));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
@@ -49,7 +49,7 @@ class Categoria
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO `categoria` (`nombre`, `descripcion`) 
+        $query=sprintf("INSERT INTO `categorias` (`nombre`, `descripcion`) 
         VALUES('%s','%s')"
             , $conn->real_escape_string($categoria->nombre)    
             , $conn->real_escape_string($categoria->descripcion));
