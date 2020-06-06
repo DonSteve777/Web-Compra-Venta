@@ -24,6 +24,8 @@ if ($app->tieneRol('admin', 'Acceso Denegado', 'No tienes permisos suficientes p
         <a href='anadeCategoria.php'>Añadir una categoria</a>
         <a href='listaCategorias.php'>Ver categorias ya existentes</a>
 <?php
+}else{
+    echo 'nop';
 }
 ?>
 	</div>

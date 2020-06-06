@@ -58,7 +58,7 @@ EOF;
             <input type="text" name="unidades" value="$unidades"/></p>
             <p><label>Talla</label> 
             <select name="talla">
-                <option value="Not sizeable">Not sizeable</option>
+                <option value="--">Not sizeable</option>
                 <option value="xs">xs</option>
                 <option value="s">s</option>
                 <option value="M">M</option>

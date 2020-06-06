@@ -4,7 +4,7 @@
     </div>
     <nav>
         <ul class="menu">
-            <li><a href="index.php?">Inicio</a></li><li><a href="vender.php">Vender</a></li><li><a href="vistaProducto.php">Mostrar productos</a></li>
+            <li><a href="index.php?">Inicio</a></li><li><a href="vender.php">Vender</a></li>
         </ul>
         <ul class="profile">
             <?php

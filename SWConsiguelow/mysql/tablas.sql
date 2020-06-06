@@ -45,8 +45,8 @@ CREATE TABLE `productos` (
   `color` varchar(12) NOT NULL,
   `categoria` INT(11) NOT NULL,
   PRIMARY KEY(`id`),
-  FOREIGN KEY (`categoria`) REFERENCES `categorias`(`id`),
-  FOREIGN KEY (`idVendedor`) REFERENCES `usuarios`(`id`)
+  FOREIGN KEY (`categoria`) REFERENCES `categorias`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`idVendedor`) REFERENCES `usuarios`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 CREATE TABLE `uploads` (
@@ -55,7 +55,7 @@ CREATE TABLE `uploads` (
     `name` VARCHAR(64) NOT NULL,
     `mime_type` VARCHAR(20) NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`producto`) REFERENCES `productos`(`id`))
+    FOREIGN KEY (`producto`) REFERENCES `productos`(`id`) ON DELETE CASCADE ON UPDATE CASCADE)
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 
@@ -87,15 +87,14 @@ CREATE TABLE `pedidos` (
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 /*
-INSERT INTO `Roles` (`id`, `nombre`) VALUES
+INSERT INTO `roles` (`id`, `nombre`) VALUES
 (1, 'user'),
 (2, 'admin');
 
 
-INSERT INTO `RolesUsuario` (`usuario`, `rol`) VALUES
+INSERT INTO `rolesUsuario` (`usuario`, `rol`) VALUES
 (1, 1),
 (1, 2);
-
 
 INSERT INTO `RolesUsuario` (`usuario`, `rol`) VALUES
 (2, 1);*/

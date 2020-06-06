@@ -6,28 +6,7 @@ class Producto
 {
 
 
-    /*public static function buscaProducto($nombreProd)
-    {
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '%s'", $conn->real_escape_string($nombreProd));
-        $rs = $conn->query($query);
-        $result = false;
-        if ($rs) {
-            if ( $rs->num_rows == 1) {
-                $fila = $rs->fetch_assoc();
-                $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['precio'],$fila['unidades'], $fila['unidadesDisponibles'],$fila['tallasDisponibles'],$fila['coloresDisponibles'],$fila['talla'],$fila['color'],$fila['categoria'],$fila['reseña'],$fila['agotado'],$fila['numEstrellas'],$fila['imagen']);
-                $producto->id = $fila['id'];
-                $result = $producto;
-            }
-            $rs->free();
-        } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        return $result;
-    }*/
-
+ 
     public static function muestraProds(){ //funcion que muestra todos los productos disponibles
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -47,44 +26,79 @@ class Producto
                    
                 }
                 $rs->free();
+                $html='';
+                foreach($prod as $key => $fila){
+                    $id =  $fila['id'];
+                    $imgSrc = ImageUpload::getSource($id);
+                    $descripcion = $fila['descripcion'];
+                    $precio= $fila['precio'];
+                    $categoria = Categoria::findById($fila['categoria'])->nombre();
+                    $nombre = $fila['nombre'];
+                    echo '<a href="#?id=5"></a>';
+                    //muestraLogo($html)
+                    $html.=<<<EOF
+                    <ul>
+                        <li> Nombre Producto: $nombre</li>
+                        <li>Descripcion: $descripcion</li>
+                        <li>Precio: $precio</li>
+                        <li>Categoria: $categoria</li>
+                        <li>$imgSrc</li>
+                       
+                            <a href="anadirPedido.php?id=$id&pagado=0">
+                            <button type="button" id="addCart" >
+                                Añadir al carrito</a>
+                                </button></a>
+        
+                                <a href="anadirPedido.php?id=$id&pagado=1">
+                                <button type="button" id="addCart">
+                                    Comprar</a>
+                                    </button></a>
+        
+                    </ul>
+        EOF;
+                }
             } else {
-                echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-                exit();
+                $html='';
+                $html =  <<<EOF
+                <p>Cada vez más gente compra mediante <strong>internet</strong>, debido a que hay muchísima
+        variedad de productos y es mucho mas cómodo, ya que no hay que moverse
+        de casa. Nuestro proyecto consiste en una página web estilo Ebay, en la que se
+        puedan comprar productos de primera y segunda mano. Habrá un sistema de
+        valoraciones de vendedores y comentarios en productos para que el
+        comprador se pueda guiar a la hora de comprar. Se podrá añadir productos a
+        favoritos, filtrar las búsquedas según precio, comentarios, número de unidades
+        vendidas.</p>
+    <div class="logo">
+        <img src="img/logo.gif" alt="imagen no disponible">
+    </div>
+    EOF;
+         
         } 
 
       
-        $html='';
-        foreach($prod as $key => $fila){
-            $id =  $fila['id'];
-            $imgSrc = ImageUpload::getSource($id);
-            $descripcion = $fila['descripcion'];
-            $precio= $fila['precio'];
-            $categoria = Categoria::findById($fila['categoria'])->nombre();
-            $nombre = $fila['nombre'];
-            echo '<a href="#?id=5"></a>';
-            $html.=<<<EOF
-            <ul>
-                <li> Nombre Producto: $nombre</li>
-                <li>Descripcion: $descripcion</li>
-                <li>Precio: $precio</li>
-                <li>Categoria: $categoria</li>
-                <li>$imgSrc</li>
-               
-                    <a href="añadirPedido.php?id=$id&pagado=0">
-                    <button type="button" id="addCart" >
-                        Añadir al carrito</a>
-                        </button></a>
-
-                        <a href="añadirPedido.php?id=$id&pagado=1">
-                        <button type="button" id="addCart">
-                            Comprar</a>
-                            </button></a>
-
-            </ul>
-EOF;
-        }
-    }
+    }else{
+    
+        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+        exit();
+    
+    } 
     return $html;
+}
+
+private function muestraLogo(&$html){
+    $html =  <<<EOF
+            <p>Cada vez más gente compra mediante <strong>internet</strong>, debido a que hay muchísima
+    variedad de productos y es mucho mas cómodo, ya que no hay que moverse
+    de casa. Nuestro proyecto consiste en una página web estilo Ebay, en la que se
+    puedan comprar productos de primera y segunda mano. Habrá un sistema de
+    valoraciones de vendedores y comentarios en productos para que el
+    comprador se pueda guiar a la hora de comprar. Se podrá añadir productos a
+    favoritos, filtrar las búsquedas según precio, comentarios, número de unidades
+    vendidas.</p>
+<div class="logo">
+    <img src="img/logo.gif" alt="imagen no disponible">
+</div>
+EOF;
 }
 
     /*public static function muestraProductosPorNombre($nombreProd)

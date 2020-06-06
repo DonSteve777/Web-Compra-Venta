@@ -32,7 +32,7 @@ class Categoria
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM categorias c WHERE c.id = '%d'", $conn->real_escape_string($id));
         $rs = $conn->query($query);
-        $result = false;
+       
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
@@ -64,14 +64,35 @@ class Categoria
                     $arrayauxliar[$i][$clave]=$array[$clave];
                 }           
                 $i++;
-                $result = $arrayauxliar;
+                
             }
             $rs->free();
         } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
+            $cat = self::crea('sin categoría', 'no está catalogado en ninguna agrupación');
+            $query = sprintf("SELECT * FROM categorias");
+            $rs = $conn->query($query);
+            $result = false;
+            $i=0;
+            if ($rs) {
+                if ( $rs->num_rows > 0) {
+                    while ($array=$rs->fetch_array()){
+                    $claves = array_keys($array);
+                    foreach($claves as $clave){
+                        $arrayauxliar[$i][$clave]=$array[$clave];
+                    }           
+                    $i++;
+                }
+                $rs->free();
+                }
+            }
+            
         }
+        $result = $arrayauxliar;
         return $result;
+    }
+    else {
+        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+        exit();
     }
 }
 
