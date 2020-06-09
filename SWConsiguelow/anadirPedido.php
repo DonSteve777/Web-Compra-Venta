@@ -9,11 +9,11 @@ require_once __DIR__.'/includes/config.php';
         $pedido = new Pedido($idproducto, $pagado, $comprador);
         Pedido::insertaPedido($pedido);
 
-}
+    }
     else{
         echo '<script type="text/javascript">
         alert("No has hecho login, se te mandará a login");
         window.location.assign("login.php");
         </script>';
-}
+    }
     

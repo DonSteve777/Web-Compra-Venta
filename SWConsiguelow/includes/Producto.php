@@ -148,7 +148,6 @@ EOF;
     return $result;
   }
 
-
     public static function muestraProductosPorCat($nombreCat){
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -175,7 +174,6 @@ EOF;
         }
         return $result;
     }
-
 
 
     public static function muestraProductosPorPrecioDesc($producto)

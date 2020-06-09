@@ -7,8 +7,8 @@ require_once __DIR__.'/includes/config.php';
 function listadoCategorias()
 {
   $html = '';
-  $html.= '<li>Categorias ya creadas';
-  $html .= '</li>';
+  $html.= 'Categorias ya creadas';
+  $html .= '';
   $cat= Categoria::muestraCats();
   foreach($cat as $c) {
     $html .= '<li>'.$c->nombre();
@@ -34,7 +34,7 @@ function listadoCategorias()
                 <h1>Categorias existentes</h1>
                 <?php
                 echo listadoCategorias();   
-            ?>
+                ?>
                 </br>
             </div>
         </div>  

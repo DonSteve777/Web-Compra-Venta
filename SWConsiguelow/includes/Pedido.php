@@ -5,13 +5,13 @@
 class Pedido
 {
 
-    public static function muestraPedidos()
+    /*public static function muestraPedidos()
     {
+        $result = [];
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $user = $_SESSION['userid'];
-        //$query = sprintf("SELECT * FROM Pedidos pd JOIN Usuarios u ON u.id = pd.idCliente"); $conn->real_escape_string($user);
-        $query = sprintf("SELECT * FROM pedidos P JOIN usuarios U ON P.idCliente = U.id"); $conn->real_escape_string($user);
+        $query = sprintf("SELECT * FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =1"); $conn->real_escape_string($user);
         $rs = $conn->query($query);
         $result = false;
         $i=0;
@@ -24,7 +24,7 @@ class Pedido
                 }           
                 $i++;
                 $pedidos = $arrayauxliar;
-                $result = $pedidos;
+                $result[] = $pedidos;
                 }
             $rs->free();
         } else {
@@ -35,7 +35,46 @@ class Pedido
         return $result;
       }
 
+    }*/
+
+    public static function muestraPedidos()
+     {
+        $result = [];
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $user = $_SESSION['userid'];
+        $query = sprintf("SELECT DISTINCT * FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =1"); $conn->real_escape_string($user);
+        $rs = $conn->query($query);
+        if ($rs) {
+            while($fila = $rs->fetch_assoc()) {
+            $ped=new Pedido($fila['producto'],$fila['pagado'],$fila['comprador']);
+            $ped->id=$fila['id'];
+            $result[] = $ped;
+            }
+            $rs->free();
+        }
+        return $result;
     }
+
+    public static function muestraCarrito()
+     {
+        $result = [];
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $user = $_SESSION['userid'];
+        $query = sprintf("SELECT DISTINCT * FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =0"); $conn->real_escape_string($user);
+        $rs = $conn->query($query);
+        if ($rs) {
+            while($fila = $rs->fetch_assoc()) {
+            $ped=new Pedido($fila['producto'],$fila['pagado'],$fila['comprador']);
+            $ped->id=$fila['id'];
+            $result[] = $ped;
+            }
+            $rs->free();
+        }
+        return $result;
+    }
+
 
     public static function añadePedido($nombrePedido,$fecha, $idProd, $idCliente,$nombreProd, $pagado) //atributos pedidos
     {
@@ -68,7 +107,10 @@ class Pedido
         );
         if ( $conn->query($query) ) {
             $pedido->idPedido= $conn->insert_id;
-            echo "pedido añadido con exito";
+            echo '<script type="text/javascript">
+            alert("Se ha añadido correctamente");
+            window.location.assign("index.php");
+            </script>';
             exit();
            // $pedido->idVendedor = $conn->id;
         } else {
