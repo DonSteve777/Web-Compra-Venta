@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\FormularioCategoria;
+use es\fdi\ucm\aw\Aplicacion;
 $form = new FormularioCategoria();
 $html = $form->gestiona();
 ?>
@@ -20,6 +21,7 @@ $html = $form->gestiona();
             <div id="contenido">
                 <h1>Añadir categoria</h1>
                 <?php
+
                echo $html;
                 ?>
             </div>

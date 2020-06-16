@@ -96,24 +96,81 @@ class Categoria
     }
 }
 
-        public static function muestraCats()
-        {
-        $result = [];
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM categorias");
-        $rs = $conn->query($query);
-        if ($rs) {
-            while($fila = $rs->fetch_assoc()) {
-            $cat=new Categoria($fila['nombre'],$fila['descripcion']);
-            $cat->id=$fila['id'];
-            $result[] = $cat;
-            }
-            $rs->free();
+        public static function muestraTodasCategorias(){ //funcion que muestra todos los productos disponibles
+            $app = Aplicacion::getSingleton();
+            $conn = $app->conexionBd();
+            $query = sprintf("SELECT * FROM categorias C");
+            $rs = $conn->query($query);
+            $result = false;
+            $i=0;
+            if ($rs) {
+                if ( $rs->num_rows > 0) {
+                    while ($array=$rs->fetch_array()){
+                        $claves = array_keys($array);
+                        foreach($claves as $clave){
+                            $arrayauxliar[$i][$clave]=$array[$clave];
+                        }           
+                        $i++;
+                        $cat = $arrayauxliar;
+                       
+                    }
+                    $rs->free();
+                    $html='';
+                    foreach($cat as $key => $fila){
+                        $nombre = $fila['nombre'];
+                        $html.=<<<EOF
+                        <ul>
+                            <li> Nombre Cat: $nombre</li>
+                                <a href="eliminaCat.php?categoria=$nombre">
+                                <button type="button" id="deleteCat" >
+                                    Eliminar</a>
+                                    </button></a>
+                        </ul>
+            EOF;
+                    }
+                } 
+        }else{
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        
+        } 
+        return $html;
         }
-        return $result;
-        }
+    
 
+
+        public static function eliminaCat($nombreCat){
+            $cat = self::buscaCat($nombreCat); 
+            if (!$cat) {
+                $html="No";
+            }
+            else{ 
+           return self::elimina($cat); 
+            }
+        }
+    
+        private static function elimina($cat) 
+        {
+            $eliminado = false;
+            $app = Aplicacion::getSingleton();
+            $conn = $app->conexionBd();
+            $id = $cat->id; 
+            $query=sprintf("DELETE FROM categorias WHERE id ='$id'",$conn->real_escape_string($id));
+            if ( $conn->query($query) ) {
+                if ( $conn->affected_rows != 1) {
+                    echo "No se ha podido borrar la categoria: " . $cat->nombre;
+                    exit();
+                }
+                elseif ($conn->affected_rows == 1){
+                    echo "Categoria. $cat->nombre . borrado";
+                    $eliminado =true;
+                }
+            } else {
+                echo "Error al borrar de la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+                exit();
+            }
+            return $eliminado;
+        }
 
     public static function crea($nombreCat,$descripcion)
     {

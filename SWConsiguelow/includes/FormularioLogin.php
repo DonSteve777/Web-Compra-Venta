@@ -15,7 +15,7 @@ class FormularioLogin extends Form
   
   protected function generaCamposFormulario ($datos)
   {
-    $username = 'user@example.org';
+    $username = 'user';
     $password = '12345';
     if ($datos) {
       $username = isset($datos['username']) ? $datos['username'] : $username;

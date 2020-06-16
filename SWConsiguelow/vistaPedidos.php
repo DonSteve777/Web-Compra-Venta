@@ -1,7 +1,23 @@
 <?php
 use es\fdi\ucm\aw\Pedido;
 
+
 require_once __DIR__.'/includes/config.php';
+
+
+function listadoPedidos()
+{
+  $html = '';
+  $html.= 'Pedidos del usuario';
+  $html .= '';
+  $pedido = Pedido::muestraPedidos();
+  foreach($pedido as $p) {
+    $html .= '<li> IdPedido: '.$p->id();
+    $html .= 'Producto: '.$p->producto();
+    $html .= '</li>';
+  }
+    return $html;
+}
 ?>
 
 
@@ -9,7 +25,7 @@ require_once __DIR__.'/includes/config.php';
     <head>
         <link rel="stylesheet" type="text/css" href="styles/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Pedidos de un usuario</title>
+        <title>Pedidos</title>
     </head>
 
     <body>
@@ -18,21 +34,12 @@ require_once __DIR__.'/includes/config.php';
                 require("includes/common/cabecera.php");
             ?>
             <div id="contenido">
-                <h1>Pedidos del usuario <?php echo $_SESSION['username'];?></h1>
-            <?php 
-                $result = Pedido::muestraPedidos();
-                $array = $result;
-                foreach($array as $key => $fila){
-                ?>
-                <li>IdPedido: <?php echo $fila['idPedido'];?></br>
-                Fecha Pedido: <?php echo $fila['fecha'];?></br>
-                Nombre Producto(s): <?php echo $fila['nombreProd'];?></br>
-                Pagado: <?php echo $fila['pagado'];?></br>
-                </br>
-                <?php  
-                }
+                <h1>Pedidos realizados <?php $_SESSION['nombre']?></h1>
+            <?php
+                echo listadoPedidos();
             ?>
             </div>
         </div>  
     </body>
 </html>
+

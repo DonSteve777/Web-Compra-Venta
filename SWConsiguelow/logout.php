@@ -19,7 +19,10 @@ App::getSingleton()->logout();
             <div id="contenido">
                 <h1>Cerrar sesion</h1>
             <?php
-                echo 'Tu sesión ha finalizado'; 
+                echo '<script type="text/javascript">
+                alert("Se ha cerrado la sesion");
+                window.location.assign("index.php");
+                </script>';
              ?>
             </div>
         </div>

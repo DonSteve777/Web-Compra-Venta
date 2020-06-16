@@ -33,8 +33,6 @@ $html = Producto::muestraProds();
     <input id="search" name="search" type="text" value='' placeholder="Type here">
     <input id="submit" type="submit" value="Search">
     </form>
-                 
-
     <?php
 
         echo $html;    
