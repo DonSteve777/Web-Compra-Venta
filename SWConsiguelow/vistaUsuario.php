@@ -45,6 +45,7 @@ use es\fdi\ucm\aw\Usuario;
                     ?>
                     <li>Pedidos del usuario: <?php echo $_SESSION['nombre'];?></li></br>
                     <a href="vistaPedidos.php">Pedidos</a>
+                    <a href="vistaProdsUsuario.php">Productos subidos por el usuario</a>
             </div>
         </div>
     </body>

@@ -16,7 +16,7 @@ function listadoPedidos()
     $html .= 'Producto: '.$p->producto();
     $html .= '</li>';
   }
-      return $html;
+    return $html;
 }
 ?>
 
@@ -25,7 +25,7 @@ function listadoPedidos()
     <head>
         <link rel="stylesheet" type="text/css" href="styles/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Mostrar producto</title>
+        <title>Pedidos</title>
     </head>
 
     <body>
@@ -34,7 +34,7 @@ function listadoPedidos()
                 require("includes/common/cabecera.php");
             ?>
             <div id="contenido">
-                <h1>Mostrando pedidos del usuario <?php $_SESSION['nombre']?></h1>
+                <h1>Pedidos realizados <?php $_SESSION['nombre']?></h1>
             <?php
                 echo listadoPedidos();
             ?>

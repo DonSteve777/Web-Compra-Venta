@@ -1,22 +1,15 @@
 <?php
-use es\fdi\ucm\aw\Pedido;
+use es\fdi\ucm\aw\Producto;
 
 
 require_once __DIR__.'/includes/config.php';
 
-
-function listadoCarrito()
-{
-  $html = '';
-  $html.= 'Carrito del usuario';
-  $html .= '';
-  $pedido = Pedido::muestraCarrito();
-  foreach($pedido as $p) {
-    $html .= '<li>Producto: '.$p->producto();
-    $html .= '</li>';
-  }
-      return $html;
+function muestraProdsUsuario(){
+  $idUsuario = $_SESSION['userid'];
+  $html= Producto::muestraProdsUsuario($idUsuario);
+  return $html;
 }
+
 ?>
 
 
@@ -24,7 +17,7 @@ function listadoCarrito()
     <head>
         <link rel="stylesheet" type="text/css" href="styles/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Carrito</title>
+        <title>Mostrar producto</title>
     </head>
 
     <body>
@@ -33,12 +26,11 @@ function listadoCarrito()
                 require("includes/common/cabecera.php");
             ?>
             <div id="contenido">
-                <h1>Carrito del usuario <?php $_SESSION['nombre']?></h1>
+                <h1>Productos subidos por el usuario</h1>
             <?php
-                echo listadoCarrito();
+                echo muestraProdsUsuario();
             ?>
             </div>
         </div>  
     </body>
 </html>
-

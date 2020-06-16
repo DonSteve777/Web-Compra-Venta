@@ -1,4 +1,4 @@
-$(document).ready(function() {	//carga del DOM tree
+$(document).ready(function() {	
     $("#addCart").onclick(function(){
         var url = "añadirAlCarrito.php?id=1";
         $.get(url,addCart);

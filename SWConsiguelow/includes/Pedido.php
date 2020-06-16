@@ -5,37 +5,27 @@
 class Pedido
 {
 
-    /*public static function muestraPedidos()
+    public static function buscaPedido($id)
     {
-        $result = [];
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $user = $_SESSION['userid'];
-        $query = sprintf("SELECT * FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =1"); $conn->real_escape_string($user);
+        $query = sprintf("SELECT * FROM pedidos P WHERE P.id = '%s'", $conn->real_escape_string($id));
         $rs = $conn->query($query);
         $result = false;
-        $i=0;
         if ($rs) {
-            if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                $claves = array_keys($array);
-                foreach($claves as $clave){
-                    $arrayauxliar[$i][$clave]=$array[$clave];
-                }           
-                $i++;
-                $pedidos = $arrayauxliar;
-                $result[] = $pedidos;
-                }
+            if ( $rs->num_rows == 1) {
+                $fila = $rs->fetch_assoc();
+                $pedido = new Pedido($fila['producto'], $fila['pagado'], $fila['comprador']);
+                $pedido->id = $fila['id'];
+                $result = $pedido;
+            }
             $rs->free();
         } else {
-            echo "No se han encontrado pedidos asociados al usuario";
-            //echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
         return $result;
-      }
-
-    }*/
+    }
 
     public static function muestraPedidos()
      {
@@ -76,13 +66,13 @@ class Pedido
     }
 
 
-    public static function añadePedido($nombrePedido,$fecha, $idProd, $idCliente,$nombreProd, $pagado) //atributos pedidos
+    public static function añadePedido($id,$producto, $pagado,$comprador) //atributos pedidos
     {
-        $pedido = self::buscaPedido($nombrePedido);
+        $pedido = self::buscaPedido($id);
         if ($pedido) {
             return false;
         }
-        $pedido = new Pedido($fecha, $idProd, $idCliente,$nombreProd,$pagado);
+        $pedido = new Pedido($producto,$pagado,$comprador);
         return self::guardaPedido($pedido);
     }
     

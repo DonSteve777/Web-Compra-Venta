@@ -85,7 +85,64 @@ class Producto
     return $html;
 }
 
-private function muestraLogo(&$html){
+
+public static function muestraProdsUsuario($idUsuario){ //funcion que muestra todos los productos disponibles
+    $app = Aplicacion::getSingleton();
+    $conn = $app->conexionBd();
+    $query = sprintf("SELECT * FROM productos P WHERE P.idVendedor =$idUsuario");$conn->real_escape_string($idUsuario);
+    $rs = $conn->query($query);
+    $result = false;
+    $i=0;
+    if ($rs) {
+        if ( $rs->num_rows > 0) {
+            while ($array=$rs->fetch_array()){
+                $claves = array_keys($array);
+                foreach($claves as $clave){
+                    $arrayauxliar[$i][$clave]=$array[$clave];
+                }           
+                $i++;
+                $prod = $arrayauxliar;
+               
+            }
+            $rs->free();
+            $html='';
+            foreach($prod as $key => $fila){
+                $id =  $fila['id'];
+                $imgSrc = ImageUpload::getSource($id);
+                $descripcion = $fila['descripcion'];
+                $precio= $fila['precio'];
+                $categoria = Categoria::findById($fila['categoria'])->nombre();
+                $nombre = $fila['nombre'];
+                echo '<a href="#?id=5"></a>';
+                $html.=<<<EOF
+                <ul>
+                    <li> Nombre Producto: $nombre</li>
+                    <li>Descripcion: $descripcion</li>
+                    <li>Precio: $precio</li>
+                    <li>Categoria: $categoria</li>
+                    <li>$imgSrc</li>
+                </ul>
+    EOF;
+            }
+        } else {
+            $html='';
+            $html =  <<<EOF
+            <p>Aun no has subido ningun producto, anímate a <a href='vender.php'>subir algo.</p>
+EOF;
+     
+    } 
+
+  
+}else{
+
+    echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+    exit();
+
+} 
+return $html;
+}
+
+/*private function muestraLogo(&$html){
     $html =  <<<EOF
             <p>Cada vez más gente compra mediante <strong>internet</strong>, debido a que hay muchísima
     variedad de productos y es mucho mas cómodo, ya que no hay que moverse
@@ -99,7 +156,7 @@ private function muestraLogo(&$html){
     <img src="img/logo.gif" alt="imagen no disponible">
 </div>
 EOF;
-}
+}*/
 
     /*public static function muestraProductosPorNombre($nombreProd)
     {
@@ -129,6 +186,61 @@ EOF;
         }
         return $result;
     }*/
+
+    public static function buscaProd($nombreProd)
+    {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '%s'", $conn->real_escape_string($nombreProd));
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            if ( $rs->num_rows == 1) {
+                $fila = $rs->fetch_assoc();
+                $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria']);
+                $prod->id = $fila['id'];
+                $result = $prod;
+            }
+            $rs->free();
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $result;
+    }
+
+    public static function eliminaProd($nombreProd){
+        $prod = self::buscaProd($nombreProd); 
+        if (!$prod) {
+            return "No se ha encontrado nada";
+        }
+        else{ 
+       return self::elimina($prod); 
+        }
+    }
+
+    private static function elimina($prod)
+    {
+        $eliminado = false;
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $id = $prod->id; 
+        $query=sprintf("DELETE FROM productos WHERE id ='$id'",$conn->real_escape_string($id));
+        if ( $conn->query($query) ) {
+            if ( $conn->affected_rows != 1) {
+                echo "No se ha podido borrar la categoria: " . $prod->nombre;
+                exit();
+            }
+            elseif ($conn->affected_rows == 1){
+                echo "Categoria. $prod->nombre . borrado";
+                $eliminado =true;
+            }
+        } else {
+            echo "Error al borrar de la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $eliminado;
+    }
 
     public static function muestraProdPorNombre($nombreProd = NULL)
   {
@@ -207,10 +319,10 @@ EOF;
 
     public static function añadeProd($nombreProd, $vendedor, $descripcion, $precio,$unidades,$talla,$color,$categoria) //atributos productos
     {
-       /* $producto = self::buscaProducto($nombreProd);
+        $producto = self::buscaProd($nombreProd);
         if ($producto) {
             return false;
-        }*/
+        }
         $producto = new Producto($nombreProd, $vendedor, $descripcion, $precio,$unidades, $talla, $color, $categoria);
         return self::guardaProd($producto);
     }

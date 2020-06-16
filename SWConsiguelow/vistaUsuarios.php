@@ -1,28 +1,25 @@
 <?php
-use es\fdi\ucm\aw\Categoria;
+use es\fdi\ucm\aw\Usuario;
 use es\fdi\ucm\aw\Aplicacion;
 
 require_once __DIR__.'/includes/config.php';
 
-
-function listadoCategorias()
-{
+function muestraTodosUsuarios(){
     $app = Aplicacion::getSingleton();
     if ($app->tieneRol('admin', 'Acceso Denegado', 'No tienes permisos suficientes para administrar la web.')) {
-   $html = '';
-   $html.= 'Categorias ya creadas';
-   $html .= '';
-   $html = Categoria::muestraTodasCategorias();
-   return $html;
+  $html= Usuario::muestraTodosUsuarios();
+  return $html;
     }
 }
+
 ?>
+
 
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="styles/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Pedidos de un usuario</title>
+        <title>Usuarios existentes</title>
     </head>
 
     <body>
@@ -31,11 +28,10 @@ function listadoCategorias()
                 require("includes/common/cabecera.php");
             ?>
             <div id="contenido">
-                <h1>Categorias existentes</h1>
-                <?php
-                echo listadoCategorias();   
-                ?>
-                </br>
+                <h1>Todos los usuarios de la web</h1>
+            <?php
+                echo muestraTodosUsuarios();
+            ?>
             </div>
         </div>  
     </body>

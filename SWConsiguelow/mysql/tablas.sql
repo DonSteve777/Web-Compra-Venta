@@ -73,10 +73,22 @@ CREATE TABLE IF NOT EXISTS `rolesUsuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 ALTER TABLE `rolesUsuario`
-  ADD CONSTRAINT `RolesUsuario_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `RolesUsuario_rol` FOREIGN KEY (`rol`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `rolesUsuario_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rolesUsuario_rol` FOREIGN KEY (`rol`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 CREATE TABLE `pedidos` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `producto` int(11) NOT NULL,
+    `pagado` TINYINT(1) NOT NULL,
+    `comprador` int(11) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`producto`) REFERENCES `productos`(`id`)ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`comprador`) REFERENCES `usuarios`(`id`)ON DELETE CASCADE ON UPDATE CASCADE
+    )
+  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
+
+
+/*CREATE TABLE `pedidos` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `producto` int(11) NOT NULL,
     `pagado` TINYINT(1) NOT NULL,
@@ -86,7 +98,6 @@ CREATE TABLE `pedidos` (
     FOREIGN KEY (`comprador`) REFERENCES `usuarios`(`id`))
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
-/*
 INSERT INTO `roles` (`id`, `nombre`) VALUES
 (1, 'user'),
 (2, 'admin');

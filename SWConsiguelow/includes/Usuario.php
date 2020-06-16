@@ -14,6 +14,48 @@ class Usuario
         return false;
     }*/
 
+    public static function muestraTodosUsuarios(){ //funcion que muestra todos los productos disponibles
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM usuarios P");
+        $rs = $conn->query($query);
+        $result = false;
+        $i=0;
+        if ($rs) {
+            if ( $rs->num_rows > 0) {
+                while ($array=$rs->fetch_array()){
+                    $claves = array_keys($array);
+                    foreach($claves as $clave){
+                        $arrayauxliar[$i][$clave]=$array[$clave];
+                    }           
+                    $i++;
+                    $prod = $arrayauxliar;
+                   
+                }
+                $rs->free();
+                $html='';
+                foreach($prod as $key => $fila){
+                    $nombre = $fila['nombreUsuario'];
+                    $html.=<<<EOF
+                    <ul>
+                        <li> Nombre Usuario: $nombre</li>
+                            <a href="eliminaUsuario.php?username=$nombre">
+                            <button type="button" id="deleteUser" >
+                                Eliminar usuario</a>
+                                </button></a>
+                    </ul>
+        EOF;
+                }
+            } 
+    }else{
+        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+        exit();
+    
+    } 
+    return $html;
+    }
+
+
     public static function login($nombreUsuario, $password)
   {
     $user = self::buscaUsuario($nombreUsuario);
@@ -90,6 +132,39 @@ class Usuario
             exit();
         }
         return $result;
+    }
+
+    public static function eliminaUsuario($nombreUsuario){
+        $user = self::buscaUsuario($nombreUsuario); 
+        if (!$user) {
+            $html="No";
+        }
+        else{ 
+       return self::elimina($user); 
+        }
+    }
+
+    private static function elimina($usuario) 
+    {
+        $eliminado = false;
+        $app = App::getSingleton();
+        $conn = $app->conexionBd();
+        $id = $usuario->id; 
+        $query=sprintf("DELETE FROM usuarios WHERE id ='$id'",$conn->real_escape_string($id));
+        if ( $conn->query($query) ) {
+            if ( $conn->affected_rows != 1) {
+                echo "No se ha podido borrar el usuario: " . $usuario->nombreUsuario;
+                exit();
+            }
+            elseif ($conn->affected_rows ==1){
+                echo "Usuario . $usuario->nombreUsuario . borrado";
+                $eliminado =true;
+            }
+        } else {
+            echo "Error al borrar de la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $eliminado;
     }
 
     
