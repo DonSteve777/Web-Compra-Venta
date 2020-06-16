@@ -15,7 +15,7 @@ $html = Producto::muestraProds();
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Local Consiguelow</title>
     <link rel="icon" href="img/money.ico"/>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
 <div id="container">
