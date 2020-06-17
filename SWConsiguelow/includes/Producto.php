@@ -5,8 +5,6 @@
 class Producto
 {
 
-
- 
     public static function muestraProds(){ //funcion que muestra todos los productos disponibles
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -63,11 +61,8 @@ class Producto
     <div class="logo">
         <img src="img/logo.gif" alt="imagen no disponible">
     </div>
-    EOF;
-         
+    EOF;   
         } 
-
-      
     }else{
     
         echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
@@ -76,6 +71,85 @@ class Producto
     } 
     return $html;
 }
+
+public static function muestraCards(){
+    $html='';
+    $prods = self::cargaProds();
+    $html = self::allCardsProduct($prods);
+    return $html;
+}
+
+public static function cargaProds(){ //funcion que muestra todos los productos disponibles
+    $app = Aplicacion::getSingleton();
+    $conn = $app->conexionBd();
+    $query = sprintf("SELECT * FROM productos P");
+    $rs = $conn->query($query);
+    $result = false;
+    $i=0;
+    if ($rs) {
+        if ( $rs->num_rows > 0) {
+            while ($array=$rs->fetch_array()){
+                $claves = array_keys($array);
+                foreach($claves as $clave){
+                    $arrayauxliar[$i][$clave]=$array[$clave];
+                }           
+                $i++;
+                $prod = $arrayauxliar;
+               
+            }
+            $rs->free();
+        } else {
+            echo "No se ha cargado ningún producto";
+        } 
+    }else{
+        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+        exit();
+    } 
+    return $prod;
+}
+
+public static function allCardsProduct($prod=array()){ 
+    $html = '';
+    foreach($prod as $key => $fila){
+        $vendedor = $fila['idVendedor'];
+        if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
+            if (!$vendedor===$_SESION['userid']) {
+                $id =  $fila['id'];
+                $imgSrc = ImageUpload::getSource($id);
+                $precio= $fila['precio'];
+                $html .= self::cardProduct($precio, $imgSrc); 
+            }
+        }
+        else{
+            $id =  $fila['id'];
+            $imgSrc = ImageUpload::getSource($id);
+            $precio= $fila['precio'];
+            $html .=<<<EOF
+                <div class="col-md-4">
+EOF;
+            $html .= self::cardProduct($precio, $imgSrc);
+            $html .=<<<EOF
+                </div>
+EOF;
+        }
+    }
+    return $html;
+}
+
+private static function cardProduct($precio, $imgSrc){ 
+    $html=<<<EOF
+    <div class="card mb-4">
+        <div class="card-img-top ">
+            $imgSrc
+        </div>
+        <div class="card-body"> 
+            $precio $
+        </div>
+    </div>
+EOF;
+    return $html;
+}
+
 
 
 public static function muestraProdsUsuario($idUsuario){ //funcion que muestra todos los productos disponibles

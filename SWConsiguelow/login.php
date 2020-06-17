@@ -3,7 +3,9 @@ require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/FormularioLogin.php';
 use es\fdi\ucm\aw\FormularioLogin;
 
-$form = new FormularioLogin(); $html = $form->gestiona();
+$form = new FormularioLogin(); 
+$html = $form->gestiona();
+
 ?>
 
 <!DOCTYPE html>
@@ -17,22 +19,19 @@ $form = new FormularioLogin(); $html = $form->gestiona();
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 
-    <body class="text-center">
-        <section class="container">
-            
-            <div class="row align-items-center">
-                <div class="col-3"></div>
-                <div class="col-6">
-                    <img src="img/logo.gif" class="rounded-circle" alt="imagen no disponible" width="70" height="70">
-                    <h1>Acceso al sistema</h1>
-                    <?php 
-                        echo $html; 
-                    ?>
-                </div>
-                <div class="col-3"></div>
+<body class="text-center bg-light">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div class="container d-flex flex-column mt-5">
+                <?php 
+                    echo $html; 
+                ?>
             </div>
-        </section>
-    </body>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</body>
 </html>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

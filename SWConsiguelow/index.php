@@ -2,8 +2,8 @@
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
 
-$html = Producto::muestraProds();
-
+//$html = Producto::muestraProds();
+$html = Producto::muestraCards();
 ?>
 
 <!DOCTYPE html>
@@ -16,22 +16,21 @@ $html = Producto::muestraProds();
     <link rel="icon" href="img/money.ico"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
-<body>
 
+<body>
     <?php
     //phpinfo();
         require("includes/common/cabecera.php");
-        ?>
-        
-
-
-    <?php
-        echo $html;    
-        ?>
-            
-
-   
-
-   
+    ?>
+    <main role="main">
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row"> 
+                    <?php
+                    echo $html;    
+                ?> 
+            </div>
+        </div>
+    </main>
 </body>
 </html>

@@ -13,14 +13,14 @@
                     <li class="nav-item active mr-3">
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item dropdown  mr-3">
+                    <li class="nav-item dropdown text-center  mr-3">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span>
                                 <img src="img/person.png" alt="imagen no disponible" width="30" height="30">
                                 Mi cuenta
                             </span>
                         </a>
-                        <div class="dropdown-menu  mr-3" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu text-center mr-3" aria-labelledby="navbarDropdown">
                             <p class="text-center"> 
                             <?php
                                 if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
@@ -41,33 +41,30 @@
                             </p>
                             <div class="dropdown-divider"></div>
                             <?php
-                                    if ($logueado===true) {
-                                        ?>
-                                        <p class="text-center">
-                                            <a href="vistaCarrito.php">
-                                                Mis pedidos
-                                            </a>
-                                        </p>
-                                    <?php
-                                    } else {
-                                    ?>
-                                    <a class="dropdown-item" href="registro.php">
-                                        <span>
-                                            <img src="img/user.png" alt="imagen no disponible" width="15" height="15">
-                                            Registro
-                                         </span>
-                                    </a>
-                                    <?php
-                                    }
-                                    ?>
-                            <p class="text-center">
-                                <a class="dropdown-item" href="logout.php">
-                                Logout
-                                </a>
-                            </p>
-                            <a class="dropdown-item" href="vistaProdsUsuario.php">
-                                    Productos subidos
+                                if ($logueado===true) {
+                            ?>
+                            <a class="dropdown-item" href="vistaCarrito.php">Mis pedidos</a>
+                            <a class="dropdown-item" href="vistaProdsUsuario.php">Productos subidos</a>
+                            <a class="dropdown-item text-danger" href="logout.php">
+                                <span>
+                                    Logout
+                                    <img src="img/exit.png" alt="imagen no disponible" width="15" height="15">
+                                </span>
                             </a>
+                            <?php
+                                } else {
+                            ?>
+                            <a class="dropdown-item" href="registro.php">
+                                <span>
+                                    <img src="img/user.png" alt="imagen no disponible" width="15" height="15">
+                                    Registro
+                                </span>
+                            </a>
+                            <?php
+                            }
+                            ?>
+                               
+                        
 
                         </div>
                     </li>
