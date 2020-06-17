@@ -34,10 +34,10 @@ class Producto
                     $precio= $fila['precio'];
                     $categoria = Categoria::findById($fila['categoria'])->nombre();
                     $nombre = $fila['nombre'];
-                    echo '<a href="#?id=5"></a>';
                     //muestraLogo($html)
                     $html.=<<<EOF
                     <ul>
+                    <li>idProducto: $id</li>
                         <li> Nombre Producto: $nombre</li>
                         <li>Descripcion: $descripcion</li>
                         <li>Precio: $precio</li>
@@ -55,7 +55,7 @@ class Producto
                                     </button></a>
         
                     </ul>
-        EOF;
+EOF;
                 }
             } else {
                 $html='';
@@ -113,7 +113,6 @@ public static function muestraProdsUsuario($idUsuario){ //funcion que muestra to
                 $precio= $fila['precio'];
                 $categoria = Categoria::findById($fila['categoria'])->nombre();
                 $nombre = $fila['nombre'];
-                echo '<a href="#?id=5"></a>';
                 $html.=<<<EOF
                 <ul>
                     <li> Nombre Producto: $nombre</li>
@@ -121,6 +120,11 @@ public static function muestraProdsUsuario($idUsuario){ //funcion que muestra to
                     <li>Precio: $precio</li>
                     <li>Categoria: $categoria</li>
                     <li>$imgSrc</li>
+                    
+                    <a href="eliminaProducto.php?nombreProd=$nombre">
+                                <button type="button" id="delProd">
+                                    Quitar</a>
+                                    </button></a>
                 </ul>
     EOF;
             }
@@ -158,34 +162,6 @@ return $html;
 EOF;
 }*/
 
-    /*public static function muestraProductosPorNombre($nombreProd)
-    {
-        $result = [];
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $nombreProd = $_GET['nombre'];
-        $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '$nombreProd'");$conn->real_escape_string($nombreProd);
-        $rs = $conn->query($query);
-        $i=0;
-        if ($rs) {
-            if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                $claves = array_keys($array);
-                foreach($claves as $clave){
-                    $arrayauxliar[$i][$clave]=$array[$clave];
-                } 
-                $i++;
-                $prod = $arrayauxliar;
-                $result[] = $prod;
-                }
-            $rs->free();
-            }   
-        } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        return $result;
-    }*/
 
     public static function buscaProd($nombreProd)
     {

@@ -10,12 +10,7 @@ function listadoPedidos()
   $html = '';
   $html.= 'Pedidos del usuario';
   $html .= '';
-  $pedido = Pedido::muestraPedidos();
-  foreach($pedido as $p) {
-    $html .= '<li> IdPedido: '.$p->id();
-    $html .= 'Producto: '.$p->producto();
-    $html .= '</li>';
-  }
+  $html.= Pedido::muestraPedidos();
     return $html;
 }
 ?>

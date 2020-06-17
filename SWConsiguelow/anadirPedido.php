@@ -7,6 +7,7 @@ require_once __DIR__.'/includes/config.php';
         $pagado = $_GET['pagado'];
         $comprador = $_SESSION['userid'];
         $pedido = new Pedido($idproducto, $pagado, $comprador);
+        //Pedido::añadePedido($id,$idproducto, $pagado, $comprador);
         Pedido::insertaPedido($pedido);
         /*$pedido = new Pedido($idproducto, $pagado, $comprador);
         Pedido::añadePedido($pedido->id(),$producto, $pagado,$comprador);*/
