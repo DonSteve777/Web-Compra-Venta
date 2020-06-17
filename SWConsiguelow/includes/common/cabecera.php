@@ -1,48 +1,111 @@
-<div class="container-fluid bg-primary">
-    <div class="container p-3">
-        <div class="row  align-items-center ">
-            <div class="col-2">
-                <img src="img/logo.gif" alt="imagen no disponible"width="100" height="100">
-            </div> 
-            <div class="col-6" >
-                <div class="row justify-content-center"> 
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-                </div>  
-            </div> 
-            <div class="col" >
-                <div class="row mx-md-n5">              
-                    <div class="col px-md-5">
-                        <div class="p-3 border bg-light">Custom column padding</div>
-                    </div>
-                    <div class="col px-md-5">
-                        <div class="p-3 border bg-light">Custom column padding</div>
-                    </div>
-                </div> 
-            </div> 
-        </div> 
-    </div>
-</div>
+<div class="container-fluid bg-success bg-dark">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand img-fluid" href="index.php?"> 
+                <img src="img/logo.gif" class="rounded-circle" alt="imagen no disponible" width="70" height="70">
+            </a>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <nav>
-            <ul class="menu">
-                <li><a href="index.php?">Inicio</a></li><li><a href="vender.php">Vender</a></li>
-            </ul>
-            <ul class="profile">
-                <?php
-                if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
-                    ?>
-                    <li>Bienvenido, <?php echo $_SESSION['nombre'];?><a href="vistaUsuario.php">Usuario</a></li><a href="vistaAdmin.php">Admin</a></li><li><a href="vistaCarrito.php">Carrito</li><li><a href="logout.php">(salir)</a></li>
-                <?php
-                } else {
-                ?>
-                    <li>Usuario desconocido.</li><li><a href="login.php">Login</a></li><li><a href="registro.php">Registro</a></li>
-                <?php
-                }
-                ?>
-        </ul>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto"> <!--margin derecho hasta el searchbar-->
+                    <li class="nav-item active mr-3">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown  mr-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span>
+                                <img src="img/person.png" alt="imagen no disponible" width="30" height="30">
+                                Mi cuenta
+                            </span>
+                        </a>
+                        <div class="dropdown-menu  mr-3" aria-labelledby="navbarDropdown">
+                            <p class="text-center"> 
+                            <?php
+                                if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
+                                    $logueado = true;
+                                    ?>
+                                    Bienvenido, <a href="vistaUsuario.php"><?php echo $_SESSION['nombre'];?></a>
+                                <?php
+                                } else {
+                                ?>
+                                    <a href="login.php">Login
+                                        <span>
+                                            <img src="img/insert-memory-card.png" alt="imagen no disponible" width="10" height="10">
+                                        </span> 
+                                    </a>
+                                <?php
+                                }
+                                ?>   
+                            </p>
+                            <div class="dropdown-divider"></div>
+                            <?php
+                                    if ($logueado===true) {
+                                        ?>
+                                        <p class="text-center">
+                                            <a href="vistaCarrito.php">
+                                                Mis pedidos
+                                            </a>
+                                        </p>
+                                    <?php
+                                    } else {
+                                    ?>
+                                    <a class="dropdown-item" href="registro.php">
+                                        <span>
+                                            <img src="img/user.png" alt="imagen no disponible" width="15" height="15">
+                                            Registro
+                                         </span>
+                                    </a>
+                                    <?php
+                                    }
+                                    ?>
+                            <p class="text-center">
+                                <a class="dropdown-item" href="logout.php">
+                                Logout
+                                </a>
+                            </p>
+                            <a class="dropdown-item" href="vistaProdsUsuario.php">
+                                    Productos subidos
+                            </a>
+
+                        </div>
+                    </li>
+                    <li class="nav-item  mr-3">
+                        <a href="vender.php" class="btn btn-light btn-lg active" role="button" aria-pressed="true">      
+                            <span>
+                                <img src="img/sell.png" alt="imagen no disponible" width="15" height="15">
+                                Vender
+                            </span>
+                        </a>                     
+                    </li>
+                    <li class="nav-item">
+                        <a href="vistaCarrito.php" class="btn btn-light btn-lg active" role="button" aria-pressed="true">
+                            <span>
+                                <img src="img/shopping-cart.png" alt="imagen no disponible" width="15" height="15">
+                                Carrito
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <!--form class="form-inline my-2 my-lg-0" action="filtrar.php" method="GET">
+                    <input class="form-control mr-sm-2" type="search" placeholder="search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                -->
+                <form class="form-inline my-2 my-lg-0" action="filtrar.php" method="GET">
+                    <input class="form-control mr-sm-2" name="search" type="text" value='' placeholder="Type here"></input>
+                    <input class="btn btn-outline-info my-2 my-sm-0" type="submit" value="Search"></input>
+                </form>
+            </div>
         </nav>
     </div>
 </div>
+
+
+       
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="js/bootstrap.min.js"></script>
+
+

@@ -60,14 +60,6 @@ class Producto
             } else {
                 $html='';
                 $html =  <<<EOF
-                <p>Cada vez más gente compra mediante <strong>internet</strong>, debido a que hay muchísima
-        variedad de productos y es mucho mas cómodo, ya que no hay que moverse
-        de casa. Nuestro proyecto consiste en una página web estilo Ebay, en la que se
-        puedan comprar productos de primera y segunda mano. Habrá un sistema de
-        valoraciones de vendedores y comentarios en productos para que el
-        comprador se pueda guiar a la hora de comprar. Se podrá añadir productos a
-        favoritos, filtrar las búsquedas según precio, comentarios, número de unidades
-        vendidas.</p>
     <div class="logo">
         <img src="img/logo.gif" alt="imagen no disponible">
     </div>
@@ -247,7 +239,8 @@ EOF;
     $result = [];
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
-    $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '$nombreProd'");$conn->real_escape_string($nombreProd);
+    $query = sprintf("SELECT * FROM productos P WHERE P.nombre LIKE '$nombreProd'%");
+    $conn->real_escape_string($nombreProd);
     $rs = $conn->query($query);
     if ($rs) {
       while($fila = $rs->fetch_assoc()) {

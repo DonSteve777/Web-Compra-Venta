@@ -2,7 +2,6 @@
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
 
-    
 $html = Producto::muestraProds();
 
 ?>
@@ -18,34 +17,21 @@ $html = Producto::muestraProds();
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-<div id="container">
 
     <?php
     //phpinfo();
         require("includes/common/cabecera.php");
         ?>
-        <div id="flex-container">
-     <?php
-        require("includes/common/sidebarIzq.php");
-    ?>      
-    <div id="contenido">
-    <form action="filtrar.php" method="GET">
-    <input id="search" name="search" type="text" value='' placeholder="Type here">
-    <input id="submit" type="submit" value="Search">
-    </form>
-    <?php
+        
 
+
+    <?php
         echo $html;    
         ?>
-            </div>
-    <?php
-       require("includes/common/sidebarDer.php");
-       ?>
-   </div>
-</div>
-    <footer>
+            
 
-    </footer>
+   
+
    
 </body>
 </html>

@@ -5,11 +5,13 @@ use es\fdi\ucm\aw\Producto;
 
 function searchByName($nombreProd = NULL)
 {
-    $nombreProd=$_GET['search'];
+    
+$nombreProd=$_GET['search'];
   $html = '';
   $html.= '<li>Estas buscando el producto '.$nombreProd;
   $html .= '</li>';
   $prod = Producto::muestraProdPorNombre($nombreProd);
+
   foreach($prod as $p) {
     $html .= '<li>'.$p->descripcion();
   }

@@ -23,12 +23,22 @@ class FormularioLogin extends Form
       $password = $datos['password'] ?? $password;
     }
     $camposFormulario=<<<EOF
-		<fieldset>
-		  <legend>Usuario y contraseña</legend>
-		  <p><label>Name:</label> <input type="text" name="username" value="$username"/></p>
-		  <p><label>Password:</label> <input type="password" name="password" value="$password"/><br /></p>
-		  <button type="submit">Entrar</button>
-		</fieldset>
+    
+    <fieldset>
+   
+      <div class="form-group">
+        <legend>Usuario</legend>
+          <p><label>Name:</label> <input class="form-control" type="text" name="username" value="$username"/></p>
+      </div>
+      <div class="form-group">
+        <legend>contraseña</legend>
+          <p><label>Password:</label> <input class="form-control" type="password" name="password" value="$password"/><br /></p>
+      </div>
+      <div class="form-group">
+		    <button class="btn btn-danger" type="submit">Entrar</button>
+      </div>
+      </fieldset>
+    
 EOF;
     return $camposFormulario;
   }
