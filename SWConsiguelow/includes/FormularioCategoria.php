@@ -20,15 +20,17 @@ class FormularioCategoria extends Form
             $descrCat = isset($datos['descrCat']) ? $datos['descrCat'] : $descrCat;
         }
         $html = <<<EOF
-		<fieldset>
-			<div class="grupo-control">
-				<label>Nombre de categoria:</label> <input class="control" type="text" name="nombreCat" value="$nombreCat" />
-			</div>
-			<div class="grupo-control">
-				<label>Descripcion:</label> <input class="control" type="text" name="descrCat" value="$descrCat" />
-			</div>
-            <div class="grupo-control"><button type="submit" name="registro">Dar de alta</button></div>
-		</fieldset>
+        <div class="form-group m-2" >
+            <fieldset>
+                <div class="form-group">
+                    <label>Nombre de categoria:</label> <input class="form-control" type="text" name="nombreCat" value="$nombreCat" />
+                </div>
+                <div class="form-group">
+                    <label>Descripcion:</label> <input class="form-control" type="text" name="descrCat" value="$descrCat" />
+                </div>
+                <div class="form-group text-center"><button class=" btn btn-info" type="submit" name="registro">Dar de alta</button></div>
+            </fieldset>
+        </div>
 EOF;
         return $html;
     }

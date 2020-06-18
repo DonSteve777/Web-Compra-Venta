@@ -71,7 +71,10 @@ EOF;
             </select>
             <p><label>Imagen</label> 
             <input type="file" class="form-control" name="imagen" value="$imgUpload"/></p>
-            <button type="submit" name="sell">Vender</button>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-info" name="sell">Vender</button>
+            </div>
+
             </fieldset>
         </div>
 EOF;

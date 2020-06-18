@@ -24,23 +24,19 @@ $html = $form->gestiona();
 <?php
 	require("includes/common/cabecera.php");
 ?>
-
 <div class="row">
-            <div class="col-4">
-            </div>
-            <div class="col-4">
-                <div class="d-flex flex-column bg-light m-3">
-                    <h1 class="m-2">Registro de usuario</h1>
-                    <?php
-                        echo $html;
-                    ?>
-                </div>
-            </div>
-            <div class="col-4">
+    <div class="col-4">
+    </div>
+    <div class="col-4">
+        <div class="d-flex flex-column bg-light m-3">
+            <h1 class="m-2">Registro de usuario</h1>
+            <?php
+                echo $html;
+            ?>
         </div>
-
-
+    </div>
+    <div class="col-4">
+    </div>
 </div>
-
 </body>
 </html>

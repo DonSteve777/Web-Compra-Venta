@@ -61,7 +61,7 @@ class FormularioRegistro extends Form
                 <div class="form-group m-2">
                     <label>tarjeta credito:</label> <input class="form-control" type="text" name="tarjetaCredito" value="$tarjetaCredito" />
                 </div>
-                <div class="form-group m-2"><button type="submit" name="registro">Registrar</button></div>
+                <div class="form-group text-center"><button class=" btn btn-info" type="submit" name="registro">Registrar</button></div>
             </fieldset>
         </div>
 EOF;

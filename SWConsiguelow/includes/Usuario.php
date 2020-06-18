@@ -33,19 +33,27 @@ class Usuario
                    
                 }
                 $rs->free();
-                $html='';
+                $html.=<<<EOF
+                <ul class="list-group">
+EOF;
                 foreach($prod as $key => $fila){
                     $nombre = $fila['nombreUsuario'];
                     $html.=<<<EOF
-                    <ul>
-                        <li> Nombre Usuario: $nombre</li>
-                            <a href="eliminaUsuario.php?username=$nombre">
-                            <button type="button" id="deleteUser" >
-                                Eliminar usuario</a>
-                                </button></a>
-                    </ul>
-        EOF;
+                    <li class="list-group-item"> 
+                        <div class="d-flex justify-content-between">
+                            <div class="p-2">Nombre Cat: $nombre</div>
+                            <div class="p-2">
+                                <a class="btn btn-info align-bottom" href="eliminaUsuario.php?username=$nombre">
+                                    Eliminar
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+EOF;
                 }
+                $html.=<<<EOF
+                </ul>
+EOF;
             } 
     }else{
         echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);

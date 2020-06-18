@@ -115,19 +115,27 @@ class Categoria
                        
                     }
                     $rs->free();
-                    $html='';
+                    $html.=<<<EOF
+                        <ul class="list-group">
+EOF;
                     foreach($cat as $key => $fila){
                         $nombre = $fila['nombre'];
                         $html.=<<<EOF
-                        <ul>
-                            <li> Nombre Cat: $nombre</li>
-                                <a href="eliminaCat.php?categoria=$nombre">
-                                <button type="button" id="deleteCat" >
-                                    Eliminar</a>
-                                    </button></a>
-                        </ul>
-            EOF;
+                            <li class="list-group-item"> 
+                                <div class="d-flex justify-content-between">
+                                    <div class="p-2">Nombre Cat: $nombre</div>
+                                    <div class="p-2">
+                                        <a class="btn btn-info align-bottom" href="eliminaCat.php?categoria=$nombre">
+                                            Eliminar
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+EOF;
                     }
+                    $html.=<<<EOF
+                        </ul>
+EOF;
                 } 
         }else{
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);

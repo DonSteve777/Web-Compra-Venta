@@ -107,7 +107,7 @@ INSERT INTO `rolesUsuario` (`usuario`, `rol`) VALUES
 (1, 1),
 (1, 2);
 
-INSERT INTO `RolesUsuario` (`usuario`, `rol`) VALUES
+INSERT INTO `rolesUsuario` (`usuario`, `rol`) VALUES
 (2, 1);*/
 --
 -- Estructura de tabla para la tabla `carrito`
