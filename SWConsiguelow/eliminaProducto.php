@@ -7,7 +7,7 @@ require_once __DIR__.'/includes/config.php';
         if(Producto::eliminaProd($nombreProd)){
             echo '<script type="text/javascript">
         alert("Prod eliminado con exito");
-        window.location.assign("login.php");
+        window.location.assign("index.php");
         </script>';
         }
 

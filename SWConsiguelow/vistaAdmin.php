@@ -23,7 +23,6 @@ if ($app->tieneRol('admin', 'Acceso Denegado', 'No tienes permisos suficientes p
 		<h1>Consola de administración</h1></br>
         <a href='anadeCategoria.php'>Añadir una categoria</a></br>
         <a href='listaCategorias.php'>Ver categorias ya existentes</a></br>
-        <a href='eliminaProducto.php'>Eliminar un producto</a></br>
         <a href='vistaUsuarios.php'>Ver todos los usuarios de la web</a></br>
 
 

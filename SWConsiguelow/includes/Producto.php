@@ -31,10 +31,10 @@ class Producto
                     $precio= $fila['precio'];
                     $categoria = Categoria::findById($fila['categoria'])->nombre();
                     $nombre = $fila['nombre'];
-                    echo '<a href="#?id=5"></a>';
                     //muestraLogo($html)
                     $html.=<<<EOF
                     <ul>
+                    <li>idProducto: $id</li>
                         <li> Nombre Producto: $nombre</li>
                         <li>Descripcion: $descripcion</li>
                         <li>Precio: $precio</li>
@@ -202,7 +202,6 @@ public static function muestraProdsUsuario($idUsuario){ //funcion que muestra to
                 $precio= $fila['precio'];
                 $categoria = Categoria::findById($fila['categoria'])->nombre();
                 $nombre = $fila['nombre'];
-                echo '<a href="#?id=5"></a>';
                 $html.=<<<EOF
                 <ul>
                     <li> Nombre Producto: $nombre</li>
@@ -210,6 +209,11 @@ public static function muestraProdsUsuario($idUsuario){ //funcion que muestra to
                     <li>Precio: $precio</li>
                     <li>Categoria: $categoria</li>
                     <li>$imgSrc</li>
+                    
+                    <a href="eliminaProducto.php?nombreProd=$nombre">
+                                <button type="button" id="delProd">
+                                    Quitar</a>
+                                    </button></a>
                 </ul>
     EOF;
             }

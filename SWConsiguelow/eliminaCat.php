@@ -8,7 +8,7 @@ require_once __DIR__.'/includes/config.php';
         if(Categoria::eliminaCat($nombreCat)){
             echo '<script type="text/javascript">
         alert("Categoria eliminada con exito");
-        window.location.assign("login.php");
+        window.location.assign("index.php");
         </script>';
         }
     }

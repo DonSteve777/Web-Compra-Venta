@@ -4,7 +4,6 @@ use es\fdi\ucm\aw\Pedido;
 
 require_once __DIR__.'/includes/config.php';
 
-
 function listadoCarrito()
 {
   $html = '';
@@ -12,10 +11,22 @@ function listadoCarrito()
   $html .= '';
   $pedido = Pedido::muestraCarrito();
   foreach($pedido as $p) {
-    $html .= '<li>Producto: '.$p->producto();
+    $id=$p->id();
+    $prod=$p->producto();
+    $html .= '<li>IdPedido: '.$id;
     $html .= '</li>';
+    $html .= 'Producto '.$prod;
+    $html.=<<<EOF
+                    <ul>
+                            <a href="eliminaCarrito.php?id=$id">
+                            <button type="button" id="deleteCart" >
+                                Eliminar del carrito</a>
+                                </button></a>
+                    </ul>
+EOF;
   }
-      return $html;
+  $html .= '</li>';
+  return $html;
 }
 ?>
 
