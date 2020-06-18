@@ -23,12 +23,17 @@
                         <div class="dropdown-menu text-center mr-3" aria-labelledby="navbarDropdown">
                             <p class="text-center"> 
                             <?php
+                            //var_dump($_SESSION["login"]);
                                 if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
+                                    echo 'algo';
+
                                     $logueado = true;
                                     ?>
                                     Bienvenido, <a href="vistaUsuario.php"><?php echo $_SESSION['nombre'];?></a>
                                 <?
                                 } else {
+                                    var_dump($_SESSION["login"]);
+                                    echo 'else';
                                 ?>
                                     <a href="login.php">Login
                                         <span>
@@ -63,9 +68,6 @@
                             <?php
                             }
                             ?>
-                               
-                        
-
                         </div>
                     </li>
                     <li class="nav-item  mr-3">
@@ -85,11 +87,6 @@
                         </a>
                     </li>
                 </ul>
-                <!--form class="form-inline my-2 my-lg-0" action="filtrar.php" method="GET">
-                    <input class="form-control mr-sm-2" type="search" placeholder="search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-                -->
                 <form class="form-inline my-2 my-lg-0" action="filtrar.php" method="GET">
                     <input class="form-control mr-sm-2" name="search" type="text" value='' placeholder="Type here"></input>
                     <input class="btn btn-outline-info my-2 my-sm-0" type="submit" value="Search"></input>
