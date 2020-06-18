@@ -27,41 +27,43 @@ class FormularioRegistro extends Form
             $nombre = isset($datos['nombre']) ? $datos['nombre'] : $nombre;
         }
         $html = <<<EOF
-		<fieldset>
-			<div class="grupo-control">
-				<label>Nombre de usuario:</label> <input class="control" type="text" name="nombreUsuario" value="$nombreUsuario" />
-			</div>
-			<div class="grupo-control">
-				<label>Nombre completo:</label> <input class="control" type="text" name="nombre" value="$nombre" />
-			</div>
-			<div class="grupo-control">
-				<label>Password:</label> <input class="control" type="password" name="password" />
-			</div>
-			<div class="grupo-control"><label>Vuelve a introducir el Password:</label> <input class="control" type="password" name="password2" /><br /></div>
-            
-            <div class="grupo-control">
-                <label>dni:</label> <input class="control" type="text" name="dni" value="$dni" />
-            </div>
-            <div class="grupo-control">
-                <label>direccion:</label> <input class="control" type="text" name="direccion" value="$direccion" />
-            </div>
-            <div class="grupo-control">
-                <label> email:</label> <input class="control" type="text" name="email" value="$email" />
-            </div>
-            <div class="grupo-control">
-                <label>telefono:</label> <input class="control" type="text" name="telefono" value="$telefono" />
-            </div>
-            <div class="grupo-control">
-                <label>ciudad:</label> <input class="control" type="text" name="ciudad" value="$ciudad" />
-            </div>
-            <div class="grupo-control">
-                <label>codigo postal:</label> <input class="control" type="text" name="codigoPostal" value="$codigoPostal" />
-             </div>
-            <div class="grupo-control">
-                <label>tarjeta credito:</label> <input class="control" type="text" name="tarjetaCredito" value="$tarjetaCredito" />
-            </div>
-            <div class="grupo-control"><button type="submit" name="registro">Registrar</button></div>
-		</fieldset>
+        <div class="form-group m-2" >
+            <fieldset>
+                <div class="form-group m-2">
+                    <label>Nombre de usuario:</label> <input class="form-control" type="text" name="nombreUsuario" value="$nombreUsuario" />
+                </div>
+                <div class="form-group m-2">
+                    <label>Nombre completo:</label> <input class="form-control" type="text" name="nombre" value="$nombre" />
+                </div>
+                <div class="form-group m-2">
+                    <label>Password:</label> <input class="form-control" type="password" name="password" />
+                </div>
+                <div class="form-group m-2"><label>Vuelve a introducir el Password:</label> <input class="form-control" type="password" name="password2" /><br /></div>
+                
+                <div class="form-group m-2">
+                    <label>dni:</label> <input class="form-control" type="text" name="dni" value="$dni" />
+                </div>
+                <div class="form-group m-2">
+                    <label>direccion:</label> <input class="form-control" type="text" name="direccion" value="$direccion" />
+                </div>
+                <div class="form-group m-2">
+                    <label> email:</label> <input class="form-control" type="text" name="email" value="$email" />
+                </div>
+                <div class="form-group m-2">
+                    <label>telefono:</label> <input class="form-control" type="text" name="telefono" value="$telefono" />
+                </div>
+                <div class="form-group m-2">
+                    <label>ciudad:</label> <input class="form-control" type="text" name="ciudad" value="$ciudad" />
+                </div>
+                <div class="form-group m-2">
+                    <label>codigo postal:</label> <input class="form-control" type="text" name="codigoPostal" value="$codigoPostal" />
+                </div>
+                <div class="form-group m-2">
+                    <label>tarjeta credito:</label> <input class="form-control" type="text" name="tarjetaCredito" value="$tarjetaCredito" />
+                </div>
+                <div class="form-group m-2"><button type="submit" name="registro">Registrar</button></div>
+            </fieldset>
+        </div>
 EOF;
         return $html;
     }

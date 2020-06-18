@@ -45,17 +45,16 @@ EOF;
         }
  
        $html =<<<EOF
+       <div class="form-group m-2" >
             <fieldset>
-            <link rel="stylesheet" href="styles/style.css">
-            <legend>Producto, descripcion y precio</legend>
             <p><label>Nombre del producto:</label> 
-            <input type="text" name="nombre" value="$nombreProd"/></p>
+            <input class="form-control" type="text" name="nombre" value="$nombreProd"/></p>
             <p><label>Descripcion</label> 
-            <input type="text" name="descripcion" value="$descripcion"/></p>
+            <input type="text" class="form-control" name="descripcion" value="$descripcion"/></p>
             <p><label>Precio del producto:</label> 
-            <input type="text" name="precio" value="$precio"/></p>
+            <input type="text" class="form-control" name="precio" value="$precio"/></p>
             <p><label>Unidades:</label> 
-            <input type="text" name="unidades" value="$unidades"/></p>
+            <input type="text" class="form-control" name="unidades" value="$unidades"/></p>
             <p><label>Talla</label> 
             <select name="talla">
                 <option value="--">Not sizeable</option>
@@ -66,14 +65,15 @@ EOF;
                 <option value="XL">XL</option>
             </select>
             <p><label>Color del producto:</label> 
-            <input type="text" name="color" value="$color"/></p>
+            <input type="text" class="form-control" name="color" value="$color"/></p>
             <p><label>Categoria</label> 
             $select;
             </select>
             <p><label>Imagen</label> 
-            <input type="file" name="imagen" value="$imgUpload"/></p>
+            <input type="file" class="form-control" name="imagen" value="$imgUpload"/></p>
             <button type="submit" name="sell">Vender</button>
             </fieldset>
+        </div>
 EOF;
         return $html;
     }

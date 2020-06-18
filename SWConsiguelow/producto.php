@@ -11,6 +11,14 @@ $imgSrc = ImageUpload::getSource($idproducto);
 $img =<<<EOF
     <img class="img-fluid border" src=$imgSrc alt="imagen no disponible">
 EOF;
+
+$id = $producto->id();
+$htmlComprar.=<<<EOF
+<a class="btn btn-info btn-lg" role="button" href="anadirPedido.php?id=$id&pagado=1">Comprar</a>
+EOF;
+$htmlCarrito.=<<<EOF
+    <a class="btn btn-info btn-lg" role="button" href="anadirPedido.php?id=$id&pagado=0">Añadir al carrito</a>
+EOF;
 ?>
 
 <!DOCTYPE html>
@@ -68,28 +76,17 @@ EOF;
                                 <div class="d-inline p-2 font-weight-bold">Color</div>
                                 <div class="d-inline p-2 font-weight-ligh"><?php echo $producto->color()?></div>
                             </div>
-                            <?php 
-                                $id = $producto->id();
-                                $htmlComprar.=<<<EOF
-                            <a class="btn btn-primary btn-lg" role="button" href="anadirPedido.php?id=$id&pagado=1">Comprar</a>
-EOF;
-                                $htmlCarrito.=<<<EOF
-                                    <a class="btn btn-primary btn-lg" role="button" href="anadirPedido.php?id=$id&pagado=0">Añadir al carrito</a>
-EOF;
 
-?>
                             <div class="jumbotron">
-                                <p class="lead"><?php echo $producto->descripcion()?></p>     
-                                <p class="lead">
-                                <?php echo $htmlComprar?>                                    
-                                </p>
-                                <p class="lead">
-                                <?php echo $htmlCarrito?> 
-                                </p>
-                            </div>
-
-                            
-
+                                <p class="lead"><?php echo $producto->descripcion()?></p>  
+                                <div class="d-flex justify-content-end">   
+                                    <p class="lead m-2">        
+                                        <?php echo $htmlComprar?>                                    
+                                    </p>
+                                    <p class="lead m-2">
+                                        <?php echo $htmlCarrito?> 
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>

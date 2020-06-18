@@ -21,7 +21,6 @@ $html = $form->gestiona();
             <div id="contenido">
                 <h1>Añadir categoria</h1>
                 <?php
-
                echo $html;
                 ?>
             </div>

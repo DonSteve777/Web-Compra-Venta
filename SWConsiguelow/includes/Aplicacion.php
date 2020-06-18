@@ -155,12 +155,11 @@ class Aplicacion
     if (! in_array($rol, $roles)) {
       if ( !is_null($cabeceraError) && ! is_null($mensajeError) ) {
         $bloqueContenido=<<<EOF
-<h1>$cabeceraError!</h1>
+<h1>$cabeceraError</h1>
 <p>$mensajeError.</p>
 EOF;
         echo $bloqueContenido;
       }
-
       return false;
     }
 

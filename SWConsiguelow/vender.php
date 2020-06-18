@@ -14,23 +14,32 @@ if(!isset($_SESSION['login'])){
 ?>
 
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="styles/style.css" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Subir un producto</title>
-    </head>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Local Consiguelow</title>
+    <link rel="icon" href="img/money.ico"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
     <body>
-        <div id="contenedor">
-            <?php
-                require("includes/common/cabecera.php");
-            ?>
-            <div id="contenido">
-                <h1>Subir un producto</h1>
-                <?php
-                    echo $html;
-                ?>
-                        </div>
-        </div>  
+        <?php
+            require("includes/common/cabecera.php");
+        ?>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <div class="d-flex flex-column bg-light m-3">
+                    <h1 class="m-2">Subir un producto</h1>
+                    <?php
+                        echo $html;
+                    ?>
+                </div>
+            </div>
+            <div class="col-4">
+        </div>
+ 
     </body>
 </html>

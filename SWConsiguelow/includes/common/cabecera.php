@@ -1,3 +1,4 @@
+
 <div class="container-fluid bg-success bg-dark">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -23,24 +24,21 @@
                         <div class="dropdown-menu text-center mr-3" aria-labelledby="navbarDropdown">
                             <p class="text-center"> 
                             <?php
-                            //var_dump($_SESSION["login"]);
                                 if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
-                                    echo 'algo';
-
                                     $logueado = true;
-                                    ?>
-                                    Bienvenido, <a href="vistaUsuario.php"><?php echo $_SESSION['nombre'];?></a>
-                                <?php
-                                } else {
-                                ?>
-                                    <a href="login.php">Login
-                                        <span>
-                                            <img src="img/insert-memory-card.png" alt="imagen no disponible" width="10" height="10">
-                                        </span> 
-                                    </a>
-                                <?php
-                                }
-                                ?>   
+                            ?>
+                            Bienvenido, <a href="vistaUsuario.php"><?php echo $_SESSION['nombre'];?></a>
+                            <?php
+                            } else {
+                            ?>
+                                <a href="login.php">Login
+                                    <span>
+                                        <img src="img/insert-memory-card.png" alt="imagen no disponible" width="10" height="10">
+                                    </span> 
+                                </a>
+                            <?php
+                            }
+                            ?>   
                             </p>
                             <div class="dropdown-divider"></div>
                             <?php
@@ -84,6 +82,18 @@
                             </span>
                         </a>
                     </li>
+
+                    <?php
+                        if ($logueado===true && $app->tieneRol('admin', '', '')) {
+                    ?>
+                        <li class="nav-item ml-3">
+                            <a href="vistaAdmin.php" class="btn btn-light btn-lg active" role="button" aria-pressed="true">
+                                Administrar
+                            </a>
+                        </li>
+                        <?php
+                            }
+                            ?>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" action="filtrar.php" method="GET">
                     <input class="form-control mr-sm-2" name="search" type="text" value='' placeholder="Type here"></input>
@@ -94,10 +104,7 @@
     </div>
 </div>
 
-
-       
+      
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="js/bootstrap.min.js"></script>
-
-
