@@ -4,7 +4,6 @@
 
 class Producto
 {
-
     public static function muestraProds(){ //funcion que muestra todos los productos disponibles
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -41,19 +40,16 @@ class Producto
                         <li>Precio: $precio</li>
                         <li>Categoria: $categoria</li>
                         <li>$imgSrc</li>
-                       
-                            <a href="anadirPedido.php?id=$id&pagado=0">
-                            <button type="button" id="addCart" >
-                                Añadir al carrito</a>
-                                </button></a>
-        
-                                <a href="anadirPedido.php?id=$id&pagado=1">
-                                <button type="button" id="addCart">
-                                    Comprar</a>
-                                    </button></a>
-        
+                        <a href="anadirPedido.php?id=$id&pagado=0">
+                        <button type="button" id="addCart" >
+                            Añadir al carrito</a>
+                            </button></a>
+                        <a href="anadirPedido.php?id=$id&pagado=1">
+                        <button type="button" id="addCart">
+                            Comprar</a>
+                            </button></a>
                     </ul>
-        EOF;
+EOF;
                 }
             } else {
                 $html='';
@@ -64,12 +60,31 @@ class Producto
     EOF;   
         } 
     }else{
-    
         echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
         exit();
     
     } 
     return $html;
+}
+
+public static function findById($id){
+    $app = Aplicacion::getSingleton();
+    $conn = $app->conexionBd();
+    $query = sprintf("SELECT * FROM productos U WHERE U.id = '%d'", $conn->real_escape_string($id));
+    $rs = $conn->query($query);
+    if ($rs) {
+        if ( $rs->num_rows == 1) {
+            $fila = $rs->fetch_assoc();
+            $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria']);
+            $prod->id = $id;
+            
+        }
+        $rs->free();
+    } else {
+        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+        exit();
+    }
+    return $prod;
 }
 
 public static function muestraCards(){
@@ -82,7 +97,10 @@ public static function muestraCards(){
 public static function cargaProds(){ //funcion que muestra todos los productos disponibles
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
-    $query = sprintf("SELECT * FROM productos P");
+    $currentuser= $_SESSION['userid'];
+    $query = sprintf("SELECT * FROM productos P WHERE NOT idVendedor=%d"
+    , $conn->real_escape_string($currentuser));
+
     $rs = $conn->query($query);
     $result = false;
     $i=0;
@@ -110,14 +128,17 @@ public static function cargaProds(){ //funcion que muestra todos los productos d
 
 public static function allCardsProduct($prod=array()){ 
     $html = '';
+    $currentuser= $_SESSION['userid'];
+    //var_dump($currentuser);
     foreach($prod as $key => $fila){
         $vendedor = $fila['idVendedor'];
+
         if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
-            if (!$vendedor===$_SESION['userid']) {
+            if ($vendedor!==$currentuser) {
                 $id =  $fila['id'];
                 $imgSrc = ImageUpload::getSource($id);
                 $precio= $fila['precio'];
-                $html .= self::cardProduct($precio, $imgSrc); 
+                $html .= self::cardProduct($precio, $imgSrc, $id); 
             }
         }
         else{
@@ -127,7 +148,7 @@ public static function allCardsProduct($prod=array()){
             $html .=<<<EOF
                 <div class="col-md-4">
 EOF;
-            $html .= self::cardProduct($precio, $imgSrc);
+            $html .= self::cardProduct($precio, $imgSrc, $id);
             $html .=<<<EOF
                 </div>
 EOF;
@@ -136,14 +157,16 @@ EOF;
     return $html;
 }
 
-private static function cardProduct($precio, $imgSrc){ 
+private static function cardProduct($precio, $imgSrc, $id){ 
     $html=<<<EOF
-    <div class="card mb-4">
-        <div class="card-img-top ">
-            $imgSrc
+    <div class="card mb-4 text-center bg-light border-0">
+        <div class="card-img-top">
+            <a href="producto.php?id=$id">
+                <img class="img-thumbnail" src=$imgSrc alt="imagen no disponible" width=250 height=250>
+            </a>
         </div>
         <div class="card-body"> 
-            $precio $
+            $precio €
         </div>
     </div>
 EOF;
@@ -208,50 +231,7 @@ EOF;
 return $html;
 }
 
-/*private function muestraLogo(&$html){
-    $html =  <<<EOF
-            <p>Cada vez más gente compra mediante <strong>internet</strong>, debido a que hay muchísima
-    variedad de productos y es mucho mas cómodo, ya que no hay que moverse
-    de casa. Nuestro proyecto consiste en una página web estilo Ebay, en la que se
-    puedan comprar productos de primera y segunda mano. Habrá un sistema de
-    valoraciones de vendedores y comentarios en productos para que el
-    comprador se pueda guiar a la hora de comprar. Se podrá añadir productos a
-    favoritos, filtrar las búsquedas según precio, comentarios, número de unidades
-    vendidas.</p>
-<div class="logo">
-    <img src="img/logo.gif" alt="imagen no disponible">
-</div>
-EOF;
-}*/
 
-    /*public static function muestraProductosPorNombre($nombreProd)
-    {
-        $result = [];
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $nombreProd = $_GET['nombre'];
-        $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '$nombreProd'");$conn->real_escape_string($nombreProd);
-        $rs = $conn->query($query);
-        $i=0;
-        if ($rs) {
-            if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                $claves = array_keys($array);
-                foreach($claves as $clave){
-                    $arrayauxliar[$i][$clave]=$array[$clave];
-                } 
-                $i++;
-                $prod = $arrayauxliar;
-                $result[] = $prod;
-                }
-            $rs->free();
-            }   
-        } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        return $result;
-    }*/
 
     public static function buscaProd($nombreProd)
     {
@@ -313,7 +293,7 @@ EOF;
     $result = [];
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
-    $query = sprintf("SELECT * FROM productos P WHERE P.nombre LIKE '$nombreProd'%");
+    $query = sprintf("SELECT * FROM productos P WHERE P.nombre LIKE '$nombreProd'");
     $conn->real_escape_string($nombreProd);
     $rs = $conn->query($query);
     if ($rs) {

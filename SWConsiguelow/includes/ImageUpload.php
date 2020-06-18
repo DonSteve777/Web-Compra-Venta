@@ -96,9 +96,8 @@ Class ImageUpload {
 		$imagen = Imagen::findByProductId($idProducto);
 		$result='';
 		$imgname = $imagen->nombre(); 
-		$result =<<<EOF
-		 <img src="data/productos/$imgname" alt="Girl in a jacket" width="250" height="200">
-EOF;
+		$result = "data/productos/$imgname";
+		
 		return $result;
 	}
 

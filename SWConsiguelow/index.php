@@ -1,9 +1,12 @@
 <?php
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
+require_once __DIR__.'/includes/ImageUpload.php';
+use es\fdi\ucm\aw\ImageUpload;
 
 //$html = Producto::muestraProds();
 $html = Producto::muestraCards();
+
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +30,7 @@ $html = Producto::muestraCards();
             <div class="container">
                 <div class="row"> 
                     <?php
-                    echo $html;    
+                    echo $html; 
                 ?> 
             </div>
         </div>

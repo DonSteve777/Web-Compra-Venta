@@ -27,7 +27,7 @@
                                     $logueado = true;
                                     ?>
                                     Bienvenido, <a href="vistaUsuario.php"><?php echo $_SESSION['nombre'];?></a>
-                                <?php
+                                <?
                                 } else {
                                 ?>
                                     <a href="login.php">Login
@@ -43,7 +43,7 @@
                             <?php
                                 if ($logueado===true) {
                             ?>
-                            <a class="dropdown-item" href="vistaCarrito.php">Mis pedidos</a>
+                            <a class="dropdown-item" href="vistaPedidos.php">Mis pedidos</a>
                             <a class="dropdown-item" href="vistaProdsUsuario.php">Productos subidos</a>
                             <a class="dropdown-item text-danger" href="logout.php">
                                 <span>

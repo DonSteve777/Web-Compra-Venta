@@ -121,6 +121,13 @@ class Aplicacion
     return $_SESSION['nombre'] ?? '';
   }
 
+  
+  public function userid()
+  {
+    return $_SESSION['userid'] ?? '';
+  }
+
+
   public function conexionBd()
   {
     if (! $this->conn ) {

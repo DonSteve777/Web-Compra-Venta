@@ -129,12 +129,14 @@ EOF;
        if (count($result) === 0) {
             $idvendedor = $_SESSION['userid'];
             $producto = Producto::añadeProd($nombreProd, $idvendedor, $descripcion, $precio,$unidades,$talla,$color,$categoria);
-            $imgupload = new ImageUpload($_FILES, $producto->id());
-            $result = $imgupload->uploadImages();
-            if ( ! $producto ) {
-                // No se da pistas a un posible atacante
+            if ($producto){
+                $imgupload = new ImageUpload($_FILES, $producto->id());
+                $result = $imgupload->uploadImages();
+
+            }       
+            // No se da pistas a un posible atacante      
+            else{
                 $result[] = "No se ha podido añadir el producto";
-            }else{
                 $result = 'index.php';
                         }
         }
