@@ -162,10 +162,10 @@ private static function cardProduct($precio, $imgSrc, $id){
     <div class="card mb-4 text-center bg-light border-0">
         <div class="card-img-top">
             <a href="producto.php?id=$id">
-                <img class="img-thumbnail" src=$imgSrc alt="imagen no disponible" width=250 height=250>
+                <img class="img-thumbnail" src=$imgSrc alt="imagen no disponible" >
             </a>
         </div>
-        <div class="card-body"> 
+        <div class="card-body justify-content-end"> 
             $precio €
         </div>
     </div>

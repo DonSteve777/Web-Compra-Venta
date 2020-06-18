@@ -30,10 +30,8 @@
                                     $logueado = true;
                                     ?>
                                     Bienvenido, <a href="vistaUsuario.php"><?php echo $_SESSION['nombre'];?></a>
-                                <?
+                                <?php
                                 } else {
-                                    var_dump($_SESSION["login"]);
-                                    echo 'else';
                                 ?>
                                     <a href="login.php">Login
                                         <span>
