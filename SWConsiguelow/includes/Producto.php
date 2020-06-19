@@ -224,6 +224,10 @@ EOF;
                             <a class="text-center btn btn-info" href="eliminaProducto.php?nombreProd=$nombre">
                                 Quitar</a>
                         </div>
+                        <div class="d-flex flex-wrap align-content-center">
+                            <a class="text-center btn btn-info" href="actualizaProd.php?id=$id">
+                                Actualizar</a>
+                        </div>
                     </li>     
     EOF;
             }
@@ -426,38 +430,35 @@ return $html;
         return $producto;
     }
     
-    /*private static function actualizaProd($producto)
+    private static function actualizaProd($producto)
     {
+        $actualizado = false;
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("UPDATE Productos P SET nombre = '%s', descripcion='%s', precio='%f', unidades='%d, unidadesDisponibles ='%d', tallasDisponibles ='%s', coloresDisponibles ='%s', talla ='%s', color ='%s', categoria ='%s', reseña ='%s', agotado ='%b', numEstrellas ='%d', imagen ='%s' WHERE P.id=%i"
-            , $conn->real_escape_string($producto->nombre)
-            , $conn->real_escape_string($producto->descripcion)
-            , $conn->real_escape_string($producto->precio)
-            , $conn->real_escape_string($producto->unidades)
-            , $conn->real_escape_string($producto->unidadesDisponibles)
-            , $conn->real_escape_string($producto->tallasDisponibles)
-            , $conn->real_escape_string($producto->coloresDisponibles)
-            , $conn->real_escape_string($producto->talla)
-            , $conn->real_escape_string($producto->color)
-            , $conn->real_escape_string($producto->categoria)
-            , $conn->real_escape_string($producto->reseña)
-            , $conn->real_escape_string($producto->agotado)
-            , $conn->real_escape_string($producto->numEstrellas)
-            , $conn->real_escape_string($producto->imagen)
-            , $producto->id);
+        $query=sprintf("UPDATE `productos` P SET nombre = '%s',idVendedor = '%d', descripcion='%s', precio='%f', unidades='%d', talla ='%s', color ='%s', categoria ='%s' WHERE P.id='%d'"
+        , $conn->real_escape_string($producto->id)
+        , $conn->real_escape_string($producto->nombre)
+        , $conn->real_escape_string($producto->vendedor)
+        , $conn->real_escape_string($producto->descripcion)
+        , $conn->real_escape_string($producto->precio)
+        , $conn->real_escape_string($producto->unidades)
+        , $conn->real_escape_string($producto->talla)
+        , $conn->real_escape_string($producto->color)
+        , $conn->real_escape_string($producto->categoria));
         if ( $conn->query($query) ) {
             if ( $conn->affected_rows != 1) {
                 echo "No se ha podido actualizar el producto: " . $producto->id;
                 exit();
             }
+            elseif($conn->affected_rows == 1){
+                $actualizado = true;
+            }
         } else {
-            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            echo "Error al actualizar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
-        
-        return $producto;
-    }*/
+        return $actualizado;
+    }
 	
 	//filas tabla productos
     private $id;
