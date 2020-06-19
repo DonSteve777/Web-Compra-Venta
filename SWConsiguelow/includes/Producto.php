@@ -20,7 +20,6 @@ class Producto
                     }           
                     $i++;
                     $prod = $arrayauxliar;
-                   
                 }
                 $rs->free();
                 $html='';
@@ -158,6 +157,7 @@ public static function allCardsProduct($prod=array()){
     }
     return $html;
 }
+
 
 private static function cardProduct($precio, $imgSrc, $id){ 
     $html=<<<EOF
@@ -325,7 +325,7 @@ return $html;
     return $result;
   }
 
-    public static function muestraProductosPorCat($idCat){
+    public static function productosPorCat($idCat){
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM productos P WHERE P.categoria = '$idCat'");$conn->real_escape_string($idCat);
@@ -350,6 +350,8 @@ return $html;
         }
         return $prod;
     }
+
+    
 
 
     public static function muestraProductosPorPrecioDesc($producto)
