@@ -36,7 +36,7 @@ EOF;
                       <p>Email: $email</p>
                   </div>
                   <div class="mb-2">
-                    <a class="text-center btn btn-info" href="vistaPedidos.php.php?">
+                    <a class="text-center btn btn-info" href="vistaPedidos.php?">
                       Pedidos del usuario</a>
                     <a class="text-center btn btn-info" href="vistaProdsUsuario.php?">
                       Productos del usuario</a>

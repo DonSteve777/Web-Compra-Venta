@@ -24,7 +24,9 @@ if (is_array($carrito)){
                   <div class="d-flex flex-wrap align-content-center">
                   <a class="text-center btn btn-info" href="eliminaCarrito.php?id=$idPedido">
                       Quitar</a>
+                  <a class="btn btn-info btn-lg" role="button" href="anadirPedido.php?id=$idProd&pagado=1">Comprar</a>
               </div>
+              
           </li>     
 EOF;
   }
