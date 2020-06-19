@@ -2,67 +2,6 @@
 
 class Producto
 {
-   /* public static function muestraProds(){ //funcion que muestra todos los productos disponibles
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM productos P");
-        $rs = $conn->query($query);
-        $result = false;
-        $i=0;
-        if ($rs) {
-            if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                    $claves = array_keys($array);
-                    foreach($claves as $clave){
-                        $arrayauxliar[$i][$clave]=$array[$clave];
-                    }           
-                    $i++;
-                    $prod = $arrayauxliar;
-                }
-                $rs->free();
-                $html='';
-                foreach($prod as $key => $fila){
-                    $id =  $fila['id'];
-                    $imgSrc = ImageUpload::getSource($id);
-                    $descripcion = $fila['descripcion'];
-                    $precio= $fila['precio'];
-                    $categoria = Categoria::findById($fila['categoria'])->nombre();
-                    $nombre = $fila['nombre'];
-                    //muestraLogo($html)
-                    $html.=<<<EOF
-                    <ul>
-                    <li>idProducto: $id</li>
-                        <li> Nombre Producto: $nombre</li>
-                        <li>Descripcion: $descripcion</li>
-                        <li>Precio: $precio</li>
-                        <li>Categoria: $categoria</li>
-                        <li>$imgSrc</li>
-                        <a href="anadirPedido.php?id=$id&pagado=0">
-                        <button type="button" id="addCart" >
-                            Añadir al carrito</a>
-                            </button></a>
-                        <a href="anadirPedido.php?id=$id&pagado=1">
-                        <button type="button" id="addCart">
-                            Comprar</a>
-                            </button></a>
-                    </ul>
-EOF;
-                }
-            } else {
-                $html='';
-                $html =  <<<EOF
-    <div class="logo">
-        <img src="img/logo.gif" alt="imagen no disponible">
-    </div>
-    EOF;   
-        } 
-    }else{
-        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-        exit();
-    
-    } 
-    return $html;
-}*/
 
 public static function findById($id){
     $app = Aplicacion::getSingleton();
@@ -102,7 +41,13 @@ public static function muestraCardsCat($id){
 public static function cargaProds(){ //funcion que muestra todos los productos disponibles
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
-    $currentuser= $_SESSION['userid'];
+    if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
+        $currentuser= $_SESSION['userid'];
+    }
+    else {
+        $currentuser=0;
+    }
+
     $query = sprintf("SELECT * FROM productos P WHERE NOT idVendedor=%d"
     , $conn->real_escape_string($currentuser));
     $prod=NULL;
@@ -133,13 +78,12 @@ public static function cargaProds(){ //funcion que muestra todos los productos d
 
 public static function allCardsProduct($prod=array()){ 
     $html = '';
-    $currentuser= $_SESSION['userid'];
-    //var_dump($currentuser);
+    
     if (is_array($prod)){
         foreach($prod as $key => $fila){
             $vendedor = $fila['idVendedor'];
-    
             if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
+                $currentuser= $_SESSION['userid'];
                 if ($vendedor!==$currentuser) {
                     $id =  $fila['id'];
                     $imgSrc = ImageUpload::getSource($id);
