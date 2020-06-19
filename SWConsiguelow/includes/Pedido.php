@@ -49,13 +49,13 @@ class Pedido
         return $result;
     }
 
-   /* public static function muestraPedidos()
+    public static function muestraPedidos()
      {
         $result = [];
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $user = $_SESSION['userid'];
-        $query = sprintf("SELECT DISTINCT * FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =1"); $conn->real_escape_string($user);
+        $query = sprintf("SELECT P.id, P.producto, P.pagado, P.comprador FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =1"); $conn->real_escape_string($user);    $rs = $conn->query($query);
         $rs = $conn->query($query);
         if ($rs) {
             while($fila = $rs->fetch_assoc()) {
@@ -66,14 +66,17 @@ class Pedido
             $rs->free();
         }
         return $result;
-    }*/
-    public static function muestraPedidos(){
+    }
+
+
+    /*public static function muestraPedidos(){
     $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $user = $_SESSION['userid'];
         $query = sprintf("SELECT P.id, P.producto, P.pagado, P.comprador FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =1"); $conn->real_escape_string($user);    $rs = $conn->query($query);
         $rs = $conn->query($query);
         $i=0;
+        $html='';
         if ($rs) {
             if ( $rs->num_rows > 0) {
                 while ($array=$rs->fetch_array()){
@@ -86,7 +89,6 @@ class Pedido
                    
                 }
                 $rs->free();
-                $html='';
                 foreach($ped as $key => $fila){
                     $id =  $fila['id'];
                     $prod = $fila['producto'];
@@ -101,7 +103,7 @@ EOF;
             }
          }
         return $html;
-    }
+    }*/
 
     public static function muestraCarrito()
   {
@@ -110,6 +112,7 @@ EOF;
     $conn = $app->conexionBd();
     $user = $_SESSION['userid'];
     $query = sprintf("SELECT P.id, P.producto, P.pagado, P.comprador FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =0"); $conn->real_escape_string($user);    $rs = $conn->query($query);
+    $html='';
     if ($rs) {
       while($fila = $rs->fetch_assoc()) {
         $ped=new Pedido($fila['producto'],$fila['pagado'],$fila['comprador']);
@@ -132,6 +135,17 @@ EOF;
         }
     }
 
+    public static function cancelaPedido($id){
+        $pedido = self::buscaPedido($id); 
+        $html = 'No';
+        if (!$pedido) {
+            return $html;
+        }
+        else{ 
+       return self::cancela($pedido); 
+        }
+    }
+
     private static function elimina($cart) 
     {
         $eliminado = false;
@@ -145,7 +159,28 @@ EOF;
                 exit();
             }
             elseif ($conn->affected_rows == 1){
-                echo "Borrado";
+                $eliminado =true;
+            }
+        } else {
+            echo "Error al borrar de la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $eliminado;
+    }
+
+    private static function cancela($pedido) 
+    {
+        $eliminado = false;
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $id = $pedido->id; 
+        $query=sprintf("DELETE FROM pedidos WHERE id ='$id'",$conn->real_escape_string($id));
+        if ( $conn->query($query) ) {
+            if ( $conn->affected_rows != 1) {
+                echo "No se ha podido cancelar el pedido: " . $id;
+                exit();
+            }
+            elseif ($conn->affected_rows == 1){
                 $eliminado =true;
             }
         } else {

@@ -127,6 +127,7 @@ EOF;
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
                 $array[0]['usuario'] = $fila['nombreUsuario'];
+                $array[0]['nombre'] = $fila['nombre'];
                 $array[0]['direccion'] = $fila['direccion'];
                 $array[0]['telefono'] = $fila['telefono'];
                 $array[0]['email'] = $fila['email'];

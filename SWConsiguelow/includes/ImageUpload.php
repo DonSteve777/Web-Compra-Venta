@@ -84,7 +84,6 @@ Class ImageUpload {
 	/* Show the image in the browser */
 	public function showImage($id){
 		$imagen = Imagen::findById($id);
-
 		  /* Send headers and file to visitor for display */
 		  header("Content-Type: " . $imagen->mime_type());
 		  readfile(F_PATH.$imagen->nombre());

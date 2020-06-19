@@ -8,6 +8,8 @@ use es\fdi\ucm\aw\ImageUpload;
 $idproducto = $_GET['id'];
 $producto = Producto::findById($idproducto);
 $imgSrc = ImageUpload::getSource($idproducto);
+$htmlComprar='';
+$htmlCarrito='';
 $img =<<<EOF
     <img class="img-fluid border" src=$imgSrc alt="imagen no disponible">
 EOF;
@@ -19,6 +21,7 @@ EOF;
 $htmlCarrito.=<<<EOF
     <a class="btn btn-info btn-lg" role="button" href="anadirPedido.php?id=$id&pagado=0">Añadir al carrito</a>
 EOF;
+
 ?>
 
 <!DOCTYPE html>
