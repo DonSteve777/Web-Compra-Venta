@@ -3,7 +3,6 @@
 
 $htmlNavCat = '';
 $htmlNavCat = Categoria::generaNavCat();
-
 ?>
 
 

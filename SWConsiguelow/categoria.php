@@ -2,6 +2,7 @@
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
 $id = $_GET['id'];
+$nombre = $_GET['nombre'];
 $html = Producto::muestraCardsCat($id);
 ?>
 
@@ -24,7 +25,13 @@ $html = Producto::muestraCardsCat($id);
     <main role="main">
         <div class="album py-5 bg-light">
             <div class="container">
-                <div class="row"> 
+                <h2>
+                    <?php 
+                        echo $nombre;
+                    ?>
+                </h2>
+                <div class="row">
+              
                 <?php
                     echo $html;
                 ?>

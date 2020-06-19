@@ -151,10 +151,11 @@ private static function generaNavItems($categorias=array()){
     if (is_array($categorias)){
         foreach($categorias as $key => $fila){
             $nombre = $fila['nombre'];
+            $id = $fila['id'];
             if ($nombre!=='sin categoría'){
                 $html.=<<<EOF
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#!">$nombre</a>
+                    <a class="nav-link text-light" href="categoria.php?id=$id&nombre=$nombre">$nombre</a>
                 </li>
 EOF;
             } 

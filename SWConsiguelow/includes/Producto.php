@@ -93,6 +93,14 @@ public static function muestraCards(){
     return $html;
 }
 
+
+public static function muestraCardsCat($id){
+    $html='';
+    $prods = self::productosPorCat($id);
+    $html = self::allCardsProduct($prods);
+    return $html;
+}
+
 public static function cargaProds(){ //funcion que muestra todos los productos disponibles
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
