@@ -143,8 +143,35 @@ EOF;
             exit();
         
         } 
-        return $html;
+    return $html;
+}
+
+private static function generaNavItems($categorias=array()){
+    $html='';
+    if (is_array($categorias)){
+        foreach($categorias as $key => $fila){
+            $nombre = $fila['nombre'];
+            if ($nombre!=='sin categoría'){
+                $html.=<<<EOF
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#!">$nombre</a>
+                </li>
+EOF;
+            } 
+
         }
+    }
+    return $html;
+}
+
+public static function generaNavCat(){
+    $html='';
+    $cats = array();
+    $cats = self::findAll();
+    $html= self::generaNavItems($cats);
+    return $html;
+}
+
     
 
 

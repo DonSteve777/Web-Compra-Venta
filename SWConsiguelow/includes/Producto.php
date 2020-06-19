@@ -130,7 +130,7 @@ public static function allCardsProduct($prod=array()){
     $html = '';
     $currentuser= $_SESSION['userid'];
     //var_dump($currentuser);
-    if (is_array($prof)){
+    if (is_array($prod)){
         foreach($prod as $key => $fila){
             $vendedor = $fila['idVendedor'];
     
@@ -325,12 +325,12 @@ return $html;
     return $result;
   }
 
-    public static function muestraProductosPorCat($nombreCat){
+    public static function muestraProductosPorCat($idCat){
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM productos P WHERE P.categoria = '$nombreCat'");$conn->real_escape_string($nombreCat);
+        $query = sprintf("SELECT * FROM productos P WHERE P.categoria = '$idCat'");$conn->real_escape_string($idCat);
         $rs = $conn->query($query);
-        $result = false;
+        $prod=array();
         $i=0;
         if ($rs) {
             if ( $rs->num_rows > 0) {
@@ -341,7 +341,6 @@ return $html;
                 }           
                 $i++;
                 $prod = $arrayauxliar;
-                $result = $prod;
                 }
             }
             $rs->free();
@@ -349,7 +348,7 @@ return $html;
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
-        return $result;
+        return $prod;
     }
 
 
