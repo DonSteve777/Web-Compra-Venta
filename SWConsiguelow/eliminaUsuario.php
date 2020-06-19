@@ -6,7 +6,7 @@ require_once __DIR__.'/includes/config.php';
         $nombreUsuario = $_GET['username'];
         if(Usuario::eliminaUsuario($nombreUsuario)){
             echo '<script type="text/javascript">
-        alert("Usuario $nombreUsuario eliminado con exito");
+        alert("Usuario eliminado con exito");
         window.location.assign("index.php");
         </script>';
         }

@@ -21,6 +21,7 @@ class Usuario
         $rs = $conn->query($query);
         $result = false;
         $i=0;
+        $html='';
         if ($rs) {
             if ( $rs->num_rows > 0) {
                 while ($array=$rs->fetch_array()){
@@ -41,7 +42,7 @@ EOF;
                     $html.=<<<EOF
                     <li class="list-group-item"> 
                         <div class="d-flex justify-content-between">
-                            <div class="p-2">Nombre Cat: $nombre</div>
+                            <div class="p-2">Nombre: $nombre</div>
                             <div class="p-2">
                                 <a class="btn btn-info align-bottom" href="eliminaUsuario.php?username=$nombre">
                                     Eliminar

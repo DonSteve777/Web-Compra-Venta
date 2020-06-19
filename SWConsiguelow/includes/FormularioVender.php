@@ -135,6 +135,10 @@ EOF;
             if ($producto){
                 $imgupload = new ImageUpload($_FILES, $producto->id());
                 $result = $imgupload->uploadImages();
+                echo '<script type="text/javascript">
+                        alert("Producto subido con exito");
+                        window.location.assign("index.php");
+                        </script>';
 
             }       
             // No se da pistas a un posible atacante      

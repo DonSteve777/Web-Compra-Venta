@@ -35,6 +35,7 @@ if(!isset($_SESSION['login'])){
                     <h1 class="m-2">Subir un producto</h1>
                     <?php
                         echo $html;
+                        
                     ?>
                 </div>
             </div>

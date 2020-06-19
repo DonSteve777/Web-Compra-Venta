@@ -130,28 +130,30 @@ public static function allCardsProduct($prod=array()){
     $html = '';
     $currentuser= $_SESSION['userid'];
     //var_dump($currentuser);
-    foreach($prod as $key => $fila){
-        $vendedor = $fila['idVendedor'];
-
-        if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
-            if ($vendedor!==$currentuser) {
+    if (is_array($prof)){
+        foreach($prod as $key => $fila){
+            $vendedor = $fila['idVendedor'];
+    
+            if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
+                if ($vendedor!==$currentuser) {
+                    $id =  $fila['id'];
+                    $imgSrc = ImageUpload::getSource($id);
+                    $precio= $fila['precio'];
+                    $html .= self::cardProduct($precio, $imgSrc, $id); 
+                }
+            }
+            else{
                 $id =  $fila['id'];
                 $imgSrc = ImageUpload::getSource($id);
                 $precio= $fila['precio'];
-                $html .= self::cardProduct($precio, $imgSrc, $id); 
+                $html .=<<<EOF
+                    <div class="col-md-4">
+    EOF;
+                $html .= self::cardProduct($precio, $imgSrc, $id);
+                $html .=<<<EOF
+                    </div>
+    EOF;
             }
-        }
-        else{
-            $id =  $fila['id'];
-            $imgSrc = ImageUpload::getSource($id);
-            $precio= $fila['precio'];
-            $html .=<<<EOF
-                <div class="col-md-4">
-EOF;
-            $html .= self::cardProduct($precio, $imgSrc, $id);
-            $html .=<<<EOF
-                </div>
-EOF;
         }
     }
     return $html;
@@ -182,6 +184,7 @@ public static function muestraProdsUsuario($idUsuario){ //funcion que muestra to
     $rs = $conn->query($query);
     $result = false;
     $i=0;
+    $html='';
     if ($rs) {
         if ( $rs->num_rows > 0) {
             while ($array=$rs->fetch_array()){
@@ -194,7 +197,10 @@ public static function muestraProdsUsuario($idUsuario){ //funcion que muestra to
                
             }
             $rs->free();
-            $html='';
+            
+            $html.=<<<EOF
+            <ul class="list-group">
+EOF;
             foreach($prod as $key => $fila){
                 $id =  $fila['id'];
                 $imgSrc = ImageUpload::getSource($id);
@@ -203,20 +209,28 @@ public static function muestraProdsUsuario($idUsuario){ //funcion que muestra to
                 $categoria = Categoria::findById($fila['categoria'])->nombre();
                 $nombre = $fila['nombre'];
                 $html.=<<<EOF
-                <ul>
-                    <li> Nombre Producto: $nombre</li>
-                    <li>Descripcion: $descripcion</li>
-                    <li>Precio: $precio</li>
-                    <li>Categoria: $categoria</li>
-                    <li>$imgSrc</li>
-                    
-                    <a href="eliminaProducto.php?nombreProd=$nombre">
-                                <button type="button" id="delProd">
-                                    Quitar</a>
-                                    </button></a>
-                </ul>
+                    <li class="list-group-item">
+                        <div class="d-flex flex-row">
+                            <div style="height: 200px;">
+                                <img class="h-50"  src=$imgSrc alt="no disponible">    
+                            </div>
+                            <div class="p-2 m-3 flex-fill">
+                                <p>Producto: $nombre</p>
+                                <p>Descripción: $descripcion</p>
+                                <p>Precio: $precio €</p>
+                                <p>Categoria: $categoria</p>
+                            </div>
+                            <div class="d-flex flex-wrap align-content-center">
+                            <a class="text-center btn btn-info" href="eliminaProducto.php?nombreProd=$nombre">
+                                Quitar</a>
+                        </div>
+                    </li>     
     EOF;
             }
+            $html.=<<<EOF
+            </ul>
+EOF;
+
         } else {
             $html='';
             $html =  <<<EOF

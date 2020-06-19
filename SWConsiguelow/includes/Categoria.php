@@ -103,6 +103,7 @@ class Categoria
             $rs = $conn->query($query);
             $result = false;
             $i=0;
+            $html='';
             if ($rs) {
                 if ( $rs->num_rows > 0) {
                     while ($array=$rs->fetch_array()){
