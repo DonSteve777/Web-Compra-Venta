@@ -7,49 +7,67 @@ require_once __DIR__.'/includes/config.php';
 function listadoCarrito()
 {
   $html = '';
-  $html.= 'Carrito del usuario';
-  $html .= '';
-  $pedido = Pedido::muestraCarrito();
-  foreach($pedido as $p) {
-    $id=$p->id();
-    $prod=$p->producto();
-    $html .= '<li>IdPedido: '.$id;
-    $html .= '</li>';
-    $html .= 'Producto '.$prod;
-    $html.=<<<EOF
-                    <ul>
-                            <a href="eliminaCarrito.php?id=$id">
-                            <button type="button" id="deleteCart" >
-                                Eliminar del carrito</a>
-                                </button></a>
-                    </ul>
+  $carrito = Pedido::muestraCarrito();
+  $html.=<<<EOF
+  <ul class="list-group">
+EOF;
+if (is_array($carrito)){
+  foreach($carrito as $c){
+      $idPedido = $c->id();
+      $idProd = $c->producto();
+      $html.=<<<EOF
+          <li class="list-group-item">
+              <div class="d-flex flex-row">
+                  <div class="p-2 m-3 flex-fill">
+                      <p>Producto: $idProd</p>
+                  </div>
+                  <div class="d-flex flex-wrap align-content-center">
+                  <a class="text-center btn btn-info" href="eliminaCarrito.php?id=$idPedido">
+                      Quitar</a>
+              </div>
+          </li>     
 EOF;
   }
-  $html .= '</li>';
+  $html.=<<<EOF
+  </ul>
+EOF;
+    }
+    else{
+    $html.="Carrito vacio";
+}
   return $html;
 }
 ?>
 
-
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="styles/style.css" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Carrito</title>
-    </head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Local Consiguelow</title>
+    <link rel="icon" href="img/money.ico"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
 
     <body>
-        <div id="contenedor">
-            <?php
+    <?php
                 require("includes/common/cabecera.php");
             ?>
-            <div id="contenido">
-                <h1>Carrito del usuario <?php $_SESSION['nombre']?></h1>
-            <?php
-                echo listadoCarrito();
-            ?>
+        <div class="container mt-3">
+            <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                        <h1 class="text-center">Carrito del usuario</h1>
+                    <?php
+                        echo listadoCarrito();
+                    ?>
+                    </div>
+                <div class="col-3"></div>
             </div>
         </div>  
     </body>
 </html>
+
+
 

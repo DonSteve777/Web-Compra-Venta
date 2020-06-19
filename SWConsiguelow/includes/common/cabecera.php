@@ -24,6 +24,7 @@
                         <div class="dropdown-menu text-center mr-3" aria-labelledby="navbarDropdown">
                             <p class="text-center"> 
                             <?php
+                            $logueado=false;
                                 if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
                                     $logueado = true;
                             ?>

@@ -100,7 +100,7 @@ public static function cargaProds(){ //funcion que muestra todos los productos d
     $currentuser= $_SESSION['userid'];
     $query = sprintf("SELECT * FROM productos P WHERE NOT idVendedor=%d"
     , $conn->real_escape_string($currentuser));
-
+    $prod=NULL;
     $rs = $conn->query($query);
     $result = false;
     $i=0;
@@ -130,7 +130,7 @@ public static function allCardsProduct($prod=array()){
     $html = '';
     $currentuser= $_SESSION['userid'];
     //var_dump($currentuser);
-    if (is_array($prof)){
+    if (is_array($prod)){
         foreach($prod as $key => $fila){
             $vendedor = $fila['idVendedor'];
     
