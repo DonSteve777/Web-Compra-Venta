@@ -72,7 +72,7 @@ Class ImageUpload {
             if($this->check_img_mime($file_tmp)){
                 // Checks the size of the the image
                 if($this->check_img_size($file_size)){
-					$src = $this->folder.$bdname;	//habrá que ponerles el formato para visualizarlas
+					$src = $this->folder.$bdname;
 					move_uploaded_file($file_tmp, $src );
 					$imagen = new Imagen($this->productId, $bdname, $file_type); 
 					$imagen = Imagen::inserta($imagen);	//setea el id
@@ -94,34 +94,10 @@ Class ImageUpload {
 		//var_dump($id);
 		$imagen = Imagen::findByProductId($idProducto);
 		$result='';
-		$imgname = $imagen->nombre(); 
+		$imgname = $imagen->nombre();
+		
 		$result = "data/productos/$imgname";
 		
 		return $result;
 	}
-
-	public function cambiaFormato(){
-		$len = strlen ( $imagen->nombre() );
-		$noFormat = substr($imagen->nombre(), 0, $len-4);
-		if ($imagen->mime_type() == 'image/png' ){
-			$result = F_PATH.$noFormat.'.png';
-		}
-	}
-	
-	/*uploading multiple files
-	<?php
-$uploads_dir = '/uploads';
-foreach ($_FILES["pictures"]["error"] as $key => $error) {
-    if ($error == UPLOAD_ERR_OK) {
-        $tmp_name = $_FILES["pictures"]["tmp_name"][$key];
-        // basename() may prevent filesystem traversal attacks;
-        // further validation/sanitation of the filename may be appropriate
-        $name = basename($_FILES["pictures"]["name"][$key]);
-        move_uploaded_file($tmp_name, "$uploads_dir/$name");
-    }
-}
-?>
-	*/ 
-
-
 }
