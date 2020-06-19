@@ -1,10 +1,8 @@
 <?php namespace es\fdi\ucm\aw;
-//require_once __DIR__ . '/Aplicacion.php';
-
 
 class Producto
 {
-    public static function muestraProds(){ //funcion que muestra todos los productos disponibles
+   /* public static function muestraProds(){ //funcion que muestra todos los productos disponibles
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM productos P");
@@ -64,7 +62,7 @@ EOF;
     
     } 
     return $html;
-}
+}*/
 
 public static function findById($id){
     $app = Aplicacion::getSingleton();
@@ -146,7 +144,13 @@ public static function allCardsProduct($prod=array()){
                     $id =  $fila['id'];
                     $imgSrc = ImageUpload::getSource($id);
                     $precio= $fila['precio'];
+                    $html .=<<<EOF
+                    <div class="col-md-4">
+EOF;
                     $html .= self::cardProduct($precio, $imgSrc, $id); 
+                    $html .=<<<EOF
+                    </div>
+EOF;
                 }
             }
             else{
@@ -155,11 +159,11 @@ public static function allCardsProduct($prod=array()){
                 $precio= $fila['precio'];
                 $html .=<<<EOF
                     <div class="col-md-4">
-    EOF;
+EOF;
                 $html .= self::cardProduct($precio, $imgSrc, $id);
                 $html .=<<<EOF
                     </div>
-    EOF;
+EOF;
             }
         }
     }
@@ -182,8 +186,6 @@ private static function cardProduct($precio, $imgSrc, $id){
 EOF;
     return $html;
 }
-
-
 
 public static function muestraProdsUsuario($idUsuario){ //funcion que muestra todos los productos disponibles
     $app = Aplicacion::getSingleton();
@@ -314,24 +316,40 @@ return $html;
         return $eliminado;
     }
 
-    public static function muestraProdPorNombre($nombreProd = NULL)
-  {
-    $result = [];
+  public static function findByName($nombreProd){
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
-    $query = sprintf("SELECT * FROM productos P WHERE P.nombre LIKE '$nombreProd'");
-    $conn->real_escape_string($nombreProd);
+    $query = sprintf("SELECT * FROM productos U WHERE U.nombre LIKE '%s'", $conn->real_escape_string($nombreProd));
     $rs = $conn->query($query);
     if ($rs) {
-      while($fila = $rs->fetch_assoc()) {
-        $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria']);
-        $prod->id=$fila['id'];
-        $result[] = $prod;
-      }
-      $rs->free();
+        if ( $rs->num_rows == 1) {
+            $fila = $rs->fetch_assoc();
+            $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria']);
+            $prod->id = $fila['id'];
+        }else echo 'no econtrado';
+        $rs->free();
+    } else {
+        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+        exit();
     }
-    return $result;
-  }
+    return $prod;
+}
+
+public static function searchProduct($name){
+    $html = '';
+    $prod = self::findByName($name);
+    $html=self::generaBusqueda($prod);
+    return $html;
+}
+
+public static function generaBusqueda($prod){
+    $html = '';
+    $precio = $prod->precio();
+    $id = $prod->id();
+    $imgSrc = ImageUpload::getSource($id);
+    $html .= self::cardProduct($precio, $imgSrc, $id); 
+    return $html;
+}
 
     public static function productosPorCat($idCat){
         $app = Aplicacion::getSingleton();
