@@ -292,13 +292,19 @@ public static function searchProduct($name){
 
 public static function generaBusqueda($prod){
     $html = '';
-    $precio = $prod->precio();
+    if ($prod!==NULL){
+        $precio = $prod->precio();
     $id = $prod->id();
     $imgSrc = ImageUpload::getSource($id);
     $html .= self::cardProduct($precio, $imgSrc, $id); 
+    }
+    else{
+        $html=<<<EOF
+        <p>No coincide ningún producto</p>
+EOF;
+    }
     return $html;
 }
-
     public static function productosPorCat($idCat){
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
