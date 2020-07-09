@@ -24,6 +24,9 @@ EOF;
                   <p>Usuario: $nombreUsuario</p>
                   </div>
                   <div class="p-2 m-3 flex-fill">
+                  <p>Nombre completo: $nombre</p>
+                  </div>
+                  <div class="p-2 m-3 flex-fill">
                   <p>Direccion: $direccion</p>
                   </div>
                   <div class="p-2 m-3 flex-fill">

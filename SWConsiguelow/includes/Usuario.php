@@ -5,23 +5,12 @@ use es\fdi\ucm\aw\Aplicacion as App;
 class Usuario
 {
 
-    /*public static function login($nombreUsuario, $password)
-    {
-        $user = self::buscaUsuario($nombreUsuario);
-        if ($user && $user->compruebaPassword($password)) {
-            return $user;
-        }
-        return false;
-    }*/
-
     public static function muestraTodosUsuarios(){ //funcion que muestra todos los productos disponibles
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM usuarios P");
         $rs = $conn->query($query);
-        $result = false;
         $i=0;
-        $html='';
         if ($rs) {
             if ( $rs->num_rows > 0) {
                 while ($array=$rs->fetch_array()){
@@ -30,38 +19,17 @@ class Usuario
                         $arrayauxliar[$i][$clave]=$array[$clave];
                     }           
                     $i++;
-                    $prod = $arrayauxliar;
+                    $user = $arrayauxliar;
                    
                 }
                 $rs->free();
-                $html.=<<<EOF
-                <ul class="list-group">
-EOF;
-                foreach($prod as $key => $fila){
-                    $nombre = $fila['nombreUsuario'];
-                    $html.=<<<EOF
-                    <li class="list-group-item"> 
-                        <div class="d-flex justify-content-between">
-                            <div class="p-2">Nombre: $nombre</div>
-                            <div class="p-2">
-                                <a class="btn btn-info align-bottom" href="eliminaUsuario.php?username=$nombre">
-                                    Eliminar
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-EOF;
-                }
-                $html.=<<<EOF
-                </ul>
-EOF;
             } 
     }else{
         echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
         exit();
     
     } 
-    return $html;
+    return $user;
     }
 
 

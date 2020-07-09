@@ -19,7 +19,7 @@ $htmlComprar.=<<<EOF
 <a class="btn btn-info btn-lg" role="button" href="anadirPedido.php?id=$id&pagado=1">Comprar</a>
 EOF;
 $htmlCarrito.=<<<EOF
-    <a class="btn btn-info btn-lg" role="button" href="anadirPedido.php?id=$id&pagado=0">Añadir al carrito</a>
+    <a class="btn btn-info btn-lg" role="button" href="anadeCarrito.php?id=$id&pagado=0">Añadir al carrito</a>
 EOF;
 
 ?>

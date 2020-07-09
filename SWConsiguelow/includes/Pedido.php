@@ -68,43 +68,6 @@ class Pedido
         return $result;
     }
 
-
-    /*public static function muestraPedidos(){
-    $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $user = $_SESSION['userid'];
-        $query = sprintf("SELECT P.id, P.producto, P.pagado, P.comprador FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =1"); $conn->real_escape_string($user);    $rs = $conn->query($query);
-        $rs = $conn->query($query);
-        $i=0;
-        $html='';
-        if ($rs) {
-            if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                    $claves = array_keys($array);
-                    foreach($claves as $clave){
-                        $arrayauxliar[$i][$clave]=$array[$clave];
-                    }           
-                    $i++;
-                    $ped = $arrayauxliar;
-                   
-                }
-                $rs->free();
-                foreach($ped as $key => $fila){
-                    $id =  $fila['id'];
-                    $prod = $fila['producto'];
-                    //muestraLogo($html)
-                    $html.=<<<EOF
-                    <ul>
-                    <li> idPedido: $id</li>
-                     Producto: $prod</li>
-                    </ul>
-EOF;
-                }
-            }
-         }
-        return $html;
-    }*/
-
     public static function muestraCarrito()
   {
     $result = [];

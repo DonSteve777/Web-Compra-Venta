@@ -3,7 +3,7 @@ require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
 
 
-$nombreProd=$_GET['search'];
+  $nombreProd=$_GET['search'];
   $html = '';
   $html.= '<p>Estas buscando el producto '.$nombreProd.'</p>';
   $html.= Producto::searchProduct($nombreProd);

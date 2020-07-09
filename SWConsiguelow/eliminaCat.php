@@ -3,7 +3,7 @@ require_once __DIR__.'/includes/config.php';
 
 
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
-
+        
         $nombreCat = $_GET['categoria'];
         if(Categoria::eliminaCat($nombreCat)){
             echo '<script type="text/javascript">

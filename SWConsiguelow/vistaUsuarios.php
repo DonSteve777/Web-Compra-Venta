@@ -7,7 +7,29 @@ require_once __DIR__.'/includes/config.php';
 function muestraTodosUsuarios(){
     $app = Aplicacion::getSingleton();
     if ($app->tieneRol('admin', 'Acceso Denegado', 'No tienes permisos suficientes para administrar la web.')) {
-  $html= Usuario::muestraTodosUsuarios();
+  $user= Usuario::muestraTodosUsuarios();
+  $html='';
+  $html.=<<<EOF
+  <ul class="list-group">
+EOF;
+    foreach($user as $key => $fila){         
+        $nombre = $fila['nombreUsuario'];
+      $html.=<<<EOF
+      <li class="list-group-item"> 
+          <div class="d-flex justify-content-between">
+              <div class="p-2">Nombre: $nombre</div>
+              <div class="p-2">
+                  <a class="btn btn-info align-bottom" href="eliminaUsuario.php?username=$nombre">
+                      Eliminar
+                  </a>
+              </div>
+          </div>
+      </li>
+EOF;
+  }
+  $html.=<<<EOF
+  </ul>
+EOF;
   return $html;
     }
 }
