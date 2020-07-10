@@ -1,11 +1,13 @@
--- phpMyAdmin SQL Dump
--- version 5.0.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Apr 01, 2020 at 03:36 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.2
+/*
+  Recuerda que deshabilitar la opción "Enable foreign key checks" para evitar problemas a la hora de importar el script.
+*/
+DROP TABLE IF EXISTS `usuarios`;
+DROP TABLE IF EXISTS `categorias`;
+DROP TABLE IF EXISTS `productos`;
+DROP TABLE IF EXISTS `uploads`;
+DROP TABLE IF EXISTS `roles`;
+DROP TABLE IF EXISTS `rolesUsuario`;
+DROP TABLE IF EXISTS `pedidos`;
 
 
 CREATE TABLE `usuarios` (
@@ -86,17 +88,3 @@ CREATE TABLE `pedidos` (
     FOREIGN KEY (`comprador`) REFERENCES `usuarios`(`id`)ON DELETE CASCADE ON UPDATE CASCADE
     )
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
-
-
-/*
-INSERT INTO `roles` (`id`, `nombre`) VALUES
-(1, 'user'),
-(2, 'admin');
-
-
-INSERT INTO `rolesUsuario` (`usuario`, `rol`) VALUES
-(1, 1),
-(1, 2);
-
-INSERT INTO `rolesUsuario` (`usuario`, `rol`) VALUES
-(2, 1);*/
