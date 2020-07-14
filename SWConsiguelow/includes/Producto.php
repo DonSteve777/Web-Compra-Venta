@@ -331,9 +331,6 @@ EOF;
         return $prod;
     }
 
-    
-
-
     public static function muestraProductosPorPrecioDesc($producto)
     {
         $app = Aplicacion::getSingleton();
@@ -362,7 +359,6 @@ EOF;
         return $result;
     }
 
-
     public static function añadeProd($nombreProd, $vendedor, $descripcion, $precio,$unidades,$talla,$color,$categoria) //atributos productos
     {
         $producto = self::buscaProd($nombreProd);
@@ -373,7 +369,6 @@ EOF;
         return self::guardaProd($producto);
     }
     
-
     public static function guardaProd($producto)
     {
         if ($producto->id !== null) {
@@ -387,7 +382,7 @@ EOF;
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query=sprintf("INSERT INTO `productos`  (`nombre`, `idVendedor`, `descripcion`,`precio`,`unidades`, `talla`, `color`, `categoria`) 
-		 VALUES('%s','%d', '%s', '%f', '%d', '%s', '%s', '%s')"
+		 VALUES('%s','%d', '%s', '%f', '%d', '%i', '%s', '%s')"
             , $conn->real_escape_string($producto->nombre)
             , $conn->real_escape_string($producto->vendedor)
             , $conn->real_escape_string($producto->descripcion)
@@ -412,7 +407,7 @@ EOF;
         $actualizado = false;
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("UPDATE `productos` P SET nombre = '%s',idVendedor = '%d', descripcion='%s', precio='%f', unidades='%d', talla ='%s', color ='%s', categoria ='%s' WHERE P.id='%d'"
+        $query=sprintf("UPDATE `productos` P SET nombre = '%s',idVendedor = '%d', descripcion='%s', precio='%f', unidades='%d', talla ='%d', color ='%s', categoria ='%s' WHERE P.id='%d'"
         , $conn->real_escape_string($producto->id)
         , $conn->real_escape_string($producto->nombre)
         , $conn->real_escape_string($producto->vendedor)

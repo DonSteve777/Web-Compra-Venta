@@ -1,6 +1,15 @@
 /*
-  Recuerda que deshabilitar la opción "Enable foreign key checks" para evitar problemas a la hora de importar el script.
+
+  Este script crea la Bdd, el usuario con privilegios sobre ella, y las tablas vacías
+  Recuerda  deshabilitar la opción "Enable foreign key checks" para evitar problemas a la hora de importar el script.
 */
+/*create db*/
+CREATE DATABASE IF NOT EXISTS `consiguelow` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
+/*create user*/
+CREATE USER 'consiguelow'@'localhost' IDENTIFIED BY 'consiguelow';
+GRANT ALL PRIVILEGES ON `consiguelow`.* TO 'consiguelow'@'localhost';
+
+/*create tables*/
 DROP TABLE IF EXISTS `usuarios`;
 DROP TABLE IF EXISTS `categorias`;
 DROP TABLE IF EXISTS `productos`;
@@ -8,7 +17,6 @@ DROP TABLE IF EXISTS `uploads`;
 DROP TABLE IF EXISTS `roles`;
 DROP TABLE IF EXISTS `rolesUsuario`;
 DROP TABLE IF EXISTS `pedidos`;
-
 
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -21,7 +29,6 @@ CREATE TABLE `usuarios` (
   `telefono` varchar(9) NOT NULL,
   `ciudad` varchar(12) NOT NULL,
   `codigo postal` varchar(5) NOT NULL,
-  `carrito` int(15) NOT NULL,
   `tarjeta credito` int(20) NOT NULL, 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
@@ -43,7 +50,7 @@ CREATE TABLE `productos` (
   `descripcion` varchar(500) NOT NULL,
   `precio` decimal(4,2) NOT NULL,
   `unidades` int(10) UNSIGNED NOT NULL,
-  `talla` varchar(3) NOT NULL,
+  `talla` int(3) NOT NULL,
   `color` varchar(12) NOT NULL,
   `categoria` INT(11) NOT NULL,
   PRIMARY KEY(`id`),

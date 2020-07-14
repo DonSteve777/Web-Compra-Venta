@@ -41,7 +41,7 @@ CREATE TABLE `productos` (
   `descripcion` varchar(500) NOT NULL,
   `precio` decimal(4,2) NOT NULL,
   `unidades` int(10) UNSIGNED NOT NULL,
-  `talla` varchar(3) NOT NULL,
+  `talla` int(3) NOT NULL,
   `color` varchar(12) NOT NULL,
   `categoria` INT(11) NOT NULL,
   PRIMARY KEY(`id`),
@@ -88,15 +88,4 @@ CREATE TABLE `pedidos` (
   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 
-/*
-INSERT INTO `roles` (`id`, `nombre`) VALUES
-(1, 'user'),
-(2, 'admin');
 
-
-INSERT INTO `rolesUsuario` (`usuario`, `rol`) VALUES
-(1, 1),
-(1, 2);
-
-INSERT INTO `rolesUsuario` (`usuario`, `rol`) VALUES
-(2, 1);*/
