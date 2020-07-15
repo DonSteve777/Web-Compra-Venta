@@ -22,37 +22,34 @@ public static function findById($id){
     }
     return $prod;
 }
-
+/*
 public static function muestraCards(){
     $html='';
-    $prods = self::cargaProds();
+    $prods = self::notMineProds();
     $html = self::allCardsProduct($prods);
     return $html;
 }
-
 
 public static function muestraCardsCat($id){
     $html='';
     $prods = self::productosPorCat($id);
     $html = self::allCardsProduct($prods);
     return $html;
-}
+}*/
 
-public static function cargaProds(){ //funcion que muestra todos los productos disponibles
+public static function getAllOthers(){ //funcion que muestra todos los productos disponibles
+    $result = [];
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
+    /*para que a un usuario no le aparezcan sus propios productos*/
     if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
         $currentuser= $_SESSION['userid'];
     }
     else {
         $currentuser=0;
     }
-
-    $query = sprintf("SELECT * FROM productos P WHERE NOT idVendedor=%d"
-    , $conn->real_escape_string($currentuser));
-    $prod=NULL;
+    $query = sprintf("SELECT * FROM productos P WHERE NOT idVendedor=%d", $conn->real_escape_string($currentuser));
     $rs = $conn->query($query);
-    $result = false;
     $i=0;
     if ($rs) {
         if ( $rs->num_rows > 0) {
@@ -61,75 +58,19 @@ public static function cargaProds(){ //funcion que muestra todos los productos d
                 foreach($claves as $clave){
                     $arrayauxliar[$i][$clave]=$array[$clave];
                 }           
-                $i++;
-                $prod = $arrayauxliar;
-               
+                $i++;    
             }
             $rs->free();
         } else {
-            echo "No se ha cargado ningún producto";
+            $result[] = 'No se ha cargado ningún producto';
         } 
     }else{
-        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+        $result[] = "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
         exit();
     } 
-    return $prod;
+    return $arrayauxliar;
 }
 
-public static function allCardsProduct($prod=array()){ 
-    $html = '';
-    
-    if (is_array($prod)){
-        foreach($prod as $key => $fila){
-            $vendedor = $fila['idVendedor'];
-            if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
-                $currentuser= $_SESSION['userid'];
-                if ($vendedor!==$currentuser) {
-                    $id =  $fila['id'];
-                    $imgSrc = ImageUpload::getSource($id);
-                    $precio= $fila['precio'];
-                    $html .=<<<EOF
-                    <div class="col-md-4">
-EOF;
-                    $html .= self::cardProduct($precio, $imgSrc, $id); 
-                    $html .=<<<EOF
-                    </div>
-EOF;
-                }
-            }
-            else{
-                $id =  $fila['id'];
-                $imgSrc = ImageUpload::getSource($id);
-                $precio= $fila['precio'];
-                $html .=<<<EOF
-                    <div class="col-md-4">
-EOF;
-                $html .= self::cardProduct($precio, $imgSrc, $id);
-                $html .=<<<EOF
-                    </div>
-EOF;
-            }
-        }
-    }
-    return $html;
-}
-
-
-private static function cardProduct($precio, $imgSrc, $id){ 
-    $html=<<<EOF
-    <div class="card mb-4 text-center bg-light border-0">
-        <div class="card-img-top">
-            <a href="producto.php?id=$id">
-                <img class="img-thumbnail" src=$imgSrc alt="imagen no disponible" >
-            </a>
-        </div>
-        <div class="card-body justify-content-end"> 
-            $precio €
-        </div>
-    </div>
-EOF;
-    return $html;
-}
 
 public static function muestraProdsUsuario($idUsuario){ //funcion que muestra todos los productos disponibles
     $app = Aplicacion::getSingleton();
