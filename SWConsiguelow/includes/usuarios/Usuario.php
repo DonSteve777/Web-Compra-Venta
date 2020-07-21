@@ -1,74 +1,44 @@
 <?php
-namespace es\fdi\ucm\aw;
+namespace es\fdi\ucm\aw\usuarios;
 use es\fdi\ucm\aw\Aplicacion as App;
 
 class Usuario
 {
 
-    /*public static function login($nombreUsuario, $password)
-    {
-        $user = self::buscaUsuario($nombreUsuario);
-        if ($user && $user->compruebaPassword($password)) {
-            return $user;
-        }
-        return false;
-    }*/
-
-    public static function muestraTodosUsuarios(){ //funcion que muestra todos los productos disponibles
+    public static function getAll(){ 
+        throw new UsuarioNoEncontradoException("No se encuentran usuarios");
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM usuarios P");
         $rs = $conn->query($query);
-        $result = false;
         $i=0;
-        $html='';
-        if ($rs) {
-            if ( $rs->num_rows > 0) {
+        $users=array();
+        if ($rs && $rs->num_rows > 1) {
                 while ($array=$rs->fetch_array()){
                     $claves = array_keys($array);
                     foreach($claves as $clave){
-                        $arrayauxliar[$i][$clave]=$array[$clave];
+                        $users[$i][$clave]=$array[$clave];
                     }           
                     $i++;
-                    $prod = $arrayauxliar;
-                   
                 }
                 $rs->free();
-                $html.=<<<EOF
-                <ul class="list-group">
-EOF;
-                foreach($prod as $key => $fila){
-                    $nombre = $fila['nombreUsuario'];
-                    $html.=<<<EOF
-                    <li class="list-group-item"> 
-                        <div class="d-flex justify-content-between">
-                            <div class="p-2">Nombre: $nombre</div>
-                            <div class="p-2">
-                                <a class="btn btn-info align-bottom" href="eliminaUsuario.php?username=$nombre">
-                                    Eliminar
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-EOF;
-                }
-                $html.=<<<EOF
-                </ul>
-EOF;
-            } 
-    }else{
-        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-        exit();
-    
-    } 
-    return $html;
+        }else{
+            error_log( "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error));
+            throw new UsuarioNoEncontradoException("No se encuentran usuarios");
+        }
+        return $users;
     }
 
 
     public static function login($nombreUsuario, $password)
   {
     $user = self::buscaUsuario($nombreUsuario);
-    if ($user && $user->compruebaPassword($password)) {
+    if (!$user) {
+        throw new UsuarioNoEncontradoException("No se puede encontrar al usuario: $username");    
+      }
+      if (!$user->compruebaPassword($password)) {
+        return false;
+      }
       $app = App::getSingleton();
       $conn = $app->conexionBd();
       $query = sprintf("SELECT R.nombre FROM rolesUsuario RU, roles R WHERE RU.rol = R.id AND RU.usuario=%s", $conn->real_escape_string($user->id));
@@ -79,14 +49,12 @@ EOF;
         }
         $rs->free();
       }
-      return $user;
-    }    
-    return false;
+      return $user;    
   }
 
     public static function buscaUsuario($nombreUsuario)
     {
-        $app = Aplicacion::getSingleton();
+        $app = App::getSingleton();
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM usuarios U WHERE U.nombreUsuario = '%s'", $conn->real_escape_string($nombreUsuario));
         $rs = $conn->query($query);
@@ -118,7 +86,7 @@ EOF;
     
 
     public static function muestraInfo($usuario){
-        $app = Aplicacion::getSingleton();
+        $app = App::getSingleton();
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM usuarios U WHERE U.nombreUsuario = '$usuario'", $conn->real_escape_string($usuario));
         $rs = $conn->query($query);
@@ -193,7 +161,7 @@ EOF;
     
     private static function inserta($usuario)
     {
-        $app = Aplicacion::getSingleton();
+        $app = App::getSingleton();
         $conn = $app->conexionBd();
         $query=sprintf("INSERT INTO `usuarios` (`dni`, `nombre`, `nombreUsuario`, `password`, `direccion`, `email`, `telefono`, `ciudad`, `codigo postal`, `carrito`, `tarjeta credito`) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d')"
             , $conn->real_escape_string($usuario->dni)    
@@ -219,7 +187,7 @@ EOF;
     
     private static function actualiza($usuario)
     {
-        $app = Aplicacion::getSingleton();
+        $app = App::getSingleton();
         $conn = $app->conexionBd();
         $query=sprintf("UPDATE usuarios U SET nombre='%s', password='%s', nombreUsuario='%s',  dni='%s', direccion='%s', email='%s', telefono='%s', ciudad='%s', codigo postal='%s', carrito='%i', trajeta credito='%i'   WHERE U.id=%i"
             , $conn->real_escape_string($usuario->nombreUsuario)

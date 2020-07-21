@@ -30,7 +30,7 @@ class FormularioRegistro extends Form
         <div class="form-group m-2" >
             <fieldset>
                 <div class="form-group m-2">
-                    <label>Nombre de usuario:</label> <input class="form-control" type="text" name="nombreUsuario" value="$nombreUsuario" />
+                    <label>Nombre de usuario:</label> <input id ="campoUser" class="form-control" type="text" name="nombreUsuario" value="$nombreUsuario" />
                 </div>
                 <div class="form-group m-2">
                     <label>Nombre completo:</label> <input class="form-control" type="text" name="nombre" value="$nombre" />
