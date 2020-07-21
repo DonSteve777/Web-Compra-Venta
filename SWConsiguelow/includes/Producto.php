@@ -22,31 +22,15 @@ public static function findById($id){
     }
     return $prod;
 }
-/*
-public static function muestraCards(){
-    $html='';
-    $prods = self::notMineProds();
-    $html = self::allCardsProduct($prods);
-    return $html;
-}
-
-public static function muestraCardsCat($id){
-    $html='';
-    $prods = self::productosPorCat($id);
-    $html = self::allCardsProduct($prods);
-    return $html;
-}*/
 
 public static function getAllOthers(){ //funcion que muestra todos los productos disponibles
     $result = [];
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
+    $currentuser=0;
     /*para que a un usuario no le aparezcan sus propios productos*/
     if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
         $currentuser= $_SESSION['userid'];
-    }
-    else {
-        $currentuser=0;
     }
     $query = sprintf("SELECT * FROM productos P WHERE NOT idVendedor=%d", $conn->real_escape_string($currentuser));
     $rs = $conn->query($query);

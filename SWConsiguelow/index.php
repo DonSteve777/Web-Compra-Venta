@@ -3,7 +3,6 @@ require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
 use es\fdi\ucm\aw\ImageUpload;
 
-
 function allCardsProduct($prod=array()){ 
     $html = '';
     $htmlimg = '';
@@ -27,7 +26,7 @@ EOF;
                                     <a href="producto.php?id=$id">
                                         <p>Imagen no disponible para este producto</p>
                                     </a>
-EOF; }
+EOF;    }
 $html .=<<<EOF
                                 </div>
                                 <div class="card-body justify-content-end"> 
@@ -42,10 +41,11 @@ EOF;
 
 $html='';
 $prods = Producto::getAllOthers();
-if (is_array($prods)){
+if (!is_array($prods)){
     $html.= allCardsProduct($prods);
 }else{
     $html='<p> Vaya, parece que nadie ha puesto nada en venta</p>';
+    error_log("select de productos ajenos no devolvió un array");
 }
 ?>
 

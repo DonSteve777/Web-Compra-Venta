@@ -1,5 +1,12 @@
-INSERT INTO `usuarios` (`id`, `dni`, `nombre`, `nombreUsuario`, `password`, `direccion`, `email`, `telefono`, `ciudad`, `codigo postal`, `tarjeta credito`) VALUES ('1', '52906370E', 'alvaro', 'alvarouser', 'alvaropass', 'calle falsa 123', 'correo@gmail.com', '123123123', 'Madrid', '28022', '123123');
-INSERT INTO `usuarios` (`id`, `dni`, `nombre`, `nombreUsuario`, `password`, `direccion`, `email`, `telefono`, `ciudad`, `codigo postal`, `tarjeta credito`) VALUES ('2', '62906370E', 'nestor', 'nestoruser', 'nestorpass', 'calle verdadera 321', 'nestor@gmail.com', '12312313', 'Madrid', '28022', '123123');
+/*
+  Recuerda que deshabilitar la opción "Enable foreign key checks" para evitar problemas a la hora de importar el script.
+*/
+/*
+  La contraseña para ambos usuarios es '12345' 
+  pasword_hash('$2y$10$0eR.KhfTH5ybn/jlB86hwe/1nQeCKXk2RcLEjBscJbpUaF504kSOi', PASSWORD_DEFAULT) == '12345'
+*/
+INSERT INTO `usuarios` (`id`, `dni`, `nombre`, `nombreUsuario`, `password`, `direccion`, `email`, `telefono`, `ciudad`, `codigo postal`, `tarjeta credito`) VALUES ('1', '52906370E', 'alvaro', 'alvarouser', '$2y$10$0eR.KhfTH5ybn/jlB86hwe/1nQeCKXk2RcLEjBscJbpUaF504kSOi', 'calle falsa 123', 'correo@gmail.com', '123123123', 'Madrid', '28022', '123123');
+INSERT INTO `usuarios` (`id`, `dni`, `nombre`, `nombreUsuario`, `password`, `direccion`, `email`, `telefono`, `ciudad`, `codigo postal`, `tarjeta credito`) VALUES ('2', '62906370E', 'nestor', 'nestoruser', '$2y$10$0eR.KhfTH5ybn/jlB86hwe/1nQeCKXk2RcLEjBscJbpUaF504kSOi', 'calle verdadera 321', 'nestor@gmail.com', '12312313', 'Madrid', '28022', '123123');
 
 INSERT INTO `roles` (`id`, `nombre`) VALUES
 (1, 'user'),
