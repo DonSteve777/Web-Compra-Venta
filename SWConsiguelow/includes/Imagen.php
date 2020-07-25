@@ -8,15 +8,11 @@ class Imagen
    // private $original_name;
     private $mime_type;
 
-
     public function __construct($productId, $nombre, $mime_type){
         $this->productId = $productId;
         $this->nombre = $nombre;
         $this->mime_type = $mime_type;
     }
-
-    
-
 
     public static function inserta($imagen)
     {
@@ -43,6 +39,7 @@ class Imagen
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM uploads U WHERE U.producto = '%d'", $conn->real_escape_string($productid));
         $rs = $conn->query($query);
+        $img = NULL;
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
@@ -57,8 +54,6 @@ class Imagen
         return $img;
     }
 
-
-
     public function id()
     {
         return $this->id;
@@ -69,18 +64,14 @@ class Imagen
         return $this->productid;
     }
 
-
     public function nombre()
     {
         return $this->nombre;
     }
 
-    
     public function mime_type()
     {
         return $this->mime_type;
     }
-
-    
 
 }

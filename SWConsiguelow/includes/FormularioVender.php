@@ -1,6 +1,7 @@
 <?php
 namespace es\fdi\ucm\aw;
 use es\fdi\ucm\aw\ImageUpload;
+use es\fdi\ucm\aw\Talla;
 
 
 class FormularioVender extends Form
@@ -15,7 +16,7 @@ class FormularioVender extends Form
         $nombreProd = '';
         $descripcion= '';
         $precio ='';
-        $talla='';
+        $talla= new Talla();
         $color='';
         $categoria ='';
         $unidades='';
@@ -32,18 +33,27 @@ class FormularioVender extends Form
             $imgUpload = isset($datos['imagen']) ? $datos['imagen'] : $imgUpload;
         }
         $cat = Categoria::findAll();
-        $select =<<<EOF
+       
+        $selectCategory='';
+        $selectCategory =<<<EOF
         <select class="category" name="categoria">
         <option selected="selected">elige categoría</option>
 EOF;
         foreach($cat as $item){
             $nombre = $item['nombre'];
             $id = $item['id'];
-        $select .= <<<EOF
+        $selectCategory .= <<<EOF
             <option value="$id"> $nombre</option>
 EOF;
         }
- 
+        $selectTalla='';
+        for ($x = 0; $x < $talla->numValores(); $x++) {
+            $texto = $talla->getValor($x);
+           
+            $selectTalla.=<<<EOF
+                        <option value="$x">$texto</option>
+EOF;
+} 
        $html =<<<EOF
        <div class="form-group m-2" >
             <fieldset>
@@ -57,24 +67,18 @@ EOF;
             <input type="text" class="form-control" name="unidades" value="$unidades"/></p>
             <p><label>Talla</label> 
             <select name="talla">
-                <option value="--">Not sizeable</option>
-                <option value="xs">xs</option>
-                <option value="s">s</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
+                $selectTalla    
             </select>
             <p><label>Color del producto:</label> 
             <input type="text" class="form-control" name="color" value="$color"/></p>
             <p><label>Categoria</label> 
-            $select;
+                $selectCategory
             </select>
             <p><label>Imagen</label> 
             <input type="file" class="form-control" name="imagen" value="$imgUpload"/></p>
             <div class="form-group text-center">
                 <button type="submit" class="btn btn-info" name="sell">Vender</button>
             </div>
-
             </fieldset>
         </div>
 EOF;
@@ -109,7 +113,6 @@ EOF;
             $result[] = "El numero de unidades no puede ser nulo";
         }
         
-
         $talla = isset($datos['talla']) ? $datos['talla'] : null;
 
         if ( empty($talla) ) {
@@ -131,7 +134,8 @@ EOF;
 
        if (count($result) === 0) {
             $idvendedor = $_SESSION['userid'];
-            $producto = Producto::añadeProd($nombreProd, $idvendedor, $descripcion, $precio,$unidades,$talla,$color,$categoria);
+            $tallaObj = new Talla($talla);
+            $producto = Producto::añadeProd($nombreProd, $idvendedor, $descripcion, $precio,$unidades,$tallaObj->getTalla(),$color,$categoria);
             if ($producto){
                 $imgupload = new ImageUpload($_FILES, $producto->id());
                 $result = $imgupload->uploadImages();
@@ -139,7 +143,6 @@ EOF;
                         alert("Producto subido con exito");
                         window.location.assign("index.php");
                         </script>';
-
             }       
             // No se da pistas a un posible atacante      
             else{

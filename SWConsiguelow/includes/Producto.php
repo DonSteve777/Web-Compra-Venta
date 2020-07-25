@@ -2,18 +2,26 @@
 
 class Producto
 {
+ 
 
-public static function findById($id){
+public static function getById($id){
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
     $query = sprintf("SELECT * FROM productos U WHERE U.id = '%d'", $conn->real_escape_string($id));
     $rs = $conn->query($query);
+    $prod = NULL;
+    if (!$id){
+        echo "product id no puede ser nulo";
+        exit();
+    }
     if ($rs) {
         if ( $rs->num_rows == 1) {
             $fila = $rs->fetch_assoc();
-            $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria']);
-            $prod->id = $id;
+            $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria'],  $fila['id']);
             
+        }else {
+            echo "No encuentro usuarios con id ". $id;
+            exit();
         }
         $rs->free();
     } else {
@@ -23,47 +31,67 @@ public static function findById($id){
     return $prod;
 }
 
-public static function getAllOthers(){ //funcion que muestra todos los productos disponibles
-    $result = [];
+public static function getAliens(){
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
     $currentuser=0;
+    $result = [];
     /*para que a un usuario no le aparezcan sus propios productos*/
     if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
         $currentuser= $_SESSION['userid'];
     }
     $query = sprintf("SELECT * FROM productos P WHERE NOT idVendedor=%d", $conn->real_escape_string($currentuser));
     $rs = $conn->query($query);
-    $i=0;
     if ($rs) {
         if ( $rs->num_rows > 0) {
-            while ($array=$rs->fetch_array()){
-                $claves = array_keys($array);
-                foreach($claves as $clave){
-                    $arrayauxliar[$i][$clave]=$array[$clave];
-                }           
-                $i++;    
+            while($fila = $rs->fetch_assoc()) {
+                $result[]=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria'],  $fila['id']);
             }
             $rs->free();
         } else {
-            $result[] = 'No se ha cargado ningún producto';
+            echo 'No se ha cargado ningún producto';
+            exit();
         } 
     }else{
-        $result[] = "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
         exit();
     } 
-    return $arrayauxliar;
+    return $result;
 }
 
-
-public static function muestraProdsUsuario($idUsuario){ //funcion que muestra todos los productos disponibles
+public static function getByUser($idUsuario){ 
+    $app = Aplicacion::getSingleton();
+    $conn = $app->conexionBd();
+    $query = sprintf("SELECT * FROM productos P WHERE P.idVendedor =$idUsuario");$conn->real_escape_string($idUsuario);
+    $rs = $conn->query($query);
+    if (!$idUsuario){
+        echo "user id no puede ser nulo";
+        exit();
+    }
+    if ($rs) {
+        if ( $rs->num_rows > 0) {
+            while($fila = $rs->fetch_assoc()) {
+                $result[]=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria'],  $fila['id']);
+            }
+            $rs->free();
+        } else {
+            echo 'No encuentro productos del usuario';
+            exit();
+        } 
+    }else{
+        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+        exit();
+    } 
+    return $result;
+}
+/*
+public static function getByUser($idUsuario){ 
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
     $query = sprintf("SELECT * FROM productos P WHERE P.idVendedor =$idUsuario");$conn->real_escape_string($idUsuario);
     $rs = $conn->query($query);
     $result = false;
     $i=0;
-    $html='';
     if ($rs) {
         if ( $rs->num_rows > 0) {
             while ($array=$rs->fetch_array()){
@@ -132,21 +160,25 @@ EOF;
 return $html;
 }
 
+*/
 
-
-    public static function buscaProd($nombreProd)
+    public static function getByName($nombreProd)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '%s'", $conn->real_escape_string($nombreProd));
         $rs = $conn->query($query);
-        $result = false;
+        $result = [];
+        if (!$nombreProd){
+            echo "nombre producto no puede ser nulo";
+            exit();
+        }
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
                 $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria']);
                 $prod->id = $fila['id'];
-                $result = $prod;
+                $result[] = $prod;
             }
             $rs->free();
         } else {
@@ -156,13 +188,19 @@ return $html;
         return $result;
     }
 
-    public static function eliminaProd($nombreProd){
-        $prod = self::buscaProd($nombreProd); 
+    public static function eliminaByName($nombreProd){
+        if (!$nombreProd){
+            echo "nombre producto no puede ser nulo";
+            exit();
+        }
+        
+        $prod = self::getByName($nombreProd); 
         if (!$prod) {
-            return "No se ha encontrado nada";
+            echo "No encuentro producto ".$nombreProd." para eliminarlo";
+            exit();
         }
         else{ 
-       return self::elimina($prod); 
+            return self::elimina($prod); 
         }
     }
 
@@ -189,28 +227,9 @@ return $html;
         return $eliminado;
     }
 
-  public static function findByName($nombreProd){
-    $app = Aplicacion::getSingleton();
-    $conn = $app->conexionBd();
-    $query = sprintf("SELECT * FROM productos U WHERE U.nombre LIKE '%s'", $conn->real_escape_string($nombreProd));
-    $rs = $conn->query($query);
-    if ($rs) {
-        if ( $rs->num_rows == 1) {
-            $fila = $rs->fetch_assoc();
-            $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria']);
-            $prod->id = $fila['id'];
-        }else echo 'no econtrado';
-        $rs->free();
-    } else {
-        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-        exit();
-    }
-    return $prod;
-}
-
-public static function searchProduct($name){
+public static function search($name){
     $html = '';
-    $prod = self::findByName($name);
+    $prod = self::getByName($name);
     $html=self::generaBusqueda($prod);
     return $html;
 }
@@ -230,32 +249,62 @@ EOF;
     }
     return $html;
 }
-    public static function productosPorCat($idCat){
+//aparece en index y en ccategoría. genera el html para un producto con su foto y su precio
+public function generaTarjeta(){ 
+    $html = '';
+    $htmlimg = '';
+    $imgSrc = ImageUpload::getSource($this->id);
+    $precio = $this->precio();
+    $html .=<<<EOF
+                    <div class="col-md-4">
+                        <div class="card mb-4 text-center bg-light border-0">
+                            <div class="card-img-top">       
+EOF;
+    if($imgSrc){
+        $html.=<<<EOF
+                                <a href="producto.php?id=$this->id">
+                                    <img class="img-thumbnail" src=$imgSrc alt="imagen no disponible">
+                                </a>
+EOF;
+    }else{
+        $html.=<<<EOF
+                                <a href="producto.php?id=$this->id">
+                                    <p>Imagen no disponible para este producto</p>
+                                </a>
+EOF;    }
+$html .=<<<EOF
+                            </div>
+                            <div class="card-body justify-content-end"> 
+                                $precio €
+                            </div>
+                        </div>
+                    </div>
+EOF;
+    
+    return $html;
+}
+    public static function getByCat($idCat){
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
+        $result = [];
         $query = sprintf("SELECT * FROM productos P WHERE P.categoria = '$idCat'");$conn->real_escape_string($idCat);
         $rs = $conn->query($query);
-        $prod=array();
-        $i=0;
         if ($rs) {
             if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                $claves = array_keys($array);
-                foreach($claves as $clave){
-                    $arrayauxliar[$i][$clave]=$array[$clave];
-                }           
-                $i++;
-                $prod = $arrayauxliar;
+                while($fila = $rs->fetch_assoc()) {
+                    $result[]=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria'],  $fila['id']);
                 }
-            }
-            $rs->free();
-        } else {
+                $rs->free();
+            } else {
+                echo 'No se ha cargado ningún producto';
+                exit();
+            } 
+        }else{
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
-        }
-        return $prod;
+        } 
+        return $result;
     }
-
     public static function muestraProductosPorPrecioDesc($producto)
     {
         $app = Aplicacion::getSingleton();
@@ -294,15 +343,15 @@ EOF;
         return self::guardaProd($producto);
     }
     
-    public static function guardaProd($producto)
+    public static function guarda($producto)
     {
         if ($producto->id !== null) {
-            return self::actualizaProd($producto);
+            return self::actualiza($producto);
         }
-        return self::insertaProd($producto);
+        return self::inserta($producto);
     }
 
-    private static function insertaProd($producto)
+    private static function inserta($producto)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -327,7 +376,7 @@ EOF;
         return $producto;
     }
     
-    private static function actualizaProd($producto)
+    private static function actualiza($producto)
     {
         $actualizado = false;
         $app = Aplicacion::getSingleton();
@@ -376,8 +425,9 @@ EOF;
 
     private $unidades;
 
-    private function __construct($nombreProd, $vendedor, $descripcion, $precio,$unidades, $talla, $color, $categoria)
+    private function __construct($nombreProd, $vendedor, $descripcion, $precio,$unidades, $talla, $color, $categoria, $id = NULL)
     {
+        $this->id = $id;
         $this->nombre = $nombreProd;
         $this->vendedor = $vendedor;
         $this->descripcion = $descripcion;
@@ -388,7 +438,6 @@ EOF;
 		$this->categoria= $categoria;
     }
 
-
     public function id()
     {
         return $this->id;
@@ -398,7 +447,6 @@ EOF;
     {
         return $this->nombre;
     }
-
     
     public function vendedor()
     {

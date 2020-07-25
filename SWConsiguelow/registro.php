@@ -15,6 +15,8 @@ $html = $form->gestiona();
     <title>Local Consiguelow</title>
     <link rel="icon" href="img/money.ico"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/ejercicio4.js"></script>
 </head>
 
 <body>

@@ -6,7 +6,7 @@ use es\fdi\ucm\aw\ImageUpload;
 
 //$html = Producto::muestraProds();
 $idproducto = $_GET['id'];
-$producto = Producto::findById($idproducto);
+$producto = Producto::getById($idproducto);
 $imgSrc = ImageUpload::getSource($idproducto);
 $htmlComprar='';
 $htmlCarrito='';
