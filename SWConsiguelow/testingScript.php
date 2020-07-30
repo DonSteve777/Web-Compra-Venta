@@ -1,15 +1,5 @@
 <?php
 require_once __DIR__.'/includes/config.php';
-use es\fdi\ucm\aw\Producto;
-use es\fdi\ucm\aw\ImageUpload;
-
-
-
-$html='';
-$prods = Producto::getAliens();
-foreach($prods as $value){
-    $html.=$value->generaTarjeta();
-}
 
 ?>
 
@@ -26,22 +16,25 @@ foreach($prods as $value){
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="js/bootstrap.min.js"></script> 
+
+    <script>
+        $(function() {
+            $("#test").click(function() {
+              var e = {
+                "id" : 1,
+                "pagado"   : 0
+              };
+                $.post( "testingRequest.php", JSON.stringify(e), function(data, status) {
+                  $("#mensaje").html(data);
+                   /* .done(function (data, textStatus, jqXHR) {
+                $("#mensaje").html(data);*/           
+                }, "json")
+            });
+        })
+    </script>     
 </head>
-
-<body>
-    <?php require("includes/common/cabecera.php");?>
-    <main role="main">
-        <div class="album py-5 bg-light">
-            <div class="container">
-                <div class="row"> 
-                    <?php
-                        echo $html;
-                    ?>
-                </div>
-            </div>
-        </div>
-    </main>
-    <?php require("includes/common/footer.php"); ?>
-
-</body>
+    <body>
+    <button id="test" type="button" class="btn btn-info btn-lg" role="button" >Comprar</button>
+    <div id="mensaje"></div>
+    </body>
 </html>

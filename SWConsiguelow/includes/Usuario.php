@@ -1,32 +1,33 @@
 <?php
-namespace es\fdi\ucm\aw\usuarios;
+namespace es\fdi\ucm\aw;
 use es\fdi\ucm\aw\Aplicacion as App;
 
 class Usuario
 {
-
     public static function getAll(){ 
-        throw new UsuarioNoEncontradoException("No se encuentran usuarios");
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM usuarios P");
         $rs = $conn->query($query);
-        $i=0;
-        $users=array();
-        if ($rs && $rs->num_rows > 1) {
-                while ($array=$rs->fetch_array()){
-                    $claves = array_keys($array);
-                    foreach($claves as $clave){
-                        $users[$i][$clave]=$array[$clave];
-                    }           
-                    $i++;
+        $result = [];
+        
+        if ($rs) {
+            if ( $rs->num_rows > 0) {
+                while($fila = $rs->fetch_assoc()) {
+                    $user = new Usuario($fila['nombre'], $fila['nombreUsuario'], $fila['password'], $fila['dni'],  $fila['direccion'],  $fila['email'],  $fila['telefono'],  $fila['ciudad'],  $fila['codigo postal'], $fila['tarjeta credito'] );
+                    $user->id = $fila['id'];
+                    $result[]=$user;
                 }
                 $rs->free();
+            } else {
+                echo 'No se ha cargado ningún usuario';
+                exit();
+            } 
         }else{
-            error_log( "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error));
-            throw new UsuarioNoEncontradoException("No se encuentran usuarios");
-        }
-        return $users;
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        } 
+        return $result;
     }
 
 
@@ -34,7 +35,8 @@ class Usuario
   {
     $user = self::buscaUsuario($nombreUsuario);
     if (!$user) {
-        throw new UsuarioNoEncontradoException("No se puede encontrar al usuario: $username");    
+        //throw new UsuarioNoEncontradoException("No se puede encontrar al usuario: $username");   
+        return false; 
       }
       if (!$user->compruebaPassword($password)) {
         return false;
@@ -62,13 +64,13 @@ class Usuario
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
-                $user = new Usuario($fila['nombre'], $fila['nombreUsuario'], $fila['password'], $fila['dni'],  $fila['direccion'],  $fila['email'],  $fila['telefono'],  $fila['ciudad'],  $fila['codigo postal'],  $fila['carrito'], $fila['tarjeta credito'] );
+                $user = new Usuario($fila['nombre'], $fila['nombreUsuario'], $fila['password'], $fila['dni'],  $fila['direccion'],  $fila['email'],  $fila['telefono'],  $fila['ciudad'],  $fila['codigo postal'], $fila['tarjeta credito'] );
                 $user->id = $fila['id'];
                 $result = $user;
             }
             $rs->free();
         } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            error_log("Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error));
             exit();
         }
         return $result;
@@ -163,7 +165,7 @@ class Usuario
     {
         $app = App::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO `usuarios` (`dni`, `nombre`, `nombreUsuario`, `password`, `direccion`, `email`, `telefono`, `ciudad`, `codigo postal`, `carrito`, `tarjeta credito`) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d')"
+        $query=sprintf("INSERT INTO `usuarios` (`dni`, `nombre`, `nombreUsuario`, `password`, `direccion`, `email`, `telefono`, `ciudad`, `codigo postal`, `tarjeta credito`) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d')"
             , $conn->real_escape_string($usuario->dni)    
             , $conn->real_escape_string($usuario->nombre)
             , $conn->real_escape_string($usuario->nombreUsuario)
@@ -173,7 +175,6 @@ class Usuario
             , $conn->real_escape_string($usuario->telefono)
             , $conn->real_escape_string($usuario->ciudad)
             , $conn->real_escape_string($usuario->codigoPostal)
-            , $conn->real_escape_string($usuario->carrito)
             , $conn->real_escape_string($usuario->tarjetaCredito));
 
         if ( $conn->query($query) ) {
@@ -198,7 +199,6 @@ class Usuario
             , $conn->real_escape_string($usuario->direccion)
             , $conn->real_escape_string($usuario->telefono)
             , $conn->real_escape_string($usuario->codigoPostal)
-            , $conn->real_escape_string($usuario->carrito )
             , $conn->real_escape_string($usuario->tarjetaCredito )
             , $usuario->id);
         if ( $conn->query($query) ) {
@@ -231,8 +231,6 @@ class Usuario
 
     private $codigoPostal;
 
-    private $carrito;
-
     private $tarjetaCredito;
 
     private $nombreUsuario;
@@ -251,7 +249,6 @@ class Usuario
         $this->telefono = $telefono;
         $this->ciudad = $ciudad;
         $this->codigoPostal = $codigoPostal;
-        $this->carrito = 0; //new carrito
         $this->tarjetaCredito = $tarjetaCredito;
         $this->roles = [];
     }
@@ -314,11 +311,6 @@ class Usuario
     public function nombre()
     {
         return $this->nombre;
-    }
-
-    public function carrito()
-    {
-        return $this->carrito;
     }
 
     public function compruebaPassword($password)

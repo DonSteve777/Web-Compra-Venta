@@ -1,5 +1,6 @@
 <?php
-//namespace es\fdi\ucm\aw\usuarios;
+require_once __DIR__.'/includes/config.php';
+use es\fdi\ucm\aw\Usuario as Usuario;
 
 	if (isset($_GET['user']) && !empty($_GET['user'])){
 		$usuario = $_GET['user'];
@@ -10,7 +11,7 @@
 		$arrayLenght = count($todos);
 
 		while ($i < $arrayLenght && $disponible){
-			if ($usuario==$todos[i]['nombreUsuario']){
+			if ($usuario==$todos[$i]['nombreUsuario']){
 				$disponible = false;
 			}
 			$i++;

@@ -7,7 +7,7 @@ require_once __DIR__.'/includes/config.php';
 function muestraTodosUsuarios(){
     $app = Aplicacion::getSingleton();
     if ($app->tieneRol('admin', 'Acceso Denegado', 'No tienes permisos suficientes para administrar la web.')) {
-  $html= Usuario::muestraTodosUsuarios();
+  $html= Usuario::getAll();
   return $html;
     }
 }

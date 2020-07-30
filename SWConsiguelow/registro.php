@@ -15,8 +15,7 @@ $html = $form->gestiona();
     <title>Local Consiguelow</title>
     <link rel="icon" href="img/money.ico"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="js/ejercicio4.js"></script>
+	
 </head>
 
 <body>
@@ -26,6 +25,7 @@ $html = $form->gestiona();
 <?php
 	require("includes/common/cabecera.php");
 ?>
+<script type="text/javascript" src="js/ejercicio4.js"></script>
 <div class="row">
     <div class="col-4">
     </div>

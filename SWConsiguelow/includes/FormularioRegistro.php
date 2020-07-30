@@ -1,7 +1,5 @@
 <?php
 namespace es\fdi\ucm\aw;
-//require_once __DIR__.'/Form.php';
-//require_once __DIR__.'/Usuario.php';*/
 
 class FormularioRegistro extends Form
 {
@@ -11,7 +9,7 @@ class FormularioRegistro extends Form
     
     protected function generaCamposFormulario($datos)
     {
-        $nombreUsuario = '';
+        $nombreUsuario = 'UsernameSample2020';
         $nombre = '';
         $dni = '';
         $direccion = '';
@@ -21,6 +19,7 @@ class FormularioRegistro extends Form
         $ciudad = '';
         $codigoPostal = ''; 
         $tarjetaCredito = '';
+        
 
         if ($datos) {
             $nombreUsuario = isset($datos['nombreUsuario']) ? $datos['nombreUsuario'] : $nombreUsuario;
@@ -30,15 +29,21 @@ class FormularioRegistro extends Form
         <div class="form-group m-2" >
             <fieldset>
                 <div class="form-group m-2">
-                    <label>Nombre de usuario:</label> <input id ="campoUser" class="form-control" type="text" name="nombreUsuario" value="$nombreUsuario" />
+                    <label>Nombre de usuario:</label> 
+                    <div class="d-flex flex-row">
+                            <input autocomplete="on" required id="campoUser" class="form-control" type="text" name="nombreUsuario" value="$nombreUsuario" />
+                            <button type="button" id="checkButton" class="btn btn-info ml-2">Check</button>
+                            <span id="userOK" class="text-danger ml-2"></span>
+                    </div>
+                    <span id="regexpr" class="text-danger">El nombre de usuario sólo puede contener símbolos alfanuméricos</span>
                 </div>
                 <div class="form-group m-2">
-                    <label>Nombre completo:</label> <input class="form-control" type="text" name="nombre" value="$nombre" />
+                    <label>Nombre completo:</label> <input required class="form-control" type="text" name="nombre" value="$nombre" />
                 </div>
                 <div class="form-group m-2">
-                    <label>Password:</label> <input class="form-control" type="password" name="password" />
+                    <label>Password:</label> <input required class="form-control" type="password" name="password" autocomplete="off"/>
                 </div>
-                <div class="form-group m-2"><label>Vuelve a introducir el Password:</label> <input class="form-control" type="password" name="password2" /><br /></div>
+                <div class="form-group m-2"><label>Vuelve a introducir el Password:</label> <input required class="form-control" type="password" name="password2 autocomplete="off"" /><br /></div>
                 
                 <div class="form-group m-2">
                     <label>dni:</label> <input class="form-control" type="text" name="dni" value="$dni" />
@@ -59,7 +64,7 @@ class FormularioRegistro extends Form
                     <label>codigo postal:</label> <input class="form-control" type="text" name="codigoPostal" value="$codigoPostal" />
                 </div>
                 <div class="form-group m-2">
-                    <label>tarjeta credito:</label> <input class="form-control" type="text" name="tarjetaCredito" value="$tarjetaCredito" />
+                    <label>tarjeta credito:</label> <input class="form-control" name="tarjetaCredito" value="$tarjetaCredito"  type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"placeholder="xxxx xxxx xxxx xxxx" autocomplete="cc-number" maxlength="19" />
                 </div>
                 <div class="form-group text-center"><button class=" btn btn-info" type="submit" name="registro">Registrar</button></div>
             </fieldset>

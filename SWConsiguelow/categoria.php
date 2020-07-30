@@ -1,9 +1,14 @@
 <?php
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
+
 $id = $_GET['id'];
 $nombre = $_GET['nombre'];
-$html = Producto::muestraCardsCat($id);
+$productos = Producto::getByCat($id);
+$html='';
+foreach($productos as $value){
+    $html.=$value->generaTarjeta();
+}
 ?>
 
 <!DOCTYPE html>

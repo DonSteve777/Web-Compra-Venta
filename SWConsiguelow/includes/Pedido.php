@@ -1,6 +1,4 @@
 <?php namespace es\fdi\ucm\aw;
-//require_once __DIR__ . '/Aplicacion.php';
-
 
 class Pedido
 {
@@ -49,12 +47,11 @@ class Pedido
         return $result;
     }
 
-    public static function muestraPedidos()
+    public static function getByUser($user)
      {
         $result = [];
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $user = $_SESSION['userid'];
         $query = sprintf("SELECT P.id, P.producto, P.pagado, P.comprador FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =1"); $conn->real_escape_string($user);    $rs = $conn->query($query);
         $rs = $conn->query($query);
         if ($rs) {
@@ -69,50 +66,13 @@ class Pedido
     }
 
 
-    /*public static function muestraPedidos(){
-    $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $user = $_SESSION['userid'];
-        $query = sprintf("SELECT P.id, P.producto, P.pagado, P.comprador FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =1"); $conn->real_escape_string($user);    $rs = $conn->query($query);
-        $rs = $conn->query($query);
-        $i=0;
-        $html='';
-        if ($rs) {
-            if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                    $claves = array_keys($array);
-                    foreach($claves as $clave){
-                        $arrayauxliar[$i][$clave]=$array[$clave];
-                    }           
-                    $i++;
-                    $ped = $arrayauxliar;
-                   
-                }
-                $rs->free();
-                foreach($ped as $key => $fila){
-                    $id =  $fila['id'];
-                    $prod = $fila['producto'];
-                    //muestraLogo($html)
-                    $html.=<<<EOF
-                    <ul>
-                    <li> idPedido: $id</li>
-                     Producto: $prod</li>
-                    </ul>
-EOF;
-                }
-            }
-         }
-        return $html;
-    }*/
-
-    public static function muestraCarrito()
+    public static function getCarrito()
   {
     $result = [];
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
     $user = $_SESSION['userid'];
     $query = sprintf("SELECT P.id, P.producto, P.pagado, P.comprador FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =0"); $conn->real_escape_string($user);    $rs = $conn->query($query);
-    $html='';
     if ($rs) {
       while($fila = $rs->fetch_assoc()) {
         $ped=new Pedido($fila['producto'],$fila['pagado'],$fila['comprador']);
@@ -209,7 +169,7 @@ EOF;
         return self::insertaPedido($pedido);
     }
     
-    public static function insertaPedido($pedido)
+    public function inserta()
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -221,21 +181,19 @@ EOF;
         );
         if ( $conn->query($query) ) {
             $pedido->id= $conn->insert_id;
-            echo '<script type="text/javascript">
+            /*echo '<script type="text/javascript">
             alert("Se ha añadido correctamente");
             window.location.assign("index.php");
             </script>';
-            exit();
+            exit();*/
         } else {
             echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
         return $pedido;
     }
-    
-	
-    //filas tabla pedido
-    
+
+
     private $id;
 
     private $producto;
@@ -244,7 +202,7 @@ EOF;
     private $comprador;
 
 	
-    public function __construct($producto, $pagado, $comprador)
+    public function __construct($producto, $pagado, $comprador, $id=NULL)
     {
         $this->pagado = $pagado;
         $this->producto = $producto;

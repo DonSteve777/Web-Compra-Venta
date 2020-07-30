@@ -1,13 +1,17 @@
 <?php
 use es\fdi\ucm\aw\Pedido;
+use es\fdi\ucm\aw\Aplicacion as App;
 
 
 require_once __DIR__.'/includes/config.php';
 
+if (!App::getSingleton()->usuarioLogueado())
+    header('Location: login.php');
+
 function listadoCarrito()
 {
   $html = '';
-  $carrito = Pedido::muestraCarrito();
+  $carrito = Pedido::getCarrito();
   $html.=<<<EOF
   <ul class="list-group">
 EOF;
