@@ -51,6 +51,7 @@ class Form
   {
     $this->formId = $formId;
 
+
     $opcionesPorDefecto = array( 'ajax' => false, 'action' => null, 'class' => null, 'enctype' => null );
     $opciones = array_merge($opcionesPorDefecto, $opciones);
 

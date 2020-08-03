@@ -30,10 +30,12 @@ class FormularioRegistro extends Form
             <fieldset>
                 <div class="form-group m-2">
                     <label>Nombre de usuario:</label> 
-                    <div class="d-flex flex-row">
+                    <div class="input-group">
                             <input autocomplete="on" required id="campoUser" class="form-control" type="text" name="nombreUsuario" value="$nombreUsuario" />
-                            <button type="button" id="checkButton" class="btn btn-info ml-2">Check</button>
-                            <span id="userOK" class="text-danger ml-2"></span>
+                            <div class="input-group-append"> 
+                                <button type="button" id="checkButton" class="btn btn-info ml-2">Check</button>
+                                <span id="userOK" class="text-danger ml-2"></span>
+                            </div>
                     </div>
                     <span id="regexpr" class="text-danger">El nombre de usuario sólo puede contener símbolos alfanuméricos</span>
                 </div>

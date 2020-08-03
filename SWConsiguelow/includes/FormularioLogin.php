@@ -11,6 +11,7 @@ class FormularioLogin extends Form
 
   public function __construct()
   {
+   //$opciones['class'] =  'form-signin';
     parent::__construct('formLogin');
   }
   

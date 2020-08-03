@@ -88,8 +88,6 @@ Class ImageUpload {
 	}
 
 	public static function getSource($idProducto){
-		//$id = $_GET['id'];
-		//var_dump($id);
 		$result='';
 		$imagen = Imagen::findByProductId($idProducto);
 		if (!$imagen){
@@ -98,7 +96,6 @@ Class ImageUpload {
 			$imgname = $imagen->nombre();
 			$result = "data/productos/$imgname";
 		}
-		
 		return $result;
 	}
 }

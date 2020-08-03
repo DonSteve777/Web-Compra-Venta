@@ -1,4 +1,5 @@
-$(document).ready(function() {	//carga del DOM tree
+$(document).ready(function() {	
+	//carga del DOM tree
 	$("#userOK").hide();
 	$("#regexpr").hide();
 	$("#campoUser").one("click", function() {
@@ -11,6 +12,7 @@ $(document).ready(function() {	//carga del DOM tree
 		if (usernameRegex.test($("#campoUser").val())){
 			$("#regexpr").hide();
 			$.get(url,function(data,status){
+				alert(data);
 				if (data === 'disponible'){
 					$("#userOK").html('&#x2714');
 				}

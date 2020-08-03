@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/FormularioLogin.php';
 use es\fdi\ucm\aw\FormularioLogin;
 
 $form = new FormularioLogin(); 
@@ -23,10 +22,11 @@ $html = $form->gestiona();
     <div class="row">
         <div class="col-4"></div>
         <div class="col-4">
-            <div class="container d-flex flex-column mt-5">
-                <?php 
-                    echo $html; 
-                ?>
+            <div class="container  w-75 d-flex flex-column mt-5">
+                <?php echo $html; ?>
+                <h6 class="mt-4"> 
+                    <a href="registro.php">¿Todavía no tienes cuenta? Regístrate aquí</a>
+                </h6>
             </div>
         </div>
         <div class="col-4"></div>

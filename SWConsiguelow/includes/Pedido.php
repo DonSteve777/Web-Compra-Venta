@@ -169,7 +169,7 @@ class Pedido
         return self::insertaPedido($pedido);
     }
     
-    public function inserta()
+    public static function inserta($pedido)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -192,6 +192,27 @@ class Pedido
         }
         return $pedido;
     }
+
+    public static function contadorCarrito()
+    {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query=sprintf("SELECT * FROM `pedidos` WHERE 'comprado'= '0' ");
+        $rs =  $conn->query($query);
+        if ( $rs ) {
+            return $rs->num_rows; 
+            /*echo '<script type="text/javascript">
+            alert("Se ha añadido correctamente");
+            window.location.assign("index.php");
+            </script>';
+            exit();*/
+        } else {
+            echo "Error al consultar la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+    }
+
+
 
 
     private $id;
