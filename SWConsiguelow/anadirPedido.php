@@ -13,7 +13,7 @@ use es\fdi\ucm\aw\Pedido as Pedido;
             //throw new ParametroNoValidoException('El cuerpo de la petición no es valido');
         }
         $dictionary = json_decode($entityBody, true);
-        $idproducto = $dictionary['id'];
+        $idproducto = $dictionary['producto'];
         $pagado = $dictionary['pagado'];
         $comprador = $_SESSION['userid'];
         $pedido = new Pedido($idproducto, $pagado, $comprador);

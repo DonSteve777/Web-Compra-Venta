@@ -4,6 +4,10 @@ require_once __DIR__.'/includes/ImageUpload.php';
 use es\fdi\ucm\aw\Producto;
 use es\fdi\ucm\aw\ImageUpload;
 use es\fdi\ucm\aw\FormularioLogin;
+use es\fdi\ucm\aw\Aplicacion as App;
+use es\fdi\ucm\aw\Pedido;
+
+
 
 //podría intentear afinar generando este html solo en caso de usarlo, como respuesta a una petición
 $form = new FormularioLogin(); 
@@ -25,7 +29,6 @@ EOF;
 
 $htmlComprar='';
 $htmlCarrito='';
-$id = $producto->id();
 $htmlComprar =<<<EOF
     <button id="buy" type="button" class="btn btn-info btn-lg" >Comprar</button>
 EOF;
@@ -34,8 +37,9 @@ if (App::getSingleton()->usuarioLogueado()){
     $carrito = Pedido::getCarrito();
     $i=0;
     $encontrado = false;
-    while($i < $carrito->count() && !$encontrado){
-        if ($carrito[$i]->producto()== $id) $encontrado = true;
+    while($i < count($carrito) && !$encontrado){
+        if ($carrito[$i]->producto()==  $idproducto) $encontrado = true;
+        $i++;
     }
     if ($encontrado){
         $htmlCarrito=<<<EOF
@@ -46,23 +50,12 @@ EOF;
         <button id="addCart" type="button" class="btn btn-info btn-lg">Añadir al carrito</button>
 EOF;
     }
-}
-    
-$carrito = Pedido::getCarrito();
-$i=0;
-$encontrado = false;
-while($i < $carrito->count() && !$encontrado){
-    if ($carrito[$i]->producto()== $id) $encontrado = true;
-}
-if ($encontrado){
-    $htmlCarrito=<<<EOF
-    <a href="vistaCarrito.php" id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</a>
-EOF;
 }else{
     $htmlCarrito=<<<EOF
     <button id="addCart" type="button" class="btn btn-info btn-lg">Añadir al carrito</button>
-EOF;
+EOF; 
 }
+
 
 
 ?>
@@ -81,45 +74,9 @@ EOF;
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script> 
+    <script src="js/productoDetalle.js"></script> 
 
-    <script>
-        $(function() {
-            $("#addCart").click(function() {
-                var url = "usuarioLogueado.php";
-                var logueado = false;
-                $.get(url,function(data,status){
-                   // alert(data);
-                    if (data == 'logueado'){
-                            var e = {
-                        "id" : 1,
-                        "pagado"   : 0
-                        };
-                        $.post( "anadirPedido.php", JSON.stringify(e), function(data, status) {
-                            $("#addCart").replaceWith(data);         
-                        })
-                    }
-                    else{
-                        var modal = document.getElementById("myModal");
-                        // Get the button that opens the modal
-                        // Get the <span> element that closes the modal
-                        var span = document.getElementsByClassName("close")[0];
-                        modal.style.display = "block";
-                    // }
-                        // When the user clicks on <span> (x), close the modal
-                        span.onclick = function() {
-                            modal.style.display = "none";
-                        }
-                        // When the user clicks anywhere outside of the modal, close it
-                        window.onclick = function(event) {
-                            if (event.target == modal) {
-                                modal.style.display = "none";
-                            }
-                        }
-                    }
-                });
-            });
-        })
-    </script>       
+    
 </head>
 
 <body>
