@@ -5,3 +5,4 @@ TRUNCATE table `uploads`;
 TRUNCATE table `roles`;
 TRUNCATE table `rolesUsuario`;
 TRUNCATE table `pedidos`;
+/*desactivar enable foreign key checks*/
