@@ -259,12 +259,12 @@ EOF;
 
     public static function añadeProd($nombreProd, $vendedor, $descripcion, $precio,$unidades,$talla,$color,$categoria) //atributos productos
     {
-        $producto = self::buscaProd($nombreProd);
+        $producto = self::getByName($nombreProd);
         if ($producto) {
             return false;
         }
         $producto = new Producto($nombreProd, $vendedor, $descripcion, $precio,$unidades, $talla, $color, $categoria);
-        return self::guardaProd($producto);
+        return self::guarda($producto);
     }
     
     public static function guarda($producto)

@@ -229,6 +229,7 @@ EOF;
     public function __construct($nombre, $descripcion, $id = NULL){
         $this->nombre = $nombre;
         $this->descripcion = $descripcion;
+        $this->id = $id;
     }
 
     public function id()

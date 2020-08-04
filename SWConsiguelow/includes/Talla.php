@@ -15,19 +15,18 @@ class Talla{
         return sizeof(self::$valores);
     }
 
-    public function getTalla($valor){
-        return $this->$talla;
+    public function getTalla(){
+        return $this->talla;
     } 
 
     public function setTalla($valor){
-        $this->$talla = $associative[$valor];
-        return $result;
+        $this->talla = self::$valores[$valor];
     } 
 
     public function __construct( $talla = NULL) {
         if (isset($talla))
-        $this->$talla = $talla;
-        $this->$talla = self::$valores[0];
+        $this->talla = $talla;
+        $this->talla = self::$valores[0];
     }
 }
 

@@ -27,12 +27,15 @@ class FormularioVender extends Form
             $descripcion = isset($datos['descripcion']) ? $datos['descripcion'] : $descripcion;
             $precio = isset($datos['precio']) ? $datos['precio'] : $precio;
             $unidades = isset($datos['unidades']) ? $datos['unidades'] : $unidades;
-            $talla = isset($datos['talla']) ? $datos['talla'] : $talla;
+            if (isset($datos['talla'])){
+                $talla->setTalla($datos['talla']);
+            }
+//            $talla = isset($datos['talla']) ? $talla->setTalla($datos['talla']) : $talla;
             $color = isset($datos['color']) ? $datos['color'] : $color;
             $categoria = isset($datos['categoria']) ? $datos['categoria'] : $categoria;
             $imgUpload = isset($datos['imagen']) ? $datos['imagen'] : $imgUpload;
         }
-        $cat = Categoria::findAll();
+        $cat = Categoria::getAll();
        
         $selectCategory='';
         $selectCategory =<<<EOF
@@ -40,8 +43,8 @@ class FormularioVender extends Form
         <option selected="selected">elige categoría</option>
 EOF;
         foreach($cat as $item){
-            $nombre = $item['nombre'];
-            $id = $item['id'];
+            $nombre = $item->nombre();
+            $id = $item->id();
         $selectCategory .= <<<EOF
             <option value="$id"> $nombre</option>
 EOF;
@@ -116,7 +119,7 @@ EOF;
         $talla = isset($datos['talla']) ? $datos['talla'] : null;
 
         if ( empty($talla) ) {
-            $result[] = "La talla no puede estar vacía.";
+            $result[] = "La talla no puede estar vacía  .";
         }
         
         $color = isset($datos['color']) ? $datos['color'] : null;
@@ -124,7 +127,6 @@ EOF;
         if ( empty($color) ) {
             $result[] = "El color no puede estar vacía.";
         }
-                
         $categoria = isset($datos['categoria']) ? $datos['categoria'] : null;
         $categoria = intval($categoria);
 
@@ -147,7 +149,7 @@ EOF;
             // No se da pistas a un posible atacante      
             else{
                 $result[] = "No se ha podido añadir el producto";
-                $result = 'index.php';
+//                $result = 'index.php';
                         }
         }
         return $result;
