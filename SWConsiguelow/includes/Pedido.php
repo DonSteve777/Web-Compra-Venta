@@ -72,7 +72,9 @@ class Pedido
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
     $user = $_SESSION['userid'];
-    $query = sprintf("SELECT P.id, P.producto, P.pagado, P.comprador FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =0"); $conn->real_escape_string($user);    $rs = $conn->query($query);
+    $query = sprintf("SELECT * FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =0"); 
+    $conn->real_escape_string($user);    
+    $rs = $conn->query($query);
     if ($rs) {
       while($fila = $rs->fetch_assoc()) {
         $ped=new Pedido($fila['producto'],$fila['pagado'],$fila['comprador']);

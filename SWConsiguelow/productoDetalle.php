@@ -15,7 +15,6 @@ if(!$idproducto) {
     exit();
 }
 $producto = Producto::getById($idproducto);
-
 $imgSrc = ImageUpload::getSource($idproducto);
 $img='';
 if ($imgSrc){
@@ -26,15 +25,45 @@ EOF;
 
 $htmlComprar='';
 $htmlCarrito='';
-
-
 $id = $producto->id();
 $htmlComprar =<<<EOF
     <button id="buy" type="button" class="btn btn-info btn-lg" >Comprar</button>
 EOF;
-$htmlCarrito=<<<EOF
+
+if (App::getSingleton()->usuarioLogueado()){
+    $carrito = Pedido::getCarrito();
+    $i=0;
+    $encontrado = false;
+    while($i < $carrito->count() && !$encontrado){
+        if ($carrito[$i]->producto()== $id) $encontrado = true;
+    }
+    if ($encontrado){
+        $htmlCarrito=<<<EOF
+        <a href="vistaCarrito.php" id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</a>
+EOF;
+    }else{
+        $htmlCarrito=<<<EOF
+        <button id="addCart" type="button" class="btn btn-info btn-lg">Añadir al carrito</button>
+EOF;
+    }
+}
+    
+$carrito = Pedido::getCarrito();
+$i=0;
+$encontrado = false;
+while($i < $carrito->count() && !$encontrado){
+    if ($carrito[$i]->producto()== $id) $encontrado = true;
+}
+if ($encontrado){
+    $htmlCarrito=<<<EOF
+    <a href="vistaCarrito.php" id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</a>
+EOF;
+}else{
+    $htmlCarrito=<<<EOF
     <button id="addCart" type="button" class="btn btn-info btn-lg">Añadir al carrito</button>
 EOF;
+}
+
 
 ?>
 
@@ -59,40 +88,35 @@ EOF;
                 var url = "usuarioLogueado.php";
                 var logueado = false;
                 $.get(url,function(data,status){
-                    //alert(data);
-                    if (data === 'logueado'){
-                        logueado = true;
+                   // alert(data);
+                    if (data == 'logueado'){
+                            var e = {
+                        "id" : 1,
+                        "pagado"   : 0
+                        };
+                        $.post( "anadirPedido.php", JSON.stringify(e), function(data, status) {
+                            $("#addCart").replaceWith(data);         
+                        })
                     }
                     else{
-                        logueado = false;
-                        }
-                });
-                if (logueado){
-                    var e = {
-                    "id" : 1,
-                    "pagado"   : 0
-                    };
-                    $.post( "anadirPedido.php", JSON.stringify(e), function(data, status) {
-                        $("#addCart").replaceWith(data);         
-                    })
-                }else{
-                    var modal = document.getElementById("myModal");
-                    // Get the button that opens the modal
-                    // Get the <span> element that closes the modal
-                    var span = document.getElementsByClassName("close")[0];
-                    modal.style.display = "block";
-                   // }
-                    // When the user clicks on <span> (x), close the modal
-                    span.onclick = function() {
-                    modal.style.display = "none";
-                    }
-                    // When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function(event) {
-                        if (event.target == modal) {
+                        var modal = document.getElementById("myModal");
+                        // Get the button that opens the modal
+                        // Get the <span> element that closes the modal
+                        var span = document.getElementsByClassName("close")[0];
+                        modal.style.display = "block";
+                    // }
+                        // When the user clicks on <span> (x), close the modal
+                        span.onclick = function() {
                             modal.style.display = "none";
                         }
+                        // When the user clicks anywhere outside of the modal, close it
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                modal.style.display = "none";
+                            }
+                        }
                     }
-                }            
+                });
             });
         })
     </script>       

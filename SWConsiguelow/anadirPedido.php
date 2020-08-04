@@ -22,7 +22,7 @@ use es\fdi\ucm\aw\Pedido as Pedido;
             $response = '';
             if ( $pagado==0){
                 $response=<<<EOF
-                <button id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</button>
+                <a href="vistaCarrito.php" id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</a>
             EOF;
             }
 
