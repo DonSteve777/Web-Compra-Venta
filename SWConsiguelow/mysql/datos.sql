@@ -46,7 +46,10 @@ INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, 
 VALUES ('5', 'producto5', '1', 'descripcion 5', '20.00', '5', '5', 'verde', '3');
 INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`) 
 VALUES ('6', 'producto6', '2', 'descripcion 6', '60.00', '3', '6', 'amarillo', '4');
-
+/*vendedores
+  alvarouser: producto 1, 3 y 5
+  nestoruser: producto 2, 4, y 6
+*/
 
 
 INSERT INTO `uploads` (`id`, `producto`, `name`, `mime_type`) VALUES ('4', '1', 'imagen1.tmp', 'image/jpeg');

@@ -62,7 +62,7 @@ public static function getAliens(){
 public static function getByUser($idUsuario){ 
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
-    $query = sprintf("SELECT * FROM productos P WHERE P.idVendedor =$idUsuario");$conn->real_escape_string($idUsuario);
+    $query = sprintf("SELECT * FROM productos P WHERE P.idVendedor ='%d'");$conn->real_escape_string($idUsuario);
     $rs = $conn->query($query);
     if (!$idUsuario){
         echo "user id no puede ser nulo";
@@ -133,7 +133,7 @@ public static function getByUser($idUsuario){
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $id = $prod->id; 
-        $query=sprintf("DELETE FROM productos WHERE id ='$id'",$conn->real_escape_string($id));
+        $query=sprintf("DELETE FROM productos WHERE id ='%d'",$conn->real_escape_string($id));
         if ( $conn->query($query) ) {
             if ( $conn->affected_rows != 1) {
                 echo "No se ha podido borrar la categoria: " . $prod->nombre;
@@ -209,8 +209,12 @@ EOF;
     public static function getByCat($idCat){
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
+        $idVendedor = $_SESSION['userid'];
         $result = [];
-        $query = sprintf("SELECT * FROM productos P WHERE P.categoria = '$idCat'");$conn->real_escape_string($idCat);
+        $query = sprintf("SELECT * FROM productos P WHERE P.categoria = '%d' AND NOT P.idVendedor='%d'",
+        $conn->real_escape_string($idCat),
+        $conn->real_escape_string($idVendedor));
+
         $rs = $conn->query($query);
         if ($rs) {
             if ( $rs->num_rows > 0) {

@@ -188,11 +188,7 @@ class Pedido
         );
         if ( $conn->query($query) ) {
             $pedido->id= $conn->insert_id;
-            /*echo '<script type="text/javascript">
-            alert("Se ha añadido correctamente");
-            window.location.assign("index.php");
-            </script>';
-            exit();*/
+    
         } else {
             echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
