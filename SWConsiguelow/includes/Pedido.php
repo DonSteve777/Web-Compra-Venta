@@ -152,16 +152,21 @@ class Pedido
         return $eliminado;
     }
 
-    public static function añadePedido($id,$producto, $pagado,$comprador) //atributos pedidos
-    {
-        $pedido = self::buscaPedido($id);
-        if ($pedido) {
-            return false;
+    public static function pedidoProducto($pedido){
+        $carro = self::getCarrito();
+        $i=0;
+        $encontrado = false;
+        $size =  count($carro);
+        while($i < $size && !$encontrado){
+            $encontrado = ($carro[$i]==$pedido->producto()) ? true : false;
+            $i++;
         }
-        $pedido = new Pedido($producto,$pagado,$comprador);
-        return self::guardaPedido($pedido);
+        if ($encontrado)
+            return false;
+        else{
+            return self::inserta($pedido);
+        }
     }
-    
 
     public static function guardaPedido($pedido)
     {

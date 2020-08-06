@@ -17,7 +17,8 @@ use es\fdi\ucm\aw\Pedido as Pedido;
         $pagado = $dictionary['pagado'];
         $comprador = $_SESSION['userid'];
         $pedido = new Pedido($idproducto, $pagado, $comprador);
-        if (Pedido::inserta($pedido)){
+
+        if (Pedido::pedidoProducto($pedido)){
             http_response_code(201); // 201 Created
             $response = '';
             if ( $pagado==0){
