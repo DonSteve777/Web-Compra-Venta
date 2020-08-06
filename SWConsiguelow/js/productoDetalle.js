@@ -15,6 +15,8 @@ $(function() {
                 })
             }
             else{
+                var contenidoModal = document.getElementById("containerForm");
+                $("#containerForm").html(data);
                 var modal = document.getElementById("myModal");
                 // Get the button that opens the modal
                 // Get the <span> element that closes the modal

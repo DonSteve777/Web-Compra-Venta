@@ -3,15 +3,8 @@ require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/ImageUpload.php';
 use es\fdi\ucm\aw\Producto;
 use es\fdi\ucm\aw\ImageUpload;
-use es\fdi\ucm\aw\FormularioLogin;
 use es\fdi\ucm\aw\Aplicacion as App;
 use es\fdi\ucm\aw\Pedido;
-
-
-
-//podría intentear afinar generando este html solo en caso de usarlo, como respuesta a una petición
-$form = new FormularioLogin(); 
-$htmlForm = $form->gestiona();
 
 
 $idproducto = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
@@ -91,10 +84,6 @@ EOF;
                 <div class="col-4"></div>
                     <div class="col-4">
                         <div id="containerForm" class="container  w-75 d-flex flex-column mt-5">
-                            <?php echo $htmlForm; ?>
-                            <h6 class="mt-4"> 
-                                <a href="registro.php">¿Todavía no tienes cuenta? Regístrate aquí</a>
-                            </h6>
                         </div>
                     </div>
                     <div class="col-4"></div>
