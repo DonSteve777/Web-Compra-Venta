@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Pedido as Pedido;
-
-
+alert('llego');
+/*
 
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
         $entityBody = file_get_contents('php://input');
@@ -31,6 +31,6 @@ use es\fdi\ucm\aw\Pedido as Pedido;
             header('Content-Length: ' . mb_strlen($response));
             echo $response;
         }  
-    }
+    }*/
     //else: mandar a login
     

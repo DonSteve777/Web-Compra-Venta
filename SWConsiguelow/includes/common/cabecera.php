@@ -103,7 +103,7 @@ $htmlNavCat= generaNavItems($categorias);
                         </a>                     
                     </li>
                     <li class="nav-item">
-                        <a href="vistaCarrito.php" class="btn btn-light btn-lg active" role="button" aria-pressed="true">
+                        <a href="carro.php" class="btn btn-light btn-lg active" role="button" aria-pressed="true">
                             <span>
                                 <img src="img/shopping-cart.png" alt="imagen no disponible" width="15" height="15">
                                 Carrito

@@ -36,7 +36,7 @@ if (App::getSingleton()->usuarioLogueado()){
     }
     if ($encontrado){
         $htmlCarrito=<<<EOF
-        <a href="vistaCarrito.php" id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</a>
+        <a href="carro.php" id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</a>
 EOF;
     }else{
         $htmlCarrito=<<<EOF
@@ -92,10 +92,10 @@ EOF;
         </div>
         <div class="container-fluid bg-light">
             <div class="row"> 
-                <div class="col-5 m-3">
+                <div class="col-5 m-3 d-flex">
                     <?php echo $img;?>  
                 </div>
-                <div class="col-5 m-3">
+                <div class="col-5 m-3 d-flex">
                     <div class="d-flex flex-column m-3 ">
                         <div class="border-bottom text-center display-4" >
                             <?php echo $producto->nombre(); ?> 

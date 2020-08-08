@@ -3,7 +3,6 @@
 class Producto
 {
  
-
 public static function getById($id){
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
@@ -209,7 +208,8 @@ EOF;
     public static function getByCat($idCat){
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $idVendedor = $_SESSION['userid'];
+        $encontrado = false;
+        $idVendedor = (isset($_SESSION['userid'])) ? $_SESSION['userid'] : 0;
         $result = [];
         $query = sprintf("SELECT * FROM productos P WHERE P.categoria = '%d' AND NOT P.idVendedor='%d'",
         $conn->real_escape_string($idCat),
