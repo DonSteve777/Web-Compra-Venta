@@ -23,27 +23,15 @@ $html = $form->gestiona();
 
 </head>
 <body>
-    <!-- Trigger/Open The Modal -->
-    <button id="myBtn">Open Modal</button>
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-    <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="row text-center">
-                <div class="col-4"></div>
-                    <div class="col-4">
-                        <div class="container  w-75 d-flex flex-column mt-5">
-                            <?php echo $html; ?>
-                            <h6 class="mt-4"> 
-                                <a href="registro.php">¿Todavía no tienes cuenta? Regístrate aquí</a>
-                            </h6>
-                        </div>
-                    </div>
-                    <div class="col-4"></div>
-                </div>
-            </div>
-        </div>
+
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Card title</h4>
+    <p>This is some text within a card block.</p>
+
+  </div>
+</div>
+
 
 </body>
 </html>

@@ -6,7 +6,7 @@ function generaNavItems($categorias=array()){
     $html='';
    // if (is_array($categorias)){
         foreach($categorias as $cat){
-            $nombre = $cat->nombre();
+            $nombre = $cat->nombre();   
             $id = $cat->id();
             if ($nombre!=='sin categoría'){
                 $html.=<<<EOF
@@ -38,17 +38,17 @@ $htmlNavCat= generaNavItems($categorias);
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto"> <!--margin derecho hasta el searchbar-->
-                    <li class="nav-item active mr-3">
+                    <li class="nav-item active m-2">
                         <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item dropdown text-center  mr-3">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span>
+                        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="align-baseline">
                                 <img src="img/person.png" alt="imagen no disponible" width="30" height="30">
                                 Mi cuenta
                             </span>
                         </a>
-                        <div class="dropdown-menu text-center mr-3" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu text-center m-2" aria-labelledby="navbarDropdown">
                             <p class="text-center"> 
                             <?php
                             $logueado=false;
@@ -94,16 +94,16 @@ $htmlNavCat= generaNavItems($categorias);
                             ?>
                         </div>
                     </li>
-                    <li class="nav-item  mr-3">
-                        <a href="vender.php" class="btn btn-light btn-lg active" role="button" aria-pressed="true">      
+                    <li class="nav-item m-2">
+                        <a href="vender.php" class="btn d-block btn-light btn-lg active" role="button" aria-pressed="true">      
                             <span>
                                 <img src="img/sell.png" alt="imagen no disponible" width="15" height="15">
                                 Vender
                             </span>
                         </a>                     
                     </li>
-                    <li class="nav-item">
-                        <a href="carro.php" class="btn btn-light btn-lg active" role="button" aria-pressed="true">
+                    <li class="nav-item m-2">
+                        <a href="carro.php" class="btn btn-light btn-lg active d-block" role="button" aria-pressed="true">
                             <span>
                                 <img src="img/shopping-cart.png" alt="imagen no disponible" width="15" height="15">
                                 Carrito
@@ -114,8 +114,8 @@ $htmlNavCat= generaNavItems($categorias);
                     <?php
                         if ($logueado===true && $app->tieneRol('admin', '', '')) {
                     ?>
-                        <li class="nav-item ml-3">
-                            <a href="vistaAdmin.php" class="btn btn-light btn-lg active" role="button" aria-pressed="true">
+                        <li class="nav-item m-2">
+                            <a href="vistaAdmin.php" class="btn d-block btn-light btn-lg active" role="button" aria-pressed="true">
                                 Administrar
                             </a>
                         </li>
@@ -123,7 +123,7 @@ $htmlNavCat= generaNavItems($categorias);
                             }
                             ?>
                 </ul>
-                <form class="form-inline my-2 my-lg-0" action="filtrar.php" method="GET">
+                <form class="form-inline my-2 my-lg-0 d-sm-flex" action="filtrar.php" method="GET">
                     <input class="form-control mr-sm-2" name="search" type="text" value='' placeholder="Type here"></input>
                     <input class="btn btn-outline-info my-2 my-sm-0" type="submit" value="Search"></input>
                 </form>

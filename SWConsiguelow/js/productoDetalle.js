@@ -1,6 +1,6 @@
 $(function() {
     $("#addCart").click(function() {
-        var url = "/action/usuarioLogueado.php";
+        var url = " usuarioLogueado.php";
         var logueado = false;
         $.get(url,function(data,status){
             
@@ -10,7 +10,7 @@ $(function() {
                     "producto" : producto ,
                     "pagado"   : 0
                 };
-                $.post( "/action/anadirPedido.php", JSON.stringify(e), function(data, status) {
+                $.post( "anadirPedido.php", JSON.stringify(e), function(data, status) {
                     $("#addCart").replaceWith(data);         
                 })
             }

@@ -3,7 +3,7 @@ require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Pedido as Pedido;
 
 $pedidos = Pedido::getCarrito();
-$counter = $pedidos->count();
+$counter = count($pedidos);
 
 ?>
 <!doctype html>
@@ -80,7 +80,6 @@ $counter = $pedidos->count();
                     <strong>$20</strong>
                 </li>
             </ul>
-           
         </div>
 <!-- DAtos-->
     <div class="col-md-8 order-md-1">
