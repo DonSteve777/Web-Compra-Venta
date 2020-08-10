@@ -55,8 +55,6 @@ Class ImageUpload {
 		}
 	}
 
-	
-    
     /* Handles the uploading of images */
 	public  function uploadImages(){
         $result = array();
@@ -90,14 +88,14 @@ Class ImageUpload {
 	}
 
 	public static function getSource($idProducto){
-		//$id = $_GET['id'];
-		//var_dump($id);
-		$imagen = Imagen::findByProductId($idProducto);
 		$result='';
-		$imgname = $imagen->nombre();
-		
-		$result = "data/productos/$imgname";
-		
+		$imagen = Imagen::findByProductId($idProducto);
+		if (!$imagen){
+			$result = false;
+		}else{
+			$imgname = $imagen->nombre();
+			$result = "data/productos/$imgname";
+		}
 		return $result;
 	}
 }

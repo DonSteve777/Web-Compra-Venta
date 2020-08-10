@@ -4,7 +4,7 @@ require_once __DIR__.'/includes/ImageUpload.php';
 use es\fdi\ucm\aw\Producto;
 use es\fdi\ucm\aw\ImageUpload;
 
-//$html = Producto::muestraProds();
+
 $idproducto = $_GET['id'];
 $producto = Producto::findById($idproducto);
 $imgSrc = ImageUpload::getSource($idproducto);

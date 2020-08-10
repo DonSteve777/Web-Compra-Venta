@@ -2,6 +2,7 @@
 namespace es\fdi\ucm\aw;
 //require_once __DIR__.'/Form.php';
 //require_once __DIR__.'/Usuario.php';
+use es\fdi\ucm\aw\Usuario;
 
 class FormularioLogin extends Form
 {
@@ -10,6 +11,7 @@ class FormularioLogin extends Form
 
   public function __construct()
   {
+   //$opciones['class'] =  'form-signin';
     parent::__construct('formLogin');
   }
   

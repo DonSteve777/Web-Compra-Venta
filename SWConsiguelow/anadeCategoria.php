@@ -25,7 +25,7 @@ $html = $form->gestiona();
     </div>
     <div class="col-4">
         <div class="d-flex flex-column bg-light m-3">
-            <h1 class="m-2">Registro de usuario</h1>
+            <h1 class="m-2">Añadir categoria</h1>
             <?php
                 echo $html;
             ?>

@@ -13,7 +13,7 @@ class FormularioActualizar extends Form
     protected function generaCamposFormulario($datos)
     {
         $id = $_GET['id'];
-        $prod = Producto::findById($id);
+        $prod = Producto::getById($id);
         $nombreProd = $prod->nombre();
         $descripcion= '';
         $precio ='';
@@ -33,7 +33,7 @@ class FormularioActualizar extends Form
             $categoria = isset($datos['categoria']) ? $datos['categoria'] : $categoria;
             $imgUpload = isset($datos['imagen']) ? $datos['imagen'] : $imgUpload;
         }
-        $cat = Categoria::findAll();
+        $cat = Categoria::getAll();
         $select =<<<EOF
         <select class="category" name="categoria">
         <option selected="selected">elige categoría</option>
@@ -87,7 +87,7 @@ EOF;
     {
        $result = array();
         $id = $_GET['id'];
-        $prod = Producto::findById($id);
+        $prod = Producto::getById($id);
         $nombreProd = $prod->nombre();
         $idvendedor = $prod->vendedor();
         $descripcion = isset($datos['descripcion']) ? $datos['descripcion'] : null;
@@ -130,7 +130,7 @@ EOF;
 
        if (count($result) === 0) {
             $id= $_GET['id'];
-            $producto = Producto::findById($id);
+            $producto = Producto::getById($id);
             if ($producto){
                 $result = Producto::guardaProd($producto);
                 //$imgupload = new ImageUpload($_FILES, $producto->id());

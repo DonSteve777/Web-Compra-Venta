@@ -3,10 +3,11 @@ require_once __DIR__.'/includes/config.php';
 
 
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
-        $nombreUsuario = $_GET['user'];
-        if(Usuario::eliminaUsuario($nombreUsuario)){
+
+        $nombreCat = $_GET['categoria'];
+        if(Categoria::eliminaCat($nombreCat)){
             echo '<script type="text/javascript">
-        alert("Usuario eliminado con exito");
+        alert("Categoria eliminada con exito");
         window.location.assign("index.php");
         </script>';
         }

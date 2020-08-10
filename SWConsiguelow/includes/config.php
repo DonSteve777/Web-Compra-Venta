@@ -54,3 +54,4 @@ spl_autoload_register(function ($class) {
 /* */
 $app = Aplicacion::getSingleton();
 $app->init(array('host'=>BD_HOST, 'bd'=>BD_NAME, 'user'=>BD_USER, 'pass'=>BD_PASS), RUTA_APP, R_PATH);
+

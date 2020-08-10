@@ -2,11 +2,22 @@
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
 
-
-  $nombreProd=$_GET['search'];
+function filtrado(){
+$nombreProd=$_GET['search'];
   $html = '';
-  $html.= '<p>Estas buscando el producto '.$nombreProd.'</p>';
-  $html.= Producto::searchProduct($nombreProd);
+  $html.='<h2>Resultados del filtrado...</h2>';
+  $html.= '<p>Resultados que coinciden con tu busqueda: '.$nombreProd.'</p>';
+  $prods= Producto::getByName($nombreProd);
+ if(is_array($prods)){
+  foreach($prods as $p){
+    $html.=$p->generaTarjeta();
+    }
+   }
+    else{
+        $html.= "No hay coincidencias";
+    }
+ return $html;
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,10 +41,10 @@ use es\fdi\ucm\aw\Producto;
             </div>
             <div class="col-6">
                 <div class="text-center mt-3">
-                        <h2>Resultados del filtrado...</h2></br>
+                        
                         <div>
                             <?php
-                                echo $html;   
+                                echo filtrado();
                             ?>
                         </div>
                     </div>

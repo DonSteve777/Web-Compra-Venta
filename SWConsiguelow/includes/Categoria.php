@@ -26,7 +26,7 @@ class Categoria
         return $result;
     }
 
-    public static function findById($id)
+    public static function getById($id)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -48,55 +48,31 @@ class Categoria
         return $result;
     }
 
-    public static function findAll()
+    public static function getAll()
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM categorias");
         $rs = $conn->query($query);
-        $result = false;
-        $i=0;
+        $result = [];
+        $rs = $conn->query($query);
         if ($rs) {
             if ( $rs->num_rows > 0) {
-                while ($array=$rs->fetch_array()){
-                $claves = array_keys($array);
-                foreach($claves as $clave){
-                    $arrayauxliar[$i][$clave]=$array[$clave];
-                }           
-                $i++;
-                
-            }
-            $rs->free();
-        } else {
-            $cat = self::crea('sin categoría', 'no está catalogado en ninguna agrupación');
-            $query = sprintf("SELECT * FROM categorias");
-            $rs = $conn->query($query);
-            $result = false;
-            $i=0;
-            if ($rs) {
-                if ( $rs->num_rows > 0) {
-                    while ($array=$rs->fetch_array()){
-                    $claves = array_keys($array);
-                    foreach($claves as $clave){
-                        $arrayauxliar[$i][$clave]=$array[$clave];
-                    }           
-                    $i++;
+                while($fila = $rs->fetch_assoc()) {
+                    $result[]=new Categoria($fila['nombre'],$fila['descripcion'], $fila['id']);
                 }
                 $rs->free();
-                }
-            }
-            
-        }
-        $result = $arrayauxliar;
+            } else {
+                echo 'No se ha cargado ninguna categoría';
+                exit();
+            } 
+        }else{
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        } 
         return $result;
     }
-    else {
-        echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-        exit();
-    }
-}
-
-        public static function muestraTodasCategorias(){ //funcion que muestra todos los productos disponibles
+      /*  public static function muestraTodasCategorias(){ //funcion que muestra todos los productos disponibles
             $app = Aplicacion::getSingleton();
             $conn = $app->conexionBd();
             $query = sprintf("SELECT * FROM categorias C");
@@ -144,42 +120,11 @@ EOF;
         
         } 
     return $html;
-}
-
-private static function generaNavItems($categorias=array()){
-    $html='';
-    if (is_array($categorias)){
-        foreach($categorias as $key => $fila){
-            $nombre = $fila['nombre'];
-            $id = $fila['id'];
-            if ($nombre!=='sin categoría'){
-                $html.=<<<EOF
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="categoria.php?id=$id&nombre=$nombre">$nombre</a>
-                </li>
-EOF;
-            } 
-
-        }
-    }
-    return $html;
-}
-
-public static function generaNavCat(){
-    $html='';
-    $cats = array();
-    $cats = self::findAll();
-    $html= self::generaNavItems($cats);
-    return $html;
-}
-
-    
-
-
-        public static function eliminaCat($nombreCat){
-            $cat = self::buscaCat($nombreCat); 
+}*/
+        public static function eliminaCat($cat){
+            $cat = self::getById($cat); 
             if (!$cat) {
-                $html="No";
+                return "No se ha encontrado cat";
             }
             else{ 
            return self::elimina($cat); 
@@ -246,11 +191,11 @@ public static function generaNavCat(){
         return $categoria;
     }
 
-    /*private static function actualiza($usuario)
+    /*private static function actualiza($cat)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("UPDATE usuarios U SET nombre='%s', password='%s', nombreUsuario='%s',  dni='%s', direccion='%s', email='%s', telefono='%s', ciudad='%s', codigo postal='%s', carrito='%i', trajeta credito='%i'   WHERE U.id=%i"
+        $query=sprintf("UPDATE `categorias` U SET nombre='%s', password='%s', nombreUsuario='%s',  dni='%s', direccion='%s', email='%s', telefono='%s', ciudad='%s', codigo postal='%s', carrito='%i', trajeta credito='%i'   WHERE U.id=%i"
             , $conn->real_escape_string($usuario->nombreUsuario)
             , $conn->real_escape_string($usuario->nombre)
             , $conn->real_escape_string($usuario->password)
@@ -281,9 +226,10 @@ public static function generaNavCat(){
     private $descripcion;
 
 
-    public function __construct($nombre, $descripcion){
+    public function __construct($nombre, $descripcion, $id = NULL){
         $this->nombre = $nombre;
         $this->descripcion = $descripcion;
+        $this->id = $id;
     }
 
     public function id()
@@ -300,7 +246,4 @@ public static function generaNavCat(){
     {
         return $this->descripcion;
     }
-
-    
-
 }

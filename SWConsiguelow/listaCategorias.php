@@ -3,18 +3,47 @@ use es\fdi\ucm\aw\Categoria;
 use es\fdi\ucm\aw\Aplicacion;
 
 require_once __DIR__.'/includes/config.php';
+
 function listadoCategorias()
 {
     $app = Aplicacion::getSingleton();
     if ($app->tieneRol('admin', 'Acceso Denegado', 'No tienes permisos suficientes para administrar la web.')) {
-   $html = '';
-   $html.= 'Categorias ya creadas';
-   $html .= '';
-   $html = Categoria::muestraTodasCategorias();
-   return $html;
+   $categorias= Categoria::getAll();
+   $html='';
+   $html.=<<<EOF
+  <ul class="list-group">
+EOF;
+if (is_array($categorias)){
+  foreach($categorias as $c){
+      $idCat = $c->id();
+      $cat = $c->nombre();
+      $html.=<<<EOF
+          <li class="list-group-item">
+              <div class="d-flex flex-row">
+                  <div class="p-2 m-3 flex-fill">
+                      <p>Categoria: $cat</p>
+                  </div>
+                  <div class="p-2">
+                  <a class="btn btn-info align-bottom" href="eliminaCat.php?categoria=$idCat">
+                      Eliminar
+                  </a>
+              </div>
+          </li>     
+EOF;
+  }
+  $html.=<<<EOF
+  </ul>
+EOF;
     }
+    else{
+    $html.="No existen categorias";
+        }
+  return $html;
+  }
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -36,7 +65,8 @@ function listadoCategorias()
             </div>
             <div class="col-4">
                 <div class="m-3">
-                    <h1 class="m-2 h3 text-center ">Categorias existentes</h1>
+                <div class="alert alert-success text-center" role="alert">
+                <strong>Categorias existentes</strong>
                     <?php
                         echo listadoCategorias();   
                         ?>

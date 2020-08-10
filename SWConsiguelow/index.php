@@ -1,8 +1,16 @@
 <?php
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
+use es\fdi\ucm\aw\ImageUpload;
 
-$html = Producto::muestraCards();
+
+
+$html='';
+$prods = Producto::getAliens();
+foreach($prods as $value){
+    $html.=$value->generaTarjeta();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -14,23 +22,27 @@ $html = Producto::muestraCards();
     <title>Local Consiguelow</title>
     <link rel="icon" href="img/money.ico"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+<script src="js/jquery-3.5.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script> 
+
 </head>
 
 <body>
-    <?php
-    //phpinfo();
-        require("includes/common/cabecera.php");
-    ?>
+    <?php require("includes/common/cabecera.php");?>
     <main role="main">
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row"> 
-                <?php
-                    echo $html;
-                ?>
+                    <?php
+                        echo $html;
+                    ?>
                 </div>
             </div>
         </div>
     </main>
+    <?php require("includes/common/footer.php"); ?>
+
 </body>
 </html>

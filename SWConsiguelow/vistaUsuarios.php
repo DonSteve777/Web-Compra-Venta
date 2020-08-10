@@ -5,33 +5,40 @@ use es\fdi\ucm\aw\Aplicacion;
 require_once __DIR__.'/includes/config.php';
 
 function muestraTodosUsuarios(){
-    $app = Aplicacion::getSingleton();
+$app = Aplicacion::getSingleton();
     if ($app->tieneRol('admin', 'Acceso Denegado', 'No tienes permisos suficientes para administrar la web.')) {
-  $user= Usuario::muestraTodosUsuarios();
-  $html='';
-  $html.=<<<EOF
+   $html = '';
+   $users= Usuario::getAll();
+   $html.=<<<EOF
   <ul class="list-group">
 EOF;
-    foreach($user as $key => $fila){         
-        $nombre = $fila['nombreUsuario'];
+if (is_array($users)){
+  foreach($users as $u){
+      $idUsuario = $u->id();
+      $nombreUsuario= $u->nombreUsuario();
       $html.=<<<EOF
-      <li class="list-group-item"> 
-          <div class="d-flex justify-content-between">
-              <div class="p-2">Nombre: $nombre</div>
-              <div class="p-2">
-                  <a class="btn btn-info align-bottom" href="eliminaUsuario.php?username=$nombre">
+          <li class="list-group-item">
+              <div class="d-flex flex-row">
+                  <div class="p-2 m-3 flex-fill">
+                      <p>Usuario: $nombreUsuario</p>
+                  </div>
+                  <div class="p-2">
+                  <a class="btn btn-info align-bottom" href="eliminaUsuario.php?user=$idUsuario">
                       Eliminar
                   </a>
               </div>
-          </div>
-      </li>
+          </li>     
 EOF;
   }
   $html.=<<<EOF
-  </ul>
+    </ul>
 EOF;
-  return $html;
     }
+    else{
+    $html.="No existen usuarios";
+        }
+  return $html;
+  }
 }
 
 ?>
@@ -60,7 +67,8 @@ EOF;
             </div>
             <div class="col-4">
                 <div class="m-3">
-                <h1 class="text-center">Todos los usuarios de la web</h1>
+                <div class="alert alert-success text-center" role="alert">
+            <strong>Usuarios de la web</strong>
             <?php
                 echo muestraTodosUsuarios();
             ?>

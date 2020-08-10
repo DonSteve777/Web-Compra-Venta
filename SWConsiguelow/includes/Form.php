@@ -51,6 +51,7 @@ class Form
   {
     $this->formId = $formId;
 
+
     $opcionesPorDefecto = array( 'ajax' => false, 'action' => null, 'class' => null, 'enctype' => null );
     $opciones = array_merge($opcionesPorDefecto, $opciones);
 
@@ -184,7 +185,7 @@ class Form
   private function csrfguard_GenerateToken($formId)
   {
     if ( ! isset($_SESSION) ) {
-      throw new Exception('La sesiÃ³n del usuario no estÃ¡ definida.');
+      throw new Exception('La sesión del usuario no está definida.');
     }
     
     if ( function_exists('hash_algos') && in_array('sha512', hash_algos()) ) {
@@ -210,7 +211,7 @@ class Form
   private function csrfguard_ValidateToken($formId, $tokenRecibido)
   {
     if ( ! isset($_SESSION) ) {
-      throw new Exception('La sesiÃ³n del usuario no estÃ¡ definida.');
+      throw new Exception('La sesión del usuario no está definida.');
     }
     
     $result = TRUE;
@@ -224,7 +225,7 @@ class Form
       unset($_SESSION[$formId.'_'.self::CSRF_PARAM]);
     } else {
       $result = array();
-      $result[] = 'Formulario no vÃ¡lido';
+      $result[] = 'Formulario no válido';
     }
       return $result;
   }

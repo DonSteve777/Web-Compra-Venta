@@ -1,8 +1,28 @@
 <?php
     namespace es\fdi\ucm\aw;
 
+
+function generaNavItems($categorias=array()){
+    $html='';
+   // if (is_array($categorias)){
+        foreach($categorias as $cat){
+            $nombre = $cat->nombre();
+            $id = $cat->id();
+            if ($nombre!=='sin categoría'){
+                $html.=<<<EOF
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="categoria.php?id=$id&nombre=$nombre">$nombre</a>
+                </li>
+EOF;
+            } 
+        }
+    //}
+    return $html;
+}
+
 $htmlNavCat = '';
-$htmlNavCat = Categoria::generaNavCat();
+$categorias = Categoria::getAll();
+$htmlNavCat= generaNavItems($categorias);
 ?>
 
 
@@ -83,7 +103,7 @@ $htmlNavCat = Categoria::generaNavCat();
                         </a>                     
                     </li>
                     <li class="nav-item">
-                        <a href="vistaCarrito.php" class="btn btn-light btn-lg active" role="button" aria-pressed="true">
+                        <a href="carro.php" class="btn btn-light btn-lg active" role="button" aria-pressed="true">
                             <span>
                                 <img src="img/shopping-cart.png" alt="imagen no disponible" width="15" height="15">
                                 Carrito
@@ -117,7 +137,3 @@ $htmlNavCat = Categoria::generaNavCat();
     </ul>
 </div>
 
-      
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="js/bootstrap.min.js"></script>

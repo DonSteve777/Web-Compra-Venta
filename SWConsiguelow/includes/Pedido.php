@@ -1,6 +1,4 @@
 <?php namespace es\fdi\ucm\aw;
-//require_once __DIR__ . '/Aplicacion.php';
-
 
 class Pedido
 {
@@ -49,12 +47,11 @@ class Pedido
         return $result;
     }
 
-    public static function muestraPedidos()
+    public static function getByUser($user)
      {
         $result = [];
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $user = $_SESSION['userid'];
         $query = sprintf("SELECT P.id, P.producto, P.pagado, P.comprador FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =1"); $conn->real_escape_string($user);    $rs = $conn->query($query);
         $rs = $conn->query($query);
         if ($rs) {
@@ -68,14 +65,16 @@ class Pedido
         return $result;
     }
 
-    public static function muestraCarrito()
+
+    public static function getCarrito()
   {
     $result = [];
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
     $user = $_SESSION['userid'];
-    $query = sprintf("SELECT P.id, P.producto, P.pagado, P.comprador FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =0"); $conn->real_escape_string($user);    $rs = $conn->query($query);
-    $html='';
+    $query = sprintf("SELECT * FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =0"); 
+    $conn->real_escape_string($user);    
+    $rs = $conn->query($query);
     if ($rs) {
       while($fila = $rs->fetch_assoc()) {
         $ped=new Pedido($fila['producto'],$fila['pagado'],$fila['comprador']);
@@ -153,26 +152,31 @@ class Pedido
         return $eliminado;
     }
 
-    public static function añadePedido($id,$producto, $pagado,$comprador) //atributos pedidos
-    {
-        $pedido = self::buscaPedido($id);
-        if ($pedido) {
-            return false;
+    public static function pedidoProducto($pedido){
+        $carro = self::getCarrito();
+        $i=0;
+        $encontrado = false;
+        $size =  count($carro);
+        while($i < $size && !$encontrado){
+            $encontrado = ($carro[$i]==$pedido->producto()) ? true : false;
+            $i++;
         }
-        $pedido = new Pedido($producto,$pagado,$comprador);
-        return self::guardaPedido($pedido);
+        if ($encontrado)
+            return false;
+        else{
+            return self::inserta($pedido);
+        }
     }
-    
 
     public static function guardaPedido($pedido)
     {
         if ($pedido->id !== null) {
             return self::actualizaPedido($pedido);
         }
-        return self::insertaPedido($pedido);
+        return self::inserta($pedido);
     }
     
-    public static function insertaPedido($pedido)
+    public static function inserta($pedido)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -184,21 +188,36 @@ class Pedido
         );
         if ( $conn->query($query) ) {
             $pedido->id= $conn->insert_id;
-            echo '<script type="text/javascript">
-            alert("Se ha añadido correctamente");
-            window.location.assign("index.php");
-            </script>';
-            exit();
+    
         } else {
             echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
         return $pedido;
     }
-    
-	
-    //filas tabla pedido
-    
+
+    public static function contadorCarrito()
+    {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query=sprintf("SELECT * FROM `pedidos` WHERE 'comprado'= '0' ");
+        $rs =  $conn->query($query);
+        if ( $rs ) {
+            return $rs->num_rows; 
+            /*echo '<script type="text/javascript">
+            alert("Se ha añadido correctamente");
+            window.location.assign("index.php");
+            </script>';
+            exit();*/
+        } else {
+            echo "Error al consultar la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+    }
+
+
+
+
     private $id;
 
     private $producto;
@@ -207,7 +226,7 @@ class Pedido
     private $comprador;
 
 	
-    public function __construct($producto, $pagado, $comprador)
+    public function __construct($producto, $pagado, $comprador, $id=NULL)
     {
         $this->pagado = $pagado;
         $this->producto = $producto;

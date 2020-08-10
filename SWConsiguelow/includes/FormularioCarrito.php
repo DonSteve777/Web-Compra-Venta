@@ -9,20 +9,17 @@ class FormularioCarrito extends Form
     
     protected function generaCamposFormulario($datos)
     {
-        //$prod=$_GET['nombre'];
-        $id = $_GET['id'];
-        $prod = Producto::findById($id);
-        $nombreProd = $prod->nombre();
+        $prod=$_GET['nombre'];
         $unidades='';
         if ($datos) {
             $unidades = isset($datos['unidades']) ? $datos['unidades'] : $unidades;
         }
         $html = <<<EOF
         <fieldset>
-            <legend>Añadir el producto: "$nombreProd" al carrito</legend></br>
+            <legend>Añadir el producto: "$prod" al carrito</legend></br>
             <form method="post" action="Pedido.php">
             <p><label>Unidades:</label> <input type="text" name="number" value="$unidades"/></p>
-            <button type="submit" name="add">Añadir</button>
+            <button type="submit" name="search">Buscar</button>
             </form>
         </fieldset>
 EOF;
@@ -33,6 +30,7 @@ EOF;
     protected function procesaFormulario($datos)
     {
         $result = array();
+        
         $unidades = isset($datos['unidades']) ? $datos['unidades'] : null;
                 
        if ( empty($unidades)) {

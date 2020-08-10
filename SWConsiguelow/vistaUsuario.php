@@ -24,9 +24,6 @@ EOF;
                   <p>Usuario: $nombreUsuario</p>
                   </div>
                   <div class="p-2 m-3 flex-fill">
-                  <p>Nombre completo: $nombre</p>
-                  </div>
-                  <div class="p-2 m-3 flex-fill">
                   <p>Direccion: $direccion</p>
                   </div>
                   <div class="p-2 m-3 flex-fill">
@@ -68,9 +65,7 @@ EOF;
 </head>
 
     <body>
-        <?php
-            require("includes/common/cabecera.php");
-        ?>
+           <?php require("includes/common/cabecera.php");?>
         <div class="row align-items-start">
         </div>
         <div class="row align-items-center">
