@@ -20,8 +20,19 @@ if ($imgSrc){
 EOF;
 }
 $id = $producto->id();
+$idVendedor=$producto->vendedor();
 $htmlComprar='';
 $htmlCarrito='';
+$htmlVendedor ='';
+$htmlVendedor.= <<<EOF
+<form action="vistaVendedor.php" method="POST">
+<input type="submit" name="seller" value ="$idVendedor">
+</form>
+
+
+
+
+EOF;
 $htmlComprar.=<<<EOF
 <a class="btn btn-info btn-lg" role="button" href="anadirPedido.php?id=$id&pagado=1">Comprar</a>
 EOF;
@@ -121,6 +132,10 @@ EOF;
                                     <div class="d-inline p-2 font-weight-bold">Color</div>
                                     <div class="d-inline p-2 font-weight-ligh"><?php echo $producto->color()?></div>
                                 </div>
+
+                                <div class="mb-2">
+                                    <div class="d-inline p-2 font-weight-bold">Ver vendedor <?php echo $htmlVendedor?></div>
+                                </div>  
                             </div>
                             <div class="bg-dark text-white rounded p-3">
                                 <div>
