@@ -5,8 +5,10 @@ function vender(){
 if(!isset($_SESSION['login'])){
     $html=<<<EOF
     <div class="alert alert-info" role="alert">
-            No has iniciado sesion!
+            No has iniciado sesión, inicia sesión </br>
+            <center><a href="login.php">Login<a/><center>
     </div>
+    
 EOF;
  }
  else{
