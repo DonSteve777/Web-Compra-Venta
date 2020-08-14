@@ -93,8 +93,8 @@ class Form
           }
         } else {
           if ( ! $this->ajax ) {
-            header('Location: '.$result);
-            //header('Location: '.'index.php');
+            //header('Location: '.$result);
+            header('Location: '.'index.php');
           } else {
             return $result;
           }

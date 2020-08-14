@@ -144,7 +144,7 @@ EOF;
                     exit();
                 }
                 elseif ($conn->affected_rows == 1){
-                    echo "Categoria. $cat->nombre . borrado";
+                    echo "Categoria $cat->nombre  borrada con exito ;) ";
                     $eliminado =true;
                 }
             } else {

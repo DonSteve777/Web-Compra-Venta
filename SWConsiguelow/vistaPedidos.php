@@ -7,8 +7,9 @@ require_once __DIR__.'/includes/config.php';
 
 function listadoPedidos()
 {
+  $user = $_SESSION['userid'];
   $html = '';
-  $pedido= Pedido::muestraPedidos();
+  $pedido= Pedido::getByUser($user);
   $html.=<<<EOF
   <ul class="list-group">
 EOF;
@@ -20,12 +21,16 @@ if (is_array($pedido)){
           <li class="list-group-item">
               <div class="d-flex flex-row">
                   <div class="p-2 m-3 flex-fill">
+                      <p>Pedido nº: $idPedido</p>
+                  </div>
+                  <div class="p-2 m-3 flex-fill">
                       <p>Producto: $idProd</p>
                   </div>
                   <div class="d-flex flex-wrap align-content-center">
-                  <a class="text-center btn btn-info" href="cancelaPedido.php?id=$idPedido">
-                      Cancelar pedido</a>
-              </div>
+                  <form action="cancelaPedido.php" method="POST">
+                  <button type="submit" class="btn btn-danger role="link" name="item" value="$idPedido">Cancelar</button>
+                  </form>
+                  </div>
           </li>     
 EOF;
   }

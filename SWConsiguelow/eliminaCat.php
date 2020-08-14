@@ -3,15 +3,13 @@ require_once __DIR__.'/includes/config.php';
 
 
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
-        if(isset(['categoria'])){
-        $idCat = isset($_POST['categoria']) ? $_POST['categoria'] : null;
+        $idCat = isset($_POST['delete']) ? $_POST['delete'] : null;
+        if(isset($idCat)){
+        Categoria::eliminaCat($idCat);
         if(Categoria::eliminaCat($idCat)){
-            echo '<script type="text/javascript">
-        alert("Categoria eliminada con exito");
-        window.location.assign("index.php");
-        </script>';
+            echo "";
         }
-     } 
+      }
     }
     else{
         '<script type="text/javascript">

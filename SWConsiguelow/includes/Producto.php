@@ -126,6 +126,21 @@ public static function getByUser($idUsuario){
         }
     }
 
+    public static function eliminaById($idProd){
+        if (!$idProd){
+            echo "producto no puede ser nulo";
+            exit();
+        }
+        $prod = self::getById($idProd); 
+        if (!$prod) {
+            echo "No encuentro producto para eliminarlo";
+            exit();
+        }
+        else{ 
+            return self::elimina($prod); 
+        }
+    }
+
     private static function elimina($prod)
     {
         $eliminado = false;
@@ -139,7 +154,7 @@ public static function getByUser($idUsuario){
                 exit();
             }
             elseif ($conn->affected_rows == 1){
-                echo "Categoria. $prod->nombre . borrado";
+                echo "Producto . $prod->nombre . borrado";
                 $eliminado =true;
             }
         } else {

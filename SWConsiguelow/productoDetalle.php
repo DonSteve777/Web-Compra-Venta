@@ -21,18 +21,16 @@ EOF;
 }
 $id = $producto->id();
 $idVendedor=$producto->vendedor();
+$currentUser = $_SESSION['userid'];
 $htmlComprar='';
 $htmlCarrito='';
 $htmlVendedor ='';
 $htmlVendedor.= <<<EOF
 <form action="vistaVendedor.php" method="POST">
-<input type="submit" name="seller" value ="$idVendedor">
+<button type="submit" class="btn btn-info" role="link" name="seller" value="$idVendedor">Ver vendedor</button>
 </form>
-
-
-
-
 EOF;
+
 $htmlComprar.=<<<EOF
 <a class="btn btn-info btn-lg" role="button" href="anadirPedido.php?id=$id&pagado=1">Comprar</a>
 EOF;
@@ -58,6 +56,18 @@ EOF;
     $htmlCarrito=<<<EOF
     <button id="addCart" type="button" class="btn btn-info btn-lg">Añadir al carrito</button>
 EOF; 
+}
+
+if($idVendedor === $currentUser){
+    $htmlBorrar = '';
+    $htmlBorrar=<<<EOF
+    <form action="eliminaProducto.php" method="POST">
+    <button type="submit" class="btn btn-danger role="link" name="delete" value="$id">Eliminar producto</button>
+    </form>
+EOF;
+}
+else {
+    $htmlBorrar = '';
 }
 
 
@@ -132,9 +142,8 @@ EOF;
                                     <div class="d-inline p-2 font-weight-bold">Color</div>
                                     <div class="d-inline p-2 font-weight-ligh"><?php echo $producto->color()?></div>
                                 </div>
-
                                 <div class="mb-2">
-                                    <div class="d-inline p-2 font-weight-bold">Ver vendedor <?php echo $htmlVendedor?></div>
+                                    <div class="d-inline p-2 font-weight-bold"><?php echo $htmlVendedor?></div>
                                 </div>  
                             </div>
                             <div class="bg-dark text-white rounded p-3">
@@ -147,6 +156,9 @@ EOF;
                                     </div> 
                                     <div class="m-1">
                                             <?php echo $htmlCarrito?> 
+                                    </div>
+                                    <div class="m-1">
+                                            <?php echo $htmlBorrar?> 
                                     </div>
                                 </div>  
                             </div>  

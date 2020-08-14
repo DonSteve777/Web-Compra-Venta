@@ -24,9 +24,9 @@ if (is_array($categorias)){
                       <p>Categoria: $cat</p>
                   </div>
                   <div class="p-2">
-                  <a class="btn btn-info align-bottom" href="eliminaCat.php?categoria=$idCat">
-                      Eliminar
-                  </a>
+                  <form action="eliminaCat.php" method="POST">
+                  <button type="submit" class="btn btn-danger role="link" name="delete" value="$idCat">Eliminar</button>
+                  </form>
               </div>
           </li>     
 EOF;
