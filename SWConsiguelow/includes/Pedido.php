@@ -3,11 +3,11 @@
 class Pedido
 {
 
-    public static function buscaPedido($id)
+    public static function getById($id)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM pedidos P WHERE P.id = '%s' AND P.pagado=1", $conn->real_escape_string($id));
+        $query = sprintf("SELECT * FROM pedidos P WHERE P.id = '%s'", $conn->real_escape_string($id));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
@@ -25,7 +25,7 @@ class Pedido
         return $result;
     }
 
-    public static function buscaCarrito($id)
+    public static function getCartById($id)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -47,6 +47,7 @@ class Pedido
         return $result;
     }
 
+ 
     public static function getByUser($user)
      {
         $result = [];
@@ -65,14 +66,14 @@ class Pedido
         return $result;
     }
 
-
+//todos los pedidos del carro del usuario en seisón
     public static function getCarrito()
   {
     $result = [];
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
     $user = $_SESSION['userid'];
-    $query = sprintf("SELECT * FROM pedidos P JOIN usuarios U ON P.comprador = U.id WHERE P.comprador=$user AND P.pagado =0"); 
+    $query = sprintf("SELECT * FROM pedidos P WHERE P.comprador=$user AND P.pagado =0"); 
     $conn->real_escape_string($user);    
     $rs = $conn->query($query);
     if ($rs) {
@@ -88,12 +89,12 @@ class Pedido
 
 
     public static function eliminaCarrito($id){
-        $cart = self::buscaCarrito($id); 
+        $cart = self::getCartById($id); 
         if (!$cart) {
-            $html="No";
+           return false;
         }
         else{ 
-       return self::elimina($cart); 
+            return self::elimina($cart); 
         }
     }
 
@@ -167,8 +168,28 @@ class Pedido
             return self::inserta($pedido);
         }
     }
+    private static function actualiza($pedido)
+    {
+        $app = App::getSingleton();
+        $conn = $app->conexionBd();
+        $query=sprintf("UPDATE pedidos U SET producto='%s', pagado='%d',  comprador='%s' WHERE U.id=%i"
+            , $conn->real_escape_string($pedido->producto)
+            , $conn->real_escape_string($pedido->pagado)
+            , $conn->real_escape_string($pedido->comprador)
+            , $pedido->id);
+        if ( $conn->query($query) ) {
+            if ( $conn->affected_rows != 1) {
+                echo "No se ha podido actualizar el pedido: " . $usuario->id;
+                exit();
+            }
+        } else {
+            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $pedido;
+    }
 
-    public static function guardaPedido($pedido)
+    public static function guarda($pedido)
     {
         if ($pedido->id !== null) {
             return self::actualizaPedido($pedido);
@@ -196,32 +217,10 @@ class Pedido
         return $pedido;
     }
 
-    public static function contadorCarrito()
-    {
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $query=sprintf("SELECT * FROM `pedidos` WHERE 'comprado'= '0' ");
-        $rs =  $conn->query($query);
-        if ( $rs ) {
-            return $rs->num_rows; 
-            /*echo '<script type="text/javascript">
-            alert("Se ha añadido correctamente");
-            window.location.assign("index.php");
-            </script>';
-            exit();*/
-        } else {
-            echo "Error al consultar la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-    }
-
-
 
 
     private $id;
-
     private $producto;
-
     private $pagado;
     private $comprador;
 
@@ -251,6 +250,21 @@ class Pedido
     public function comprador()
     {
         return $this->comprador; 
+    }
+
+    public function setComprador($comprador)
+    {
+        $this->comprador=$comprador; 
+    }
+
+    public function setPagado($comprador)
+    {
+        $this->pagado=$pagado; 
+    }
+
+    public function setProducto($comprador)
+    {
+        $this->producto=$producto; 
     }
 
 }

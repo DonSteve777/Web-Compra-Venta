@@ -2,7 +2,6 @@
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Pedido as Pedido;
 
-
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
         $entityBody = file_get_contents('php://input');
         $dictionary = json_decode($entityBody);
@@ -22,10 +21,9 @@ use es\fdi\ucm\aw\Pedido as Pedido;
             $response = '';
             if ( $pagado==0){
                 $response=<<<EOF
-                <a href="vistaCarrito.php" id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</a>
+                <a href="carro.php" id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</a>
             EOF;
             }
-
             header('Content-Type: application/html; charset=utf-8');
             header('Content-Length: ' . mb_strlen($response));
             echo $response;

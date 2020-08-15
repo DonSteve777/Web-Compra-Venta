@@ -4,9 +4,6 @@ use es\fdi\ucm\aw\Aplicacion as App;
 use es\fdi\ucm\aw\Producto as Producto;
 use es\fdi\ucm\aw\ImageUpload as ImageUpload;
 
-
-
-
 require_once __DIR__.'/includes/config.php';
 
 if (!App::getSingleton()->usuarioLogueado())
@@ -16,26 +13,38 @@ $pedidos = Pedido::getCarrito();
 $counter = count($pedidos);
 
 $htmlListado = '';
-$htmlTotal = '';
 $total = 0;
+$htmlTotal =<<<EOF
+<div class="col-3 mb-4" >
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Lista de items</span>
+            <span class="badge badge-secondary badge-pill"  id='counter'>$counter</span>
+        </h4>
+        <ul class="list-group mb-3">    
+            <li class="list-group-item" id='test'>
+                <div class="container-fluid">
+                    <button type="button" class="btn btn-block btn-primary">Caja</button>
+                </div>
+            </li>
+EOF;
 foreach($pedidos as $value){
-    $producto = Producto::getById($value->producto());
+    $idPedido = $value->id();
+    $id = $value->producto();
+    $producto = Producto::getById($id);
     $nombre = $producto->nombre();
     $descripcion = $producto->descripcion();
     $precio = $producto->precio();
     $imgSrc = ImageUpload::getSource($value->producto());
     $total += $precio;
-
+    $idli = $idPedido . 'li';
     $htmlTotal.= <<<EOF
-    <li class="list-group-item d-flex justify-content-between lh-condensed">
-    <div>
-        <h6 class="my-0">$nombre</h6>
-    </div>
-    <span class="text-muted">$precio</span>
-</li>
+    <li class="list-group-item d-flex justify-content-between lh-condensed" id=$idli>
+            <h6 class="my-0">$nombre</h6>
+        <span class="text-muted">$precio</span>
+    </li>
 EOF;
     $htmlListado.=<<<EOF
-    <div class="card m-3">
+    <div class="card m-3" id=$idPedido>
         <div class="card-header">
          Vendedor
         </div>
@@ -48,16 +57,25 @@ EOF;
                     <div class="d-flex flex-column">
                         $precio €
                         <div class="d-inline mt-2">
-                            <a href=#  class="border border-primary border-top-0 border-bottom-0 border-left-0 p-2">Comprar este artículo</a>
-                            <a href=# id="remove" class="m-1">Eliminar </a>
+                            <button type="button" class="btn comprar btn-primary" value=$idPedido>Comprar este artículo</button>
+                            <button type="button" class="btn eliminar btn-primary" value=$idPedido>Eliminar</button>
                         </div>
                     </div>
                 </div>
             </div>  
         </div>
-  </div>
+    </div>
 EOF;
 };
+$htmlTotal.=<<<EOF
+<li class="list-group-item d-flex justify-content-between">
+    <span>Total (Euros)</span>
+    <strong id='total'>  $total</strong>
+</li>
+</ul>
+</div>
+
+EOF;
 ?>
 
 <!DOCTYPE html>
@@ -79,36 +97,16 @@ EOF;
 <body>
 <?php require("includes/common/cabecera.php");?>
 <div class="bg-light">
-<div class="row container-fluid p-3">
-    <div class="col-1"></div>
-    <div class="col-md-7">
-        <h1 class="text-center">Carrito del usuario</h1>
-        <?php echo $htmlListado; ?>
+    <div class="row container-fluid p-3">
+        <div class="col-1"></div>
+        <div class="col-md-7">
+            <h1 class="text-center">Carrito del usuario</h1>
+            <?php echo $htmlListado; ?>
+        </div>
+        <?php echo $htmlTotal ?>
+        <div class="col-1"></div>
     </div>
-    <div class="col-3 mb-4">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Lista de items</span>
-            <span class="badge badge-secondary badge-pill"><?php echo $counter?></span>
-        </h4>
-        <ul class="list-group mb-3">    
-            <li class="list-group-item">
-                <div class="container-fluid">
-                    <button type="button" class="btn btn-block btn-primary">Caja</button>
-                </div>
-            </li>
-            <?php echo $htmlTotal;?>
-            <li class="list-group-item d-flex justify-content-between">
-          <span>Total (Euros)</span>
-          <strong><?php echo $total?></strong>
-        </li>
-      </ul>
-        </ul>
-    </div>
-    <div class="col-1"></div>
-
-
 </div>
-
 </body>
 </html>
 
