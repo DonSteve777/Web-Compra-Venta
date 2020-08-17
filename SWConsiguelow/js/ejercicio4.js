@@ -12,7 +12,7 @@ $(document).ready(function() {
 		if (usernameRegex.test($("#campoUser").val())){
 			$("#regexpr").hide();
 			$.get(url,function(data,status){
-				alert(data);
+				//alert(data);
 				if (data === 'disponible'){
 					$("#userOK").html('&#x2714');
 				}

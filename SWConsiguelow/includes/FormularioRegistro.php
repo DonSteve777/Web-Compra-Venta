@@ -45,7 +45,7 @@ class FormularioRegistro extends Form
                 <div class="form-group m-2">
                     <label>Password:</label> <input required class="form-control" type="password" name="password" autocomplete="off"/>
                 </div>
-                <div class="form-group m-2"><label>Vuelve a introducir el Password:</label> <input required class="form-control" type="password" name="password2 autocomplete="off"" /><br /></div>
+                <div class="form-group m-2"><label>Vuelve a introducir el Password:</label> <input required class="form-control" type="password" name="password2" autocomplete="off" /><br /></div>
                 
                 <div class="form-group m-2">
                     <label>dni:</label> <input class="form-control" type="text" name="dni" value="$dni" />
@@ -90,12 +90,14 @@ EOF;
         if ( empty($nombre) || mb_strlen($nombre) < 5 ) {
             $result[] = "El nombre tiene que tener una longitud de al menos 5 caracteres.";
         }
-        
+
         $password = isset($datos['password']) ? $datos['password'] : null;
         if ( empty($password) || mb_strlen($password) < 5 ) {
             $result[] = "El password tiene que tener una longitud de al menos 5 caracteres.";
         }
+
         $password2 = isset($datos['password2']) ? $datos['password2'] : null;
+
         if ( empty($password2) || strcmp($password, $password2) !== 0 ) {
             $result[] = "Los passwords deben coincidir";
         }

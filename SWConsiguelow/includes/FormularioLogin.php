@@ -17,7 +17,7 @@ class FormularioLogin extends Form
   
   protected function generaCamposFormulario ($datos)
   {
-    $username = 'user';
+    $username = 'alvarouser';
     $password = '12345';
     if ($datos) {
       $username = isset($datos['username']) ? $datos['username'] : $username;
@@ -65,6 +65,8 @@ EOF;
       $result[] = 'El nombre de usuario no es válido';
       $ok = false;
     }
+    /*var_dump($datos['password']);
+    var_dump($password);*/
 
     $password = $datos['password'] ?? '' ;
     if ( ! $password ||  mb_strlen($password) < 4 ) {
