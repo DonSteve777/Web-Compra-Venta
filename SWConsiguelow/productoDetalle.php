@@ -5,19 +5,49 @@ use es\fdi\ucm\aw\Producto;
 use es\fdi\ucm\aw\ImageUpload;
 use es\fdi\ucm\aw\Aplicacion as App;
 use es\fdi\ucm\aw\Pedido;
+use es\fdi\ucm\aw\Usuario as Usuario;
+
 
 
 $idproducto = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if(!$idproducto) {
-    exit();
-}
-$producto = Producto::getById($idproducto);
-$imgSrc = ImageUpload::getSource($idproducto);
-$img='';
-if ($imgSrc){
-    $img =<<<EOF
-    <img class="img-fluid border" src=$imgSrc alt="imagen no disponible">
+        exit();
+    }
+    $producto = Producto::getById($idproducto);
+    $imgSrc = ImageUpload::getSource($idproducto);
+    $img='';
+    if ($imgSrc){
+        $img =<<<EOF
+        <img width=600 height= 300 class="img-fluid border" src=$imgSrc alt="imagen no disponible">
 EOF;
+    }
+
+$idVendedor=$producto->vendedor();
+$vendedor = Usuario::getById($idVendedor)->nombre();
+$htmlComprar='';
+$htmlVendedor ='';
+$htmlVendedor.= <<<EOF
+<form action="vistaVendedor.php" method="POST">
+<button type="submit" class="btn btn-outline-info border-0" role="link" name="seller" value="$idVendedor">$vendedor</button>
+</form>
+EOF;
+
+$htmlComprar.=<<<EOF
+<a class="btn btn-info btn-lg" role="button" href="anadirPedido.php?id=$idproducto&pagado=1">Comprar</a>
+EOF;
+
+/*  Álvaro para Nestor: creo que un usuario no puede ver sus mismos produtos */
+    $currentUser = $_SESSION['userid'];
+    if($idVendedor === $currentUser){
+    $htmlBorrar = '';
+    $htmlBorrar=<<<EOF
+    <form action="eliminaProducto.php" method="POST">
+    <button type="submit" class="btn btn-danger role="link" name="delete" value="$idproducto">Eliminar producto</button>
+    </form>
+EOF;
+}
+else {
+    $htmlBorrar = '';
 }
 
 $htmlComprar='';
@@ -97,9 +127,13 @@ EOF;
                 </div>
                 <div class="col-5 m-3 d-flex">
                     <div class="d-flex flex-column m-3 ">
-                        <div class="border-bottom text-center display-4" >
-                            <?php echo $producto->nombre(); ?> 
-                        </div>
+                            <div class="border-bottom text-center display-4 d-inline" >
+                                <?php echo $producto->nombre(); ?> 
+                            </div>
+                            <div class="d-inline" >
+                                <?php echo $htmlVendedor; ?>
+                            </div>
+                        
                         <div class="m-3">
                             <div class="mb-3" >
                                 <div class="mb-2">
@@ -122,6 +156,10 @@ EOF;
                                     <div class="d-inline p-2 font-weight-ligh"><?php echo $producto->color()?></div>
                                 </div>
                             </div>
+
+                         
+
+
                             <div class="bg-dark text-white rounded p-3">
                                 <div>
                                     <p class="lead"><?php echo $producto->descripcion()?></p>  

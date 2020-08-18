@@ -30,6 +30,29 @@ class Usuario
         return $result;
     }
 
+    public static function getById($id){ 
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM usuarios P WHERE P.id=%d", $conn->real_escape_string($id));
+        $rs = $conn->query($query);
+        
+        if ($rs) {
+            if ( $rs->num_rows > 0) {
+                $fila = $rs->fetch_assoc();
+                    $user = new Usuario($fila['nombre'], $fila['nombreUsuario'], $fila['password'], $fila['dni'],  $fila['direccion'],  $fila['email'],  $fila['telefono'],  $fila['ciudad'],  $fila['codigo postal'], $fila['tarjeta credito'] );
+                    $user->id = $fila['id'];
+                $rs->free();
+            } else {
+                echo 'No se ha cargado ningún usuario';
+                exit();
+            } 
+        }else{
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        } 
+        return $user;
+    }
+
 
     public static function login($nombreUsuario, $password)
   {
