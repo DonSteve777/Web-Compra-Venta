@@ -194,7 +194,7 @@ class Pedido
         if ($pedido->id !== null) {
             return self::actualizaPedido($pedido);
         }
-        return self::insertaPedido($pedido);
+        return self::inserta($pedido);
     }
     
     public static function inserta($pedido)
@@ -211,10 +211,9 @@ class Pedido
             $pedido->id= $conn->insert_id;
     
         } else {
-            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            echo "Error al consultar la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
-        return $pedido;
     }
 
 

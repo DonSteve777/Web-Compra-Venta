@@ -3,14 +3,16 @@ require_once __DIR__.'/includes/config.php';
 
 
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
-        $nombreProd = $_GET['nombreProd'];
-        if(Producto::eliminaProd($nombreProd)){
+        $idProd = $_POST['delete'];
+        if(isset($idProd)){
+        Producto::eliminaById($idProd);
+        if(Producto::eliminaById($idProd)){
             echo '<script type="text/javascript">
         alert("Prod eliminado con exito");
         window.location.assign("index.php");
         </script>';
         }
-
+      }
     }
     else{
         echo '<script type="text/javascript">

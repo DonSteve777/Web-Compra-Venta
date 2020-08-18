@@ -121,10 +121,10 @@ EOF;
         } 
     return $html;
 }*/
-        public static function eliminaCat($nombreCat){
-            $cat = self::buscaCat($nombreCat); 
+        public static function eliminaCat($cat){
+            $cat = self::getById($cat); 
             if (!$cat) {
-                $html="No";
+                return "No se ha encontrado cat";
             }
             else{ 
            return self::elimina($cat); 
@@ -144,7 +144,7 @@ EOF;
                     exit();
                 }
                 elseif ($conn->affected_rows == 1){
-                    echo "Categoria. $cat->nombre . borrado";
+                    echo "Categoria $cat->nombre  borrada con exito ;) ";
                     $eliminado =true;
                 }
             } else {
@@ -191,11 +191,11 @@ EOF;
         return $categoria;
     }
 
-    /*private static function actualiza($usuario)
+    /*private static function actualiza($cat)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("UPDATE usuarios U SET nombre='%s', password='%s', nombreUsuario='%s',  dni='%s', direccion='%s', email='%s', telefono='%s', ciudad='%s', codigo postal='%s', carrito='%i', trajeta credito='%i'   WHERE U.id=%i"
+        $query=sprintf("UPDATE `categorias` U SET nombre='%s', password='%s', nombreUsuario='%s',  dni='%s', direccion='%s', email='%s', telefono='%s', ciudad='%s', codigo postal='%s', carrito='%i', trajeta credito='%i'   WHERE U.id=%i"
             , $conn->real_escape_string($usuario->nombreUsuario)
             , $conn->real_escape_string($usuario->nombre)
             , $conn->real_escape_string($usuario->password)
@@ -246,7 +246,4 @@ EOF;
     {
         return $this->descripcion;
     }
-
-    
-
 }

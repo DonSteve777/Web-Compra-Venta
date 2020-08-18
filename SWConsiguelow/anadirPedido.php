@@ -14,6 +14,7 @@ use es\fdi\ucm\aw\Pedido as Pedido;
         $idproducto = $dictionary['producto'];
         $pagado = $dictionary['pagado'];
         $comprador = $_SESSION['userid'];
+        var_dump( $comprador);
         $pedido = new Pedido($idproducto, $pagado, $comprador);
 
         if (Pedido::pedidoProducto($pedido)){

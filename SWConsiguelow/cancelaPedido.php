@@ -3,14 +3,13 @@ require_once __DIR__.'/includes/config.php';
 
 
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
-
-        $id = $_GET['id'];
+        $id = $_POST['item'];
+        if(isset($id)){
+            Pedido::cancelaPedido($id);
         if(Pedido::cancelaPedido($id)){
-            echo '<script type="text/javascript">
-        alert("Pedido cancelado");
-        window.location.assign("index.php");
-        </script>';
+            echo "Se ha eliminado el pedido numero $id con exito";
         }
+      }
     }
     else{
         '<script type="text/javascript">

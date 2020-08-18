@@ -6,8 +6,14 @@ require_once __DIR__.'/includes/config.php';
 
 function muestraProdsUsuario(){
   $idUsuario = $_SESSION['userid'];
-  $html= Producto::muestraProdsUsuario($idUsuario);
-  return $html;
+  $html = '';
+  $productoUser= Producto::getByUser($idUsuario);
+  if(is_array($productoUser)){
+  foreach($productoUser as $pu){
+    $html.=$pu->generaTarjeta();
+    }
+  }
+ return $html;
 }
 ?>
 

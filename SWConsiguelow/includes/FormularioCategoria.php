@@ -58,10 +58,7 @@ EOF;
             if ( ! $cat ) {
                 $result[] = "La categoria que intentas añadir ya existe";
             } else {
-                echo '<script type="text/javascript">
-                    alert("Categoria añadida con exito");
-                    window.location.assign("index.php");
-                    </script>';
+                echo "Categoria añadida con exito";
             }
         }
         return $result;

@@ -65,9 +65,7 @@ EOF;
 </head>
 
     <body>
-        <?php
-            require("includes/common/cabecera.php");
-        ?>
+           <?php require("includes/common/cabecera.php");?>
         <div class="row align-items-start">
         </div>
         <div class="row align-items-center">

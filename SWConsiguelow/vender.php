@@ -1,16 +1,22 @@
 <?php
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\FormularioVender;
+function vender(){
 if(!isset($_SESSION['login'])){
-    echo '<script type="text/javascript">
-     alert("No puedes subir un producto si no has hecho login antes, se te mandará a login");
-     window.location.assign("login.php");
-     </script>';
+    $html=<<<EOF
+    <div class="alert alert-info" role="alert">
+            No has iniciado sesión, inicia sesión </br>
+            <center><a href="login.php">Login<a/><center>
+    </div>
+    
+EOF;
  }
  else{
  $form = new FormularioVender(); 
  $html = $form->gestiona();
  }
+ return $html;
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,13 +40,15 @@ if(!isset($_SESSION['login'])){
                 <div class="d-flex flex-column bg-light m-3">
                     <h1 class="m-2">Subir un producto</h1>
                     <?php
-                        echo $html;
+                        echo vender();
                         
                     ?>
+                    <?php require("includes/common/footer.php"); ?>
                 </div>
             </div>
             <div class="col-4">
+            
         </div>
- 
+        
     </body>
 </html>
