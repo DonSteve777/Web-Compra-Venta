@@ -61,7 +61,7 @@ public static function getAliens(){
 public static function getByUser($idUsuario){ 
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
-    $query = sprintf("SELECT * FROM productos P WHERE P.idVendedor ='%d'");$conn->real_escape_string($idUsuario);
+    $query = sprintf("SELECT * FROM productos P WHERE P.idVendedor =%d", $conn->real_escape_string($idUsuario));
     $rs = $conn->query($query);
     if (!$idUsuario){
         echo "user id no puede ser nulo";
