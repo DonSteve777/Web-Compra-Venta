@@ -113,7 +113,7 @@ EOF;
             <div class="row text-center">
                 <div class="col-4"></div>
                     <div class="col-4">
-                        <div id="containerForm" class="container  w-75 d-flex flex-column mt-5">
+                        <div id="containerForm" class="container w-75 d-flex flex-column mt-5">
                         </div>
                     </div>
                     <div class="col-4"></div>
@@ -122,11 +122,11 @@ EOF;
         </div>
         <div class="container-fluid bg-light">
             <div class="row"> 
-                <div class="col-5 m-3 d-flex">
+                <div class="col-12 mt-3 d-flex col-md-5 mw-10 mh-10">
                     <?php echo $img;?>  
                 </div>
-                <div class="col-5 m-3 d-flex">
-                    <div class="d-flex flex-column m-3 ">
+                <div class="col-12 col-md-5 mt-3 d-flex">
+                    <div class="d-flex flex-column ">
                             <div class="border-bottom text-center display-4 d-inline" >
                                 <?php echo $producto->nombre(); ?> 
                             </div>
@@ -156,9 +156,6 @@ EOF;
                                     <div class="d-inline p-2 font-weight-ligh"><?php echo $producto->color()?></div>
                                 </div>
                             </div>
-
-                         
-
 
                             <div class="bg-dark text-white rounded p-3">
                                 <div>
