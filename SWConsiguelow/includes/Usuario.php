@@ -281,6 +281,12 @@ class Usuario
         return $this->id;
     }
 
+    public function tarjetaCredito()
+    {
+        return $this->tarjetaCredito;
+    }
+
+
     public function password()
     {
         return $this->password;
@@ -303,7 +309,7 @@ class Usuario
 
     public function dni()
     {
-        return $this->dnis;
+        return $this->dni;
     }
 
     public function direccion()

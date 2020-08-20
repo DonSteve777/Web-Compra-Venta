@@ -1,4 +1,5 @@
 $(function() {
+
     $("#addCart").click(function() {
         var url = " usuarioLogueado.php";
         var logueado = false;
@@ -36,4 +37,6 @@ $(function() {
             }
         });
     });
+
+    $("#addCart").click(function() {
 })

@@ -42,7 +42,7 @@ EOF;
     $htmlBorrar = '';
     $htmlBorrar=<<<EOF
     <form action="eliminaProducto.php" method="POST">
-    <button type="submit" class="btn btn-danger role="link" name="delete" value="$idproducto">Eliminar producto</button>
+        <button type="submit" class="btn btn-danger role="link" name="delete" value="$idproducto">Eliminar producto</button>
     </form>
 EOF;
 }
