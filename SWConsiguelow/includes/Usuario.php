@@ -213,20 +213,21 @@ class Usuario
     {
         $app = App::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("UPDATE usuarios U SET nombre='%s', password='%s', nombreUsuario='%s',  dni='%s', direccion='%s', email='%s', telefono='%s', ciudad='%s', codigo postal='%s', carrito='%i', trajeta credito='%i' WHERE U.id=%i"
-            , $conn->real_escape_string($usuario->nombreUsuario)
-            , $conn->real_escape_string($usuario->nombre)
-            , $conn->real_escape_string($usuario->password)
-            , $conn->real_escape_string($usuario->direccion)
-            , $conn->real_escape_string($usuario->email)
-            , $conn->real_escape_string($usuario->direccion)
-            , $conn->real_escape_string($usuario->telefono)
-            , $conn->real_escape_string($usuario->codigoPostal)
-            , $conn->real_escape_string($usuario->tarjetaCredito )
-            , $usuario->id);
-        if ( $conn->query($query) ) {
+        $query=sprintf("UPDATE usuarios U SET nombre='%s', password='%s', nombreUsuario='%s', dni='%s', direccion='%s', email='%s', telefono='%s', ciudad='%s', `codigo postal`='%s',`tarjeta credito`=%d WHERE U.id = %d"
+        , $conn->real_escape_string($usuario->nombre)  
+        , $conn->real_escape_string($usuario->password)
+        , $conn->real_escape_string($usuario->nombreUsuario)
+        , $conn->real_escape_string($usuario->dni)
+        , $conn->real_escape_string($usuario->direccion)
+        , $conn->real_escape_string($usuario->email)
+        , $conn->real_escape_string($usuario->telefono)
+        , $conn->real_escape_string($usuario->ciudad)
+        , $conn->real_escape_string($usuario->codigoPostal)
+        , $usuario->tarjetaCredito
+        , $usuario->id);
+        if ( $conn->query($query)) {
             if ( $conn->affected_rows != 1) {
-                echo "No se ha podido actualizar el usuario: " . $usuario->id;
+                echo "No se ha podido actualizar el usuario: " . $usuario->nombreUsuario;
                 exit();
             }
         } else {
@@ -261,7 +262,7 @@ class Usuario
     private $roles;
 
 
-    private function __construct($nombre, $nombreUsuario, $password,  $dni, $direccion, $email, $telefono, $ciudad, $codigoPostal, $tarjetaCredito )
+    private function __construct($nombre, $nombreUsuario, $password,  $dni, $direccion, $email, $telefono, $ciudad, $codigoPostal, $tarjetaCredito, $id = NULL )
     {
         $this->nombre = $nombre;
         $this->nombreUsuario= $nombreUsuario;
@@ -342,6 +343,53 @@ class Usuario
         return $this->nombre;
     }
 
+    /********************** */
+    public function setTarjetaCredito($tarjetaCredito)
+    {
+        $this->tarjetaCredito = $tarjetaCredito;
+    }
+
+    public function setNombreUsuario($nombreUsuario)
+    {
+        $this->nombreUsuario = $nombreUsuario ;
+    }
+
+    public function setDni($dni)
+    {
+        $this->dni = $dni;
+    }
+
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+    }
+
+    public function setCiudad($ciudad)
+    {
+        $this->ciudad = $ciudad;
+    }
+
+    public function setCodigoPostal($codigoPostal)
+    {
+        $this->codigoPostal = $codigoPostal;
+    }
+
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    }
+    /******************************** */
+
     public function compruebaPassword($password)
     {
        /* echo $password;
@@ -349,7 +397,6 @@ class Usuario
         
         echo $this->password;
         echo "<br>";*/
-
         return password_verify($password, $this->password);
     }
 

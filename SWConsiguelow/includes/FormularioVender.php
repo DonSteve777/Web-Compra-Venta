@@ -92,50 +92,46 @@ EOF;
     protected function procesaFormulario($datos)
     {
        $result = array();
+     
+
         $nombreProd = isset($datos['nombre']) ? $datos['nombre'] : null;
-   
         if (empty($nombreProd)) {
             $result[] = "El nombre del producto no puede estar vacío";
         }
         
         $descripcion = isset($datos['descripcion']) ? $datos['descripcion'] : null;
-
         if ( empty($descripcion) ) {
             $result[] = "La descripcion no puede estar vacía.";
         }
 
         $precio = isset($datos['precio']) ? $datos['precio'] : null;
-
         if ( empty($precio) ) {
             $result[] = "El precio no puede ser nulo.";
         }
 
-        $unidades = isset($datos['unidades']) ? $datos['unidades'] : null;
-                
+        $unidades = isset($datos['unidades']) ? $datos['unidades'] : null;      
         if ( empty($unidades) ) {
             $result[] = "El numero de unidades no puede ser nulo";
         }
-        
-        $talla = isset($datos['talla']) ? $datos['talla'] : null;
 
+        $talla = isset($datos['talla']) ? $datos['talla'] : null;
         if ( empty($talla) ) {
             $result[] = "La talla no puede estar vacía  .";
         }
         
         $color = isset($datos['color']) ? $datos['color'] : null;
-
         if ( empty($color) ) {
             $result[] = "El color no puede estar vacía.";
         }
         $categoria = isset($datos['categoria']) ? $datos['categoria'] : null;
         $categoria = intval($categoria);
-
         if ( empty($categoria) ) {
             $result[] = "La categoria no puede estar vacía.";
         }
 
        if (count($result) === 0) {
-            $idvendedor = $_SESSION['userid'];
+            $app = App::getSingleton();
+            $idvendedor = $app->userid();
             $tallaObj = new Talla($talla);
             $producto = Producto::añadeProd($nombreProd, $idvendedor, $descripcion, $precio,$unidades,$tallaObj->getTalla(),$color,$categoria);
             if ($producto){

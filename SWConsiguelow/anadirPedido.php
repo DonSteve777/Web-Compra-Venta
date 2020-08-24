@@ -30,5 +30,4 @@ use es\fdi\ucm\aw\Pedido as Pedido;
             echo $response;
         }  
     }
-    //else: mandar a login
     

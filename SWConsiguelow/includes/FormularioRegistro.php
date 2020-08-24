@@ -14,7 +14,6 @@ class FormularioRegistro extends Form
         $dni = '';
         $direccion = '';
         $email = '';
-        $nombre = '';
         $telefono = '';
         $ciudad = '';
         $codigoPostal = ''; 

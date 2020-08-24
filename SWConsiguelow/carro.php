@@ -1,8 +1,10 @@
 <?php
 use es\fdi\ucm\aw\Pedido;
 use es\fdi\ucm\aw\Aplicacion as App;
-use es\fdi\ucm\aw\Producto as Producto;
-use es\fdi\ucm\aw\ImageUpload as ImageUpload;
+use es\fdi\ucm\aw\Producto;
+use es\fdi\ucm\aw\ImageUpload;
+use es\fdi\ucm\aw\Usuario;
+
 
 require_once __DIR__.'/includes/config.php';
 
@@ -31,6 +33,8 @@ foreach($pedidos as $value){
     $idPedido = $value->id();
     $id = $value->producto();
     $producto = Producto::getById($id);
+    $idVendedor = $producto->vendedor();
+    $nombreVendedor = Usuario::getById($idVendedor)->nombreUsuario();
     $nombre = $producto->nombre();
     $descripcion = $producto->descripcion();
     $precio = $producto->precio();
@@ -46,7 +50,9 @@ EOF;
     $htmlListado.=<<<EOF
     <div class="card m-3" id=$idPedido>
         <div class="card-header">
-         Vendedor
+            <form action="vistaVendedor.php" method="POST">
+                <button type="submit" class="btn btn-outline-info border-0" role="link" name="seller" value="$idVendedor">$nombreVendedor</button>
+            </form>
         </div>
         <div class="card-body">
             <div class="d-flex flex-row">

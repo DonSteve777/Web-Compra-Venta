@@ -51,7 +51,6 @@ VALUES ('6', 'producto6', '2', 'descripcion 6', '60.00', '3', '6', 'amarillo', '
   nestoruser: producto 2, 4, y 6
 */
 
-
 INSERT INTO `uploads` (`id`, `producto`, `name`, `mime_type`) VALUES ('4', '1', 'imagen1.tmp', 'image/jpeg');
 INSERT INTO `uploads` (`id`, `producto`, `name`, `mime_type`) VALUES ('5', '2', 'imagen2.tmp', 'image/jpeg');
 INSERT INTO `uploads` (`id`, `producto`, `name`, `mime_type`) VALUES ('6', '3', 'imagen3.tmp', 'image/jpeg');
