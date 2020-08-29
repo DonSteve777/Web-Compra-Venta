@@ -77,49 +77,46 @@ EOF;
                 <ul class="list-group mb-3">    
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0">Product name</h6>
-                            <small class="text-muted">Brief description</small>
+                            <h6 class="my-0"><?php echo $nombreProducto?></h6>
+                            <small class="text-muted"><?php echo $descripcion?></small>
                         </div>
-                        <span class="text-muted">$12</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Second product</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$8</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Third item</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$5</span>
+                        <span class="text-muted"><?php echo $precio ?></span>
                     </li>
                     
                     <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>$20</strong>
+                        <span>Total (€)</span>
+                        <strong>€<?php echo $precio ?></strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-center">
+                        <button type="button" class="btn btn-info" id="pagarBtn" value=<?php $idProducto?> >Confirmar y pagar</button>
                     </li>
                 </ul>
             </div>
         <!-- DAtos-->
+
             <div class="col-md-8 order-md-1">
-                
-                <h4 class="mb-3">Pago</h4>
                 <div class="d-block my-3">
-                    <div class="custom-control custom-radio">
-                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                        <label class="custom-control-label" for="credit">Credit card</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                        <label class="custom-control-label" for="debit">Debit card</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                        <label class="custom-control-label" for="paypal">PayPal</label>
-                    </div>
+                    <h6> Modo de pago </h6>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="custom-control p-3 custom-radio">
+                                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                                <label class="custom-control-label" for="credit">Credit card</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="custom-control p-3 custom-radio">
+                                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                <label class="custom-control-label" for="debit">Debit card</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="custom-control p-3 custom-radio">
+                                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                <label class="custom-control-label" for="paypal">PayPal</label>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="card" id="enviara">

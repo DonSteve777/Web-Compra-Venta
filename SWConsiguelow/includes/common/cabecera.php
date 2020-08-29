@@ -55,7 +55,7 @@ $htmlNavCat= generaNavItems($categorias);
                                 if (isset($_SESSION["login"]) && ($_SESSION["login"]===true)) {
                                     $logueado = true;
                             ?>
-                            Bienvenido, <a href="vistaUsuario.php"><?php echo $_SESSION['nombre'];?></a>
+                            Bienvenido, <a href="miPerfil.php"><?php echo $_SESSION['nombre'];?></a>
                             <?php
                             } else {
                             ?>

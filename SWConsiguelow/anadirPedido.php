@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/includes/config.php';
-use es\fdi\ucm\aw\Pedido as Pedido;
+use es\fdi\ucm\aw\Pedido;
 
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
         $entityBody = file_get_contents('php://input');
@@ -14,7 +14,7 @@ use es\fdi\ucm\aw\Pedido as Pedido;
         $idproducto = $dictionary['producto'];
         $pagado = $dictionary['pagado'];
         $comprador = $_SESSION['userid'];
-        var_dump( $comprador);
+        //var_dump( $comprador);
         $pedido = new Pedido($idproducto, $pagado, $comprador);
 
         if (Pedido::pedidoProducto($pedido)){

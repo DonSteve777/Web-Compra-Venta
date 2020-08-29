@@ -153,7 +153,12 @@ class Pedido
         return $eliminado;
     }
 
-    public static function pedidoProducto($pedido){
+    /**
+     * Busca un producto en el carro para que no se repita un pedido. 
+     * Si se compra un prodcuto que resultar estar ya pedido en el carro, se encuentra es pedido y se actualiza
+     * Contexto: vista de carrito-> para no guardar un pedido ya guardado
+     */
+    public static function pedidoProducto($pedido){ 
         $carro = self::getCarrito();
         $i=0;
         $encontrado = false;
@@ -162,12 +167,16 @@ class Pedido
             $encontrado = ($carro[$i]==$pedido->producto()) ? true : false;
             $i++;
         }
-        if ($encontrado)
-            return false;
+        var_dump($ecnotrado);
+        if ($encontrado){
+            $carro[$i]->pagado = $pedido->pagado;
+            return self::actualiza( $carro[$i]);
+        }
         else{
             return self::inserta($pedido);
         }
     }
+
     private static function actualiza($pedido)
     {
         $app = App::getSingleton();

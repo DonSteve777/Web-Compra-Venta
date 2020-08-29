@@ -13,14 +13,14 @@ $idproducto = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if(!$idproducto) {
         exit();
     }
-    $producto = Producto::getById($idproducto);
-    $imgSrc = ImageUpload::getSource($idproducto);
-    $img='';
-    if ($imgSrc){
-        $img =<<<EOF
-        <img width=600 height= 300 class="img-fluid border" src=$imgSrc alt="imagen no disponible">
+$producto = Producto::getById($idproducto);
+$imgSrc = ImageUpload::getSource($idproducto);
+$img='';
+if ($imgSrc){
+    $img =<<<EOF
+    <img width=600 height= 300 class="img-fluid border" src=$imgSrc alt="imagen no disponible">
 EOF;
-    }
+}
 
 $idVendedor=$producto->vendedor();
 $vendedor = Usuario::getById($idVendedor)->nombre();
@@ -33,7 +33,7 @@ $htmlVendedor.= <<<EOF
 EOF;
 
 $htmlComprar.=<<<EOF
-<a class="btn btn-info btn-lg" role="button" href="anadirPedido.php?id=$idproducto&pagado=1">Comprar</a>
+<a class="btn btn-info btn-lg" role="button" href="caja.php?id=$idproducto&pagado=1">Comprar</a>
 EOF;
 
 /*  Álvaro para Nestor: creo que un usuario no puede ver sus mismos produtos */
@@ -49,12 +49,8 @@ EOF;
 else {
     $htmlBorrar = '';
 }
-
-$htmlComprar='';
 $htmlCarrito='';
-$htmlComprar =<<<EOF
-    <button id="buy" type="button" class="btn btn-info btn-lg" >Comprar</button>
-EOF;
+
 
 if (App::getSingleton()->usuarioLogueado()){
     $carrito = Pedido::getCarrito();
