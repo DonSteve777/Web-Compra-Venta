@@ -26,12 +26,12 @@ $htmlComprar='';
 $htmlVendedor ='';
 $htmlVendedor.= <<<EOF
 <form action="vistaVendedor.php" method="POST">
-<button type="submit" class="btn btn-outline-info border-0" role="link" name="seller" value="$idVendedor">$vendedor</button>
+    <button type="submit" class="btn btn-outline-info border-0" role="link" name="seller" value="$idVendedor">$vendedor</button>
 </form>
 EOF;
 
 $htmlComprar.=<<<EOF
-<a class="btn btn-info btn-lg" role="button" href="caja.php?id=$idproducto&pagado=1">Comprar</a>
+    <button id="comprarBtn" value="$idproducto" type="button" class="btn btn-info btn-lg">Comprar</button>
 EOF;
 
     $currentUser = $_SESSION['userid'];
@@ -63,7 +63,7 @@ if (App::getSingleton()->usuarioLogueado()){
 EOF;
     }else{
         $htmlCarrito=<<<EOF
-        <button id="addCart" type="button" class="btn btn-info btn-lg">Añadir al carrito</button>
+        <button id="addCart" type="button" class="btn btn-info btn-lg" value="$idproducto">Añadir al carrito</button>
 EOF;
     }
 }else{

@@ -25,6 +25,12 @@ $(function() {
             alert( "error. No se ha eliminado" );
           });
     });
+    
+    $(".comprar").click(function() {
+      var producto = $(this).val();
+      url = "caja.php?id="+producto;
+                window.location.href= url;
+    });
 
 
 })

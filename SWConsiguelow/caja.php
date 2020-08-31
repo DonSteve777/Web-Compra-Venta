@@ -86,7 +86,7 @@ EOF;
                         <strong>€<?php echo $precio ?></strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-center">
-                        <button type="button" class="btn btn-info" id="pagarBtn" value=<?php $idProducto?> >Confirmar y pagar</button>
+                        <button type="button" class="btn btn-info" id="pagarBtn" value=<?php echo $idProducto?> >Confirmar y pagar</button>
                     </li>
                 </ul>
             </div>

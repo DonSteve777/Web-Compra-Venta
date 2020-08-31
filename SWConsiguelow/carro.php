@@ -56,14 +56,16 @@ EOF;
         </div>
         <div class="card-body">
             <div class="d-flex flex-row">
+            <a href="productoDetalle.php?id=$id">
                 <img class="img-thumbnail mr-4" src=$imgSrc alt="imagen no disponible"  width="92" height="92">
+            </a>
                 <h4 class="card-title mr-4">$nombre</h4>
                 <small class="text-muted">$descripcion</small>
                 <div class="d-flex flex-fill justify-content-end">
                     <div class="d-flex flex-column">
                         $precio €
                         <div class="d-inline mt-2">
-                            <button type="button" class="btn comprar btn-primary" value=$idPedido>Comprar este artículo</button>
+                            <button type="button" class="btn comprar btn-primary" value=$id>Comprar este artículo</button>
                             <button type="button" class="btn eliminar btn-primary" value=$idPedido>Eliminar</button>
                         </div>
                     </div>

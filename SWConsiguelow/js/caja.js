@@ -12,10 +12,10 @@ $(function() {
             });  
         });
     });
-
     $("#pagarBtn").click(function() {
         var url = 'anadirPedido.php'; 
          var idProducto = $(this).val();
+         alert(idProducto);
          var e = {
              "producto" : idProducto,
              "pagado"   : 1

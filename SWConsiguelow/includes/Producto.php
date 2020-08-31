@@ -19,7 +19,7 @@ public static function getById($id){
             $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria'],  $fila['id']);
             
         }else {
-            echo "No encuentro usuarios con id ". $id;
+            echo "No encuentro productos con id ". $id;
             exit();
         }
         $rs->free();

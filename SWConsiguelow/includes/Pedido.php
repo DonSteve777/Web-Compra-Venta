@@ -202,7 +202,7 @@ class Pedido
         if ( $conn->query($query) ) {
             $pedido->id= $conn->insert_id;
         } else {
-            echo "Error al consultar la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
         return $pedido;
@@ -223,7 +223,7 @@ class Pedido
                 exit();
             }
         } else {
-            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            echo "Error al actualizar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
         return $pedido;

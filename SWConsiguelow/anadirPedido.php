@@ -40,9 +40,14 @@ EOF;
             $guardado = NULL;
             $i=0;
             $encontrado = false;
+            
+            var_dump($idproducto);
+
             while($i < count($carrito) && !$encontrado){
+                var_dump($carrito[$i]->producto());
                 if ($carrito[$i]->producto() ==  $idproducto) $encontrado = true;
-                $i++;
+                else
+                    $i++;
             }
             if ($encontrado){
                 $pedido->setId($carrito[$i]->id());
@@ -50,8 +55,9 @@ EOF;
             }else {
                 $response = 'insertado ';
             }
-            $guardado = Pedido::guarda($pedido);
+           $guardado = Pedido::guarda($pedido);
         }
         echo $response;
+        
     }
     
