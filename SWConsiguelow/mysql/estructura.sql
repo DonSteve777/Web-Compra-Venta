@@ -1,5 +1,5 @@
 /*
-
+IMPORTAR ESTE SCRIPT Y EL DE datos.sql
   Este script crea la Bdd, el usuario con privilegios sobre ella, y las tablas vacías
   Recuerda  deshabilitar la opción "Enable foreign key checks" para evitar problemas a la hora de importar el script.
 */
@@ -17,7 +17,6 @@ DROP TABLE IF EXISTS `uploads`;
 DROP TABLE IF EXISTS `roles`;
 DROP TABLE IF EXISTS `rolesUsuario`;
 DROP TABLE IF EXISTS `pedidos`;
-
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dni` varchar(9) NOT NULL,

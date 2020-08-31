@@ -14,20 +14,44 @@ use es\fdi\ucm\aw\Pedido;
         $idproducto = $dictionary['producto'];
         $pagado = $dictionary['pagado'];
         $comprador = $_SESSION['userid'];
-        //var_dump( $comprador);
         $pedido = new Pedido($idproducto, $pagado, $comprador);
-
-        if (Pedido::pedidoProducto($pedido)){
-            http_response_code(201); // 201 Created
-            $response = '';
-            if ( $pagado==0){
+        $response = '';
+        //añadir al carro->pagado es 0
+        if ($pagado==0){
+            if (Pedido::inserta($pedido)){
+                http_response_code(201); // 201 Created
                 $response=<<<EOF
                 <a href="carro.php" id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</a>
-            EOF;
+EOF;
+            
+                 header('Content-Type: application/html; charset=utf-8');
+                 header('Content-Length: ' . mb_strlen($response));
+                 
+             }  
+             else{
+                 $response=<<<EOF
+                 <p> Error en la operación de guardado del pedido</p>
+EOF; 
+             }
+        }
+        //distinción entre compra directa (insertar pedido), y compra de un producto del carrito (buscar y actualizar)
+        else{
+            $carrito = Pedido::getCarrito();
+            $guardado = NULL;
+            $i=0;
+            $encontrado = false;
+            while($i < count($carrito) && !$encontrado){
+                if ($carrito[$i]->producto() ==  $idproducto) $encontrado = true;
+                $i++;
             }
-            header('Content-Type: application/html; charset=utf-8');
-            header('Content-Length: ' . mb_strlen($response));
-            echo $response;
-        }  
+            if ($encontrado){
+                $pedido->setId($carrito[$i]->id());
+                $response = 'actualizado ';
+            }else {
+                $response = 'insertado ';
+            }
+            $guardado = Pedido::guarda($pedido);
+        }
+        echo $response;
     }
     

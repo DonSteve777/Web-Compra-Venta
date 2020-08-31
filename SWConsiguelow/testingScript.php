@@ -1,9 +1,31 @@
 <?php
 require_once __DIR__.'/includes/config.php';
-use es\fdi\ucm\aw\FormularioLogin;
+use es\fdi\ucm\aw\Pedido;
 
-$form = new FormularioLogin(); 
-$html = $form->gestiona();
+$idproducto = 2;
+$pagado = 1;
+$comprador = $_SESSION['userid'];
+$guardado = NULL;
+$pedido = new Pedido($idproducto, $pagado, $comprador);
+$carrito = Pedido::getCarrito();
+            $i=0;
+            $encontrado = false;
+            while($i < count($carrito) && !$encontrado){
+                if ($carrito[$i]->producto() ==  $idproducto) $encontrado = true;
+                else
+                  $i++;
+            }
+            if ($encontrado){
+              $pedido->setId($carrito[$i]->id());
+              //$updated = Pedido::actualiza($pedido);
+              $response = 'actualizado ';
+             // $response.= $updated->id() ;
+          }else {
+             // Pedido::inserta($pedido);
+              $response = 'insertado ';
+             // $response.= $pedido->id();
+          }
+          $guardado = Pedido::guarda($pedido);
 ?>
 <!doctype html>
 <html lang="es">
@@ -24,13 +46,7 @@ $html = $form->gestiona();
 </head>
 <body>
 
-<div class="card">
-  <div class="card-body">
-    <h4 class="card-title">Card title</h4>
-    <p>This is some text within a card block.</p>
-
-  </div>
-</div>
+<?php echo $response ?>
 
 
 </body>

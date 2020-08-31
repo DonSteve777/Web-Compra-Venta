@@ -1,19 +1,4 @@
 $(function() {
-    /*$(".comprar").click(function() {
-       var url = 'anadirPedido.php'; 
-        var idPedido = $(this).val();
-        var e = {
-            "id" : idPedido,
-          };
-        $.post(url,JSON.stringify(e),function(data,status){
-        })//CREO QUE TODO ESTO SOBRA. 
-        .done(function() {
-            window.location.href = "caja.php";
-          })
-          .fail(function(){
-            alert( "error. No se ha comprado" );
-          })
-    });*/
     $(".eliminar").click(function() {
        var url = 'eliminaCarrito.php'; 
         var idPedido = $(this).val();

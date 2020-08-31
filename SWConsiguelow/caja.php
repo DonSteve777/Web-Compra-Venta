@@ -43,11 +43,9 @@ $htmlListado.=<<<EOF
                 </div>
             </div>  
 EOF;
-
-
-
-
 ?>
+
+
 <!doctype html>
 <html lang="es">
   <head>

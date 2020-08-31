@@ -5,8 +5,11 @@ use es\fdi\ucm\aw\ImageUpload;
 
 
 
+
 $html='';
 $prods = Producto::getAliens();
+
+
 foreach($prods as $value){
     $html.=$value->generaTarjeta();
 }

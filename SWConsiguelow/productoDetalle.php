@@ -7,8 +7,6 @@ use es\fdi\ucm\aw\Aplicacion as App;
 use es\fdi\ucm\aw\Pedido;
 use es\fdi\ucm\aw\Usuario as Usuario;
 
-
-
 $idproducto = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if(!$idproducto) {
         exit();
@@ -23,7 +21,7 @@ EOF;
 }
 
 $idVendedor=$producto->vendedor();
-$vendedor = Usuario::getById($idVendedor)->nombre();
+$vendedor = Usuario::getById($idVendedor)->nombreUsuario();
 $htmlComprar='';
 $htmlVendedor ='';
 $htmlVendedor.= <<<EOF
@@ -36,7 +34,6 @@ $htmlComprar.=<<<EOF
 <a class="btn btn-info btn-lg" role="button" href="caja.php?id=$idproducto&pagado=1">Comprar</a>
 EOF;
 
-/*  Álvaro para Nestor: creo que un usuario no puede ver sus mismos produtos */
     $currentUser = $_SESSION['userid'];
     if($idVendedor === $currentUser){
     $htmlBorrar = '';

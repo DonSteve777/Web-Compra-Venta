@@ -154,8 +154,9 @@ class Pedido
     }
 
     /**
+     * Distinción entre comrpa directa (crear pedido) y compra de un producto del carro (campo pagado del pedido existente a 1)
      * Busca un producto en el carro para que no se repita un pedido. 
-     * Si se compra un prodcuto que resultar estar ya pedido en el carro, se encuentra es pedido y se actualiza
+     * Si se compra un prodcuto que resulta estar ya pedido en el carro, se encuentra es pedido y se actualiza
      * Contexto: vista de carrito-> para no guardar un pedido ya guardado
      */
     public static function pedidoProducto($pedido){ 
@@ -167,7 +168,8 @@ class Pedido
             $encontrado = ($carro[$i]==$pedido->producto()) ? true : false;
             $i++;
         }
-        var_dump($ecnotrado);
+        exit();
+        var_dump($encontrado);
         if ($encontrado){
             $carro[$i]->pagado = $pedido->pagado;
             return self::actualiza( $carro[$i]);
@@ -177,31 +179,12 @@ class Pedido
         }
     }
 
-    private static function actualiza($pedido)
-    {
-        $app = App::getSingleton();
-        $conn = $app->conexionBd();
-        $query=sprintf("UPDATE pedidos U SET producto='%s', pagado='%d',  comprador='%s' WHERE U.id=%i"
-            , $conn->real_escape_string($pedido->producto)
-            , $conn->real_escape_string($pedido->pagado)
-            , $conn->real_escape_string($pedido->comprador)
-            , $pedido->id);
-        if ( $conn->query($query) ) {
-            if ( $conn->affected_rows != 1) {
-                echo "No se ha podido actualizar el pedido: " . $usuario->id;
-                exit();
-            }
-        } else {
-            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        return $pedido;
-    }
+
 
     public static function guarda($pedido)
     {
         if ($pedido->id !== null) {
-            return self::actualizaPedido($pedido);
+            return self::actualiza($pedido);
         }
         return self::inserta($pedido);
     }
@@ -218,11 +201,32 @@ class Pedido
         );
         if ( $conn->query($query) ) {
             $pedido->id= $conn->insert_id;
-    
         } else {
             echo "Error al consultar la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
+        return $pedido;
+    }
+
+    private static function actualiza($pedido)
+    {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query=sprintf("UPDATE pedidos U SET producto='%d', pagado='%d', comprador='%d' WHERE U.id=%d"
+            , $conn->real_escape_string($pedido->producto)
+            , $conn->real_escape_string($pedido->pagado)
+            , $conn->real_escape_string($pedido->comprador)
+            , $pedido->id);
+        if ( $conn->query($query) ) {
+            if ( $conn->affected_rows != 1) {
+                echo "No se ha podido actualizar el pedido: " . $usuario->id;
+                exit();
+            }
+        } else {
+            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $pedido;
     }
 
 
@@ -260,17 +264,22 @@ class Pedido
         return $this->comprador; 
     }
 
+    public function setId($id)
+    {
+        return $this->id = $id;
+    }
+
     public function setComprador($comprador)
     {
         $this->comprador=$comprador; 
     }
 
-    public function setPagado($comprador)
+    public function setPagado($pagado)
     {
         $this->pagado=$pagado; 
     }
 
-    public function setProducto($comprador)
+    public function setProducto($producto)
     {
         $this->producto=$producto; 
     }

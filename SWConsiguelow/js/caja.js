@@ -17,14 +17,15 @@ $(function() {
         var url = 'anadirPedido.php'; 
          var idProducto = $(this).val();
          var e = {
-             "id" : idProducto,
+             "producto" : idProducto,
              "pagado"   : 1
            };
          $.post(url,JSON.stringify(e),function(data,status){
+           alert(data);
          })
          .done(function() {
-             alert("Pedido realizado");
-             window.location.href = "index.php";    //MEJORAR: modal de éxito con enlace 
+             //alert('ewewewe');
+            // window.location.href = "index.php";    //MEJORAR: modal de éxito con enlace 
            })
            .fail(function(){
              alert( "error. No se ha comprado" );
