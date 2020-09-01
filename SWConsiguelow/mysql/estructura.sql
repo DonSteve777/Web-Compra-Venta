@@ -50,7 +50,6 @@ CREATE TABLE `productos` (
   `precio` decimal(4,2) NOT NULL,
   `unidades` int(10) UNSIGNED NOT NULL,
   `talla` int(3) NOT NULL,
-  `color` varchar(12) NOT NULL,
   `categoria` INT(11) NOT NULL,
   PRIMARY KEY(`id`),
   FOREIGN KEY (`categoria`) REFERENCES `categorias`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,

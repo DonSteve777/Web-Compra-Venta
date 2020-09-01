@@ -57,26 +57,27 @@ Class ImageUpload {
 
     /* Handles the uploading of images */
 	public  function uploadImages(){
-        $result = array();
         //$target = 'C:\xampp\htdocs\gitLocal\SWConsiguelo\SWConsiguelow\data\productos\\';
        /* foreach($this->files['imagen']['tmp_name'] as $value)
-        {*/
-            $file_size =$this->files['imagen']['size'];//[$key];
-            $file_tmp =$this->files['imagen']['tmp_name'];//[$key];
-			$file_type=$this->files['imagen']['type'];//[$key];  
-			$bdname= mt_rand().".tmp";
+		{*/
+		$result = false;
+		$file_size =$this->files['imagen']['size'];//[$key];
+		$file_tmp =$this->files['imagen']['tmp_name'];//[$key];
+		$file_type=$this->files['imagen']['type'];//[$key];  
+		$bdname= mt_rand().".tmp";
 
-            // Checks the true MIME type of the file
-            if($this->check_img_mime($file_tmp)){
-                // Checks the size of the the image
-                if($this->check_img_size($file_size)){
-					$src = $this->folder.$bdname;
-					move_uploaded_file($file_tmp, $src );
-					$imagen = new Imagen($this->productId, $bdname, $file_type); 
-					$imagen = Imagen::inserta($imagen);	//setea el id
-                }
-            }
-	   return $result;
+		// Checks the true MIME type of the file
+		if($this->check_img_mime($file_tmp)){
+			// Checks the size of the the image
+			if($this->check_img_size($file_size)){
+				$src = $this->folder.$bdname;
+				move_uploaded_file($file_tmp, $src );
+				$imagen = new Imagen($this->productId, $bdname, $file_type); 
+				$imagen = Imagen::inserta($imagen);	//setea el id
+				$result = true;
+			}
+		}
+		return $result;
 	}
 
 	/* Show the image in the browser */

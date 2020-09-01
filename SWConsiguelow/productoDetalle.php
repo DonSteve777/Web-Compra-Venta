@@ -34,7 +34,7 @@ $htmlComprar.=<<<EOF
     <button id="comprarBtn" value="$idproducto" type="button" class="btn btn-info btn-lg">Comprar</button>
 EOF;
 
-    $currentUser = $_SESSION['userid'];
+   /* $currentUser = $_SESSION['userid'];
     if($idVendedor === $currentUser){
     $htmlBorrar = '';
     $htmlBorrar=<<<EOF
@@ -45,7 +45,7 @@ EOF;
 }
 else {
     $htmlBorrar = '';
-}
+}*/
 $htmlCarrito='';
 
 
@@ -143,11 +143,6 @@ EOF;
                                 <div class="mb-2">
                                     <div class="d-inline p-2 font-weight-bold">Talla</div>
                                     <div class="d-inline p-2 font-weight-ligh"><?php echo $producto->talla()?></div>
-                                </div>
-
-                                <div class="mb-2">
-                                    <div class="d-inline p-2 font-weight-bold">Color</div>
-                                    <div class="d-inline p-2 font-weight-ligh"><?php echo $producto->color()?></div>
                                 </div>
                             </div>
 

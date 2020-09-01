@@ -83,17 +83,22 @@ class Form
           }
       } else  {
         $result = $this->procesaFormulario($_POST);
-        if ( is_array($result) ) {
+        if ( is_array($result)) {
+          var_dump($result);
           // Error al procesar el formulario, volvemos a mostrarlo
           if ( ! $this->ajax ) {
             return $this->generaFormulario($result, $_POST);
           } else {
             return $this->generaHtmlErrores($result);
           }
-        } else {
+        } else {  //Éxito
           if ( ! $this->ajax ) {
-            //header('Location: '.$result);
-            header('Location: '.'index.php');
+            header('Location: '.$result);
+            /*echo '<script type="text/javascript">
+            alert("estamos ready");
+            window.location.assign("index.php");
+            </script>';*/
+           // header('Location: index.php');
           } else {
             return $result;
           }

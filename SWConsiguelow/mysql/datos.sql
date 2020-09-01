@@ -1,7 +1,6 @@
 /*
   Recuerda que deshabilitar la opción "Enable foreign key checks" para evitar problemas a la hora de importar el script.
-*/
-/*
+  opción importa con la bdd 'consiguelow seleccionada: Importing into the database "consiguelow"
   La contraseña para ambos usuarios es '12345' 
   pasword_hash('$2y$10$0eR.KhfTH5ybn/jlB86hwe/1nQeCKXk2RcLEjBscJbpUaF504kSOi', PASSWORD_DEFAULT) == '12345'
 */
@@ -32,20 +31,20 @@ categoria 4: producto 6
 categoria 5: --
 categoria 6: --
 */
-INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`) 
-VALUES ('1', 'producto1', '1', 'descripcion 1', '20.00', '1', '1', 'verde', '1');
-INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`) 
-VALUES ('2', 'producto2', '2', 'descripcion 2', '20.00', '3', '2', 'amarillo', '3');
+INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`,`categoria`) 
+VALUES ('1', 'producto1', '1', 'descripcion 1', '20.00', '1', '1', '1');
+INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`,`categoria`) 
+VALUES ('2', 'producto2', '2', 'descripcion 2', '20.00', '3', '2', '3');
 
-INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`) 
-VALUES ('3', 'producto3', '1', 'descripcion 3', '20.00', '3', '3', 'verde', '1');
-INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`) 
-VALUES ('4', 'producto4', '2', 'descripcion 4', '40.00', '3', '4', 'amarillo', '2');
+INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `categoria`) 
+VALUES ('3', 'producto3', '1', 'descripcion 3', '20.00', '3', '3',  '1');
+INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`,  `categoria`) 
+VALUES ('4', 'producto4', '2', 'descripcion 4', '40.00', '3', '4', '2');
 
-INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`) 
-VALUES ('5', 'producto5', '1', 'descripcion 5', '20.00', '5', '5', 'verde', '3');
-INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `color`, `categoria`) 
-VALUES ('6', 'producto6', '2', 'descripcion 6', '60.00', '3', '6', 'amarillo', '4');
+INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`,`categoria`) 
+VALUES ('5', 'producto5', '1', 'descripcion 5', '20.00', '5', '5', '3');
+INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `categoria`) 
+VALUES ('6', 'producto6', '2', 'descripcion 6', '60.00', '3', '6', '4');
 /*vendedores
   alvarouser: producto 1, 3 y 5
   nestoruser: producto 2, 4, y 6

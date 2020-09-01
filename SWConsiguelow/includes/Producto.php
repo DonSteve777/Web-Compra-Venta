@@ -16,7 +16,7 @@ public static function getById($id){
     if ($rs) {
         if ( $rs->num_rows == 1) {
             $fila = $rs->fetch_assoc();
-            $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria'],  $fila['id']);
+            $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['categoria'],  $fila['id']);
             
         }else {
             echo "No encuentro productos con id ". $id;
@@ -44,7 +44,7 @@ public static function getAliens(){
     if ($rs) {
         if ( $rs->num_rows > 0) {
             while($fila = $rs->fetch_assoc()) {
-                $result[]=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria'],  $fila['id']);
+                $result[]=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['categoria'],  $fila['id']);
             }
             $rs->free();
         } else {
@@ -70,7 +70,7 @@ public static function getByUser($idUsuario){
     if ($rs) {
         if ( $rs->num_rows > 0) {
             while($fila = $rs->fetch_assoc()) {
-                $result[]=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria'],  $fila['id']);
+                $result[]=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['categoria'],  $fila['id']);
             }
             $rs->free();
         } else {
@@ -98,7 +98,7 @@ public static function getByUser($idUsuario){
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
-                $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria']);
+                $prod=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['categoria']);
                 $prod->id = $fila['id'];
                 $result[] = $prod;
             }
@@ -109,6 +109,7 @@ public static function getByUser($idUsuario){
         }
         return $result;
     }
+
 
     public static function eliminaByName($nombreProd){
         if (!$nombreProd){
@@ -234,7 +235,7 @@ EOF;
         if ($rs) {
             if ( $rs->num_rows > 0) {
                 while($fila = $rs->fetch_assoc()) {
-                    $result[]=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['color'],$fila['categoria'],  $fila['id']);
+                    $result[]=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['categoria'],  $fila['id']);
                 }
                 $rs->free();
             } else {
@@ -276,13 +277,13 @@ EOF;
         return $result;
     }
 
-    public static function añadeProd($nombreProd, $vendedor, $descripcion, $precio,$unidades,$talla,$color,$categoria) //atributos productos
+    public static function añadeProd($nombreProd, $vendedor, $descripcion, $precio,$unidades,$talla,$categoria) //atributos productos
     {
         $producto = self::getByName($nombreProd);
         if ($producto) {
             return false;
         }
-        $producto = new Producto($nombreProd, $vendedor, $descripcion, $precio,$unidades, $talla, $color, $categoria);
+        $producto = new Producto($nombreProd, $vendedor, $descripcion, $precio,$unidades, $talla, $categoria);
         return self::guarda($producto);
     }
     
@@ -298,15 +299,14 @@ EOF;
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO `productos`  (`nombre`, `idVendedor`, `descripcion`,`precio`,`unidades`, `talla`, `color`, `categoria`) 
-		 VALUES('%s','%d', '%s', '%f', '%d', '%d', '%s', '%s')"
+        $query=sprintf("INSERT INTO `productos`  (`nombre`, `idVendedor`, `descripcion`,`precio`,`unidades`, `talla`, `categoria`) 
+		 VALUES('%s','%d', '%s', '%f', '%d', '%d', '%s')"
             , $conn->real_escape_string($producto->nombre)
             , $conn->real_escape_string($producto->vendedor)
             , $conn->real_escape_string($producto->descripcion)
             , $conn->real_escape_string($producto->precio)
             , $conn->real_escape_string($producto->unidades)
 			, $conn->real_escape_string($producto->talla)
-			, $conn->real_escape_string($producto->color)
 			, $conn->real_escape_string($producto->categoria));
 
         if ( $conn->query($query) ) {
@@ -324,7 +324,7 @@ EOF;
         $actualizado = false;
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("UPDATE `productos` P SET nombre = '%s',idVendedor = '%d', descripcion='%s', precio='%f', unidades='%d', talla ='%d', color ='%s', categoria ='%s' WHERE P.id='%d'"
+        $query=sprintf("UPDATE `productos` P SET nombre = '%s',idVendedor = '%d', descripcion='%s', precio='%f', unidades='%d', talla ='%d', categoria ='%s' WHERE P.id='%d'"
         , $conn->real_escape_string($producto->id)
         , $conn->real_escape_string($producto->nombre)
         , $conn->real_escape_string($producto->vendedor)
@@ -332,7 +332,6 @@ EOF;
         , $conn->real_escape_string($producto->precio)
         , $conn->real_escape_string($producto->unidades)
         , $conn->real_escape_string($producto->talla)
-        , $conn->real_escape_string($producto->color)
         , $conn->real_escape_string($producto->categoria));
         if ( $conn->query($query) ) {
             if ( $conn->affected_rows != 1) {
@@ -362,14 +361,12 @@ EOF;
     private $precio;
 	
     private $talla;
-	
-    private $color;
-	
+		
     private $categoria;
 
     private $unidades;
 
-    private function __construct($nombreProd, $vendedor, $descripcion, $precio,$unidades, $talla, $color, $categoria, $id = NULL)
+    private function __construct($nombreProd, $vendedor, $descripcion, $precio,$unidades, $talla, $categoria, $id = NULL)
     {
         $this->id = $id;
         $this->nombre = $nombreProd;
@@ -378,7 +375,6 @@ EOF;
         $this->precio = $precio;
         $this->unidades = $unidades;
         $this->talla = $talla;
-        $this->color = $color;
 		$this->categoria= $categoria;
     }
 
@@ -422,8 +418,5 @@ EOF;
     }
 
 
-    public function color()
-    {
-        return $this->color;
-    }
+
 }

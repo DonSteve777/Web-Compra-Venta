@@ -4,7 +4,6 @@ use es\fdi\ucm\aw\ImageUpload;
 use es\fdi\ucm\aw\Talla;
 use es\fdi\ucm\aw\Aplicacion;
 
-
 class FormularioVender extends Form
 {
     public function __construct() {
@@ -18,7 +17,6 @@ class FormularioVender extends Form
         $descripcion= '';
         $precio ='';
         $talla= new Talla();
-        $color='';
         $categoria ='';
         $unidades='';
         $imgUpload='';
@@ -32,7 +30,6 @@ class FormularioVender extends Form
                 $talla->setTalla($datos['talla']);
             }
 //            $talla = isset($datos['talla']) ? $talla->setTalla($datos['talla']) : $talla;
-            $color = isset($datos['color']) ? $datos['color'] : $color;
             $categoria = isset($datos['categoria']) ? $datos['categoria'] : $categoria;
             $imgUpload = isset($datos['imagen']) ? $datos['imagen'] : $imgUpload;
         }
@@ -73,8 +70,6 @@ EOF;
             <select name="talla">
                 $selectTalla    
             </select>
-            <p><label>Color del producto:</label> 
-            <input type="text" class="form-control" name="color" value="$color"/></p>
             <p><label>Categoria</label> 
                 $selectCategory
             </select>
@@ -118,10 +113,6 @@ EOF;
             $result[] = "La talla no puede estar vacía  .";
         }
         
-        $color = isset($datos['color']) ? $datos['color'] : null;
-        if ( empty($color) ) {
-            $result[] = "El color no puede estar vacía.";
-        }
         $categoria = isset($datos['categoria']) ? $datos['categoria'] : null;
         $categoria = intval($categoria);
         if ( empty($categoria) ) {
@@ -131,20 +122,18 @@ EOF;
             $app = Aplicacion::getSingleton();
             $idvendedor = $app->userid();
             $tallaObj = new Talla($talla);
-            $producto = Producto::añadeProd($nombreProd, $idvendedor, $descripcion, $precio,$unidades,$tallaObj->getTalla(),$color,$categoria);
+            $producto = Producto::añadeProd($nombreProd, $idvendedor, $descripcion, $precio,$unidades,$tallaObj->getTalla(),$categoria);
             if ($producto){
                 $imgupload = new ImageUpload($_FILES, $producto->id());
-                $result = $imgupload->uploadImages();
-                $result = 'subido con exito';
-                /*echo '<script type="text/javascript">
-                        alert("Producto subido con exito");
-                        window.location.assign("index.php");
-                        </script>';*/
+                if (! $imgupload->uploadImages()){
+                    $result[] = "No se ha podido subir la imagen del producto";
+                }else{
+                    $result = 'index.php';
+                }
             }       
             // No se da pistas a un posible atacante      
             else{
                 $result[] = "No se ha podido añadir el producto";
-//              $result = 'index.php';
             }
        }
         return $result;
