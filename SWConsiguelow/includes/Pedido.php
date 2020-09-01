@@ -159,27 +159,24 @@ class Pedido
      * Si se compra un prodcuto que resulta estar ya pedido en el carro, se encuentra es pedido y se actualiza
      * Contexto: vista de carrito-> para no guardar un pedido ya guardado
      */
-    public static function pedidoProducto($pedido){ 
-        $carro = self::getCarrito();
-        $i=0;
-        $encontrado = false;
-        $size =  count($carro);
-        while($i < $size && !$encontrado){
-            $encontrado = ($carro[$i]==$pedido->producto()) ? true : false;
-            $i++;
+    public static function isPaid($idProducto){ 
+        $result = false;
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM pedidos P WHERE P.producto=$idProducto AND P.pagado = 1"); 
+        $conn->real_escape_string($idProducto);    
+        $rs = $conn->query($query);
+        if ($rs) {
+            if ( $rs->num_rows == 1) {
+                $result = true;
+            }
+            $rs->free();
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
         }
-        exit();
-        var_dump($encontrado);
-        if ($encontrado){
-            $carro[$i]->pagado = $pedido->pagado;
-            return self::actualiza( $carro[$i]);
-        }
-        else{
-            return self::inserta($pedido);
-        }
+        return $result;
     }
-
-
 
     public static function guarda($pedido)
     {

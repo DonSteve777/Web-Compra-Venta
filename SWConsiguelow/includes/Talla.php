@@ -20,13 +20,15 @@ class Talla{
     } 
 
     public function setTalla($valor){
-        $this->talla = self::$valores[$valor];
+        $this->talla = $valor;
     } 
 
     public function __construct( $talla = NULL) {
-        if (isset($talla))
-        $this->talla = $talla;
-        $this->talla = self::$valores[0];
+        if (!is_null($talla)){
+            $this->talla = $talla;
+        }else{
+            $this->talla = 0;
+        }
     }
 }
 

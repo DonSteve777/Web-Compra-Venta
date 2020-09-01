@@ -2,18 +2,14 @@
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
 use es\fdi\ucm\aw\ImageUpload;
-
-
+use es\fdi\ucm\aw\Pedido;
 
 
 $html='';
 $prods = Producto::getAliens();
-
-
 foreach($prods as $value){
-    $html.=$value->generaTarjeta();
+    if (!Pedido::isPaid($value->id())){ $html.=$value->generaTarjeta();}
 }
-
 ?>
 
 <!DOCTYPE html>

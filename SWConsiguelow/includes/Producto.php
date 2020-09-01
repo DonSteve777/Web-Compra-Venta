@@ -299,7 +299,7 @@ EOF;
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query=sprintf("INSERT INTO `productos`  (`nombre`, `idVendedor`, `descripcion`,`precio`,`unidades`, `talla`, `color`, `categoria`) 
-		 VALUES('%s','%d', '%s', '%f', '%d', '%i', '%s', '%s')"
+		 VALUES('%s','%d', '%s', '%f', '%d', '%d', '%s', '%s')"
             , $conn->real_escape_string($producto->nombre)
             , $conn->real_escape_string($producto->vendedor)
             , $conn->real_escape_string($producto->descripcion)

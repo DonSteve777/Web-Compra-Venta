@@ -55,6 +55,7 @@ EOF;
     <title>Local Consiguelow</title>
     <link rel="icon" href="img/money.ico"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/modal.css">
 
     <!-- Custom styles for this template -->
     <script src="js/jquery-3.5.1.min.js"></script>
@@ -64,6 +65,22 @@ EOF;
   </head>
 
 <body class="bg-light">
+<!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="row text-center">
+                <div class="col-4"></div>
+                    <div class="col-4">
+                        <div id="respuesta" class="container w-75 d-flex flex-column mt-5">
+                        </div>
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="py-5 text-center">
             <img class="d-block mx-auto mb-4 rounded" src="img/logo.gif" alt="Imagen no disponible" width="72" height="72">

@@ -1,24 +1,22 @@
 <?php
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\FormularioVender;
-function vender(){
+
+
+$html='';
 if(!isset($_SESSION['login'])){
     $html=<<<EOF
     <div class="alert alert-info" role="alert">
             No has iniciado sesión, inicia sesión </br>
             <center><a href="login.php">Login<a/><center>
     </div>
-    
 EOF;
- }
- else{
- $form = new FormularioVender(); 
- $html = $form->gestiona();
- }
- return $html;
+}
+else{
+    $form = new FormularioVender(); 
+    $html = $form->gestiona();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -46,9 +44,7 @@ EOF;
                 <div class="col-md-4 col-12">
                     <div class="d-flex flex-column bg-light mt-3">
                         <h1 class="m-2">Subir un producto</h1>
-                        <?php
-                            echo vender();      
-                        ?>
+                        <?php echo $html; ?>
                         <?php require("includes/common/footer.php"); ?>
                     </div>
                 </div>

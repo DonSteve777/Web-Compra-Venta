@@ -113,6 +113,7 @@ EOF;
                 </div>
             </div>
         </div>
+    </div>
         <div class="container-fluid bg-light">
             <div class="row"> 
                 <div class="col-12 mt-3 d-flex col-md-5 mw-10 mh-10">

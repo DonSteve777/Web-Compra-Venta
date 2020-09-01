@@ -2,6 +2,7 @@
 namespace es\fdi\ucm\aw;
 use es\fdi\ucm\aw\ImageUpload;
 use es\fdi\ucm\aw\Talla;
+use es\fdi\ucm\aw\Aplicacion;
 
 
 class FormularioVender extends Form
@@ -13,7 +14,7 @@ class FormularioVender extends Form
     
     protected function generaCamposFormulario($datos)
     {
-        $nombreProd = '';
+       $nombreProd = '';
         $descripcion= '';
         $precio ='';
         $talla= new Talla();
@@ -92,8 +93,6 @@ EOF;
     protected function procesaFormulario($datos)
     {
        $result = array();
-     
-
         $nombreProd = isset($datos['nombre']) ? $datos['nombre'] : null;
         if (empty($nombreProd)) {
             $result[] = "El nombre del producto no puede estar vacío";
@@ -128,27 +127,26 @@ EOF;
         if ( empty($categoria) ) {
             $result[] = "La categoria no puede estar vacía.";
         }
-
-       if (count($result) === 0) {
-            $app = App::getSingleton();
+      if (count($result) === 0) {
+            $app = Aplicacion::getSingleton();
             $idvendedor = $app->userid();
             $tallaObj = new Talla($talla);
             $producto = Producto::añadeProd($nombreProd, $idvendedor, $descripcion, $precio,$unidades,$tallaObj->getTalla(),$color,$categoria);
             if ($producto){
                 $imgupload = new ImageUpload($_FILES, $producto->id());
                 $result = $imgupload->uploadImages();
-                echo '<script type="text/javascript">
+                $result = 'subido con exito';
+                /*echo '<script type="text/javascript">
                         alert("Producto subido con exito");
                         window.location.assign("index.php");
-                        </script>';
+                        </script>';*/
             }       
             // No se da pistas a un posible atacante      
             else{
                 $result[] = "No se ha podido añadir el producto";
-//                $result = 'index.php';
-                        }
-        }
+//              $result = 'index.php';
+            }
+       }
         return $result;
     }
-
 }

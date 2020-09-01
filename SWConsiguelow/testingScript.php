@@ -1,31 +1,21 @@
 <?php
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Pedido;
+use es\fdi\ucm\aw\Talla;
+use es\fdi\ucm\aw\Producto;
 
-$idproducto = 2;
-$pagado = 1;
-$comprador = $_SESSION['userid'];
-$guardado = NULL;
-$pedido = new Pedido($idproducto, $pagado, $comprador);
-$carrito = Pedido::getCarrito();
-            $i=0;
-            $encontrado = false;
-            while($i < count($carrito) && !$encontrado){
-                if ($carrito[$i]->producto() ==  $idproducto) $encontrado = true;
-                else
-                  $i++;
-            }
-            if ($encontrado){
-              $pedido->setId($carrito[$i]->id());
-              //$updated = Pedido::actualiza($pedido);
-              $response = 'actualizado ';
-             // $response.= $updated->id() ;
-          }else {
-             // Pedido::inserta($pedido);
-              $response = 'insertado ';
-             // $response.= $pedido->id();
-          }
-          $guardado = Pedido::guarda($pedido);
+$idvendedor = $app->userid();
+$nombreProd = 'nombreProd';
+$descripcion= 'desc';
+$precio =2;
+$talla= new Talla();
+$color='rojo';
+$categoria =2;
+$unidades=3;
+$imgUpload='';
+$producto = Producto::añadeProd($nombreProd, $idvendedor, $descripcion, $precio,$unidades,1,$color,$categoria);
+var_dump($producto);
+
 ?>
 <!doctype html>
 <html lang="es">
@@ -46,7 +36,6 @@ $carrito = Pedido::getCarrito();
 </head>
 <body>
 
-<?php echo $response ?>
 
 
 </body>

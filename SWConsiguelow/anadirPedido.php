@@ -23,7 +23,6 @@ use es\fdi\ucm\aw\Pedido;
                 $response=<<<EOF
                 <a href="carro.php" id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</a>
 EOF;
-            
                  header('Content-Type: application/html; charset=utf-8');
                  header('Content-Length: ' . mb_strlen($response));
                  
@@ -40,24 +39,24 @@ EOF;
             $guardado = NULL;
             $i=0;
             $encontrado = false;
-            
-            var_dump($idproducto);
-
+            $response='';
             while($i < count($carrito) && !$encontrado){
-                var_dump($carrito[$i]->producto());
                 if ($carrito[$i]->producto() ==  $idproducto) $encontrado = true;
                 else
                     $i++;
             }
             if ($encontrado){
                 $pedido->setId($carrito[$i]->id());
-                $response = 'actualizado ';
-            }else {
-                $response = 'insertado ';
             }
            $guardado = Pedido::guarda($pedido);
+           if (!is_null($guardado)){
+            $response = <<<EOF
+            <div class="alert alert-success text-center" role="alert">
+                <strong>Genial!</strong> Compra confirmada
+            </div>
+EOF;
+            }
         }
         echo $response;
-        
     }
     
