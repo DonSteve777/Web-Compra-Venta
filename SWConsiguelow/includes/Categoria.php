@@ -72,6 +72,31 @@ class Categoria
         } 
         return $result;
     }
+
+    public static function getNotEmpties()
+    {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT DISTINCT  categorias.id, categorias.descripcion, categorias.nombre FROM categorias INNER JOIN productos ON categorias.id=productos.categoria");
+        $rs = $conn->query($query);
+        $result = [];
+        $rs = $conn->query($query);
+        if ($rs) {
+            if ( $rs->num_rows > 0) {
+                while($fila = $rs->fetch_assoc()) {
+                    $result[]=new Categoria($fila['nombre'],$fila['descripcion'], $fila['id']);
+                }
+                $rs->free();
+            } else {
+                echo 'No se ha cargado ninguna categoría';
+                exit();
+            } 
+        }else{
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        } 
+        return $result;
+    }
       /*  public static function muestraTodasCategorias(){ //funcion que muestra todos los productos disponibles
             $app = Aplicacion::getSingleton();
             $conn = $app->conexionBd();

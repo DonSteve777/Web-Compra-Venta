@@ -6,6 +6,7 @@ function generaNavItems($categorias=array()){
     $html='';
    // if (is_array($categorias)){
         foreach($categorias as $cat){
+
             $nombre = $cat->nombre();   
             $id = $cat->id();
             if ($nombre!=='sin categoría'){
@@ -21,7 +22,7 @@ EOF;
 }
 
 $htmlNavCat = '';
-$categorias = Categoria::getAll();
+$categorias = Categoria::getNotEmpties();
 $htmlNavCat= generaNavItems($categorias);
 ?>
 
