@@ -3,6 +3,8 @@ namespace es\fdi\ucm\aw;
 
 class FormularioRegistro extends Form
 {
+    const HTML5_EMAIL_REGEXP = '^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$';
+ 
     public function __construct() {
         parent::__construct('formRegistro');
     }
@@ -81,18 +83,18 @@ EOF;
         
         $nombreUsuario = isset($datos['nombreUsuario']) ? $datos['nombreUsuario'] : null;
         
-        if ( empty($nombreUsuario) || mb_strlen($nombreUsuario) < 5 ) {
-            $result[] = "El nombre de usuario tiene que tener una longitud de al menos 5 caracteres.";
+        if ( empty($nombreUsuario) || mb_strlen($nombreUsuario) < 5 || mb_strlen($nombreUsuario) > 15 ) {
+            $result[] = "El nombre de usuario tiene que tener una longitud de al menos 5 caracteres, y no más de 15";
         }
         
         $nombre = isset($datos['nombre']) ? $datos['nombre'] : null;
-        if ( empty($nombre) || mb_strlen($nombre) < 5 ) {
-            $result[] = "El nombre tiene que tener una longitud de al menos 5 caracteres.";
+        if ( empty($nombre) || mb_strlen($nombre) < 5 || mb_strlen($nombre) > 30 ) {
+            $result[] = "El nombre tiene que tener una longitud de al menos 5 caracteres, y no más de 30";
         }
 
         $password = isset($datos['password']) ? $datos['password'] : null;
-        if ( empty($password) || mb_strlen($password) < 5 ) {
-            $result[] = "El password tiene que tener una longitud de al menos 5 caracteres.";
+        if ( empty($password) || mb_strlen($password) < 5 || mb_strlen($password) > 80 ) {
+            $result[] = "El password tiene que tener una longitud de al menos 5 caracteres y no más de 80";
         }
 
         $password2 = isset($datos['password2']) ? $datos['password2'] : null;
@@ -104,32 +106,58 @@ EOF;
         if ( empty($dni)) {
             $result[] = "El campo dni es obligatorio";
         }
+        if (strlen($dni) != 9 || !preg_match('/^[XYZ]?([0-9]{7,8})([A-Z])$/i', $dni)){
+            $result[] = "Formato del dni incorrecto. Ejemplo 12345678Z";
+        }
+
         $direccion = isset($datos['direccion']) ? $datos['direccion'] : null;
         if ( empty($direccion)) {
             $result[] = "El campo direccion es obligatorio";
+        }
+
+        if ( mb_strlen($direccion) > 100 ) {
+            $result[] = "El campo direccion es demasiado largo (100 máximo)";
         }
 
         $email = isset($datos['email']) ? $datos['email'] : null;
         if ( empty($email) ) {
             $result[] = "El campo email es obligatorio";
         }
-        
+        if (!mb_ereg_match(self::HTML5_EMAIL_REGEXP, $email) ) {
+            $result[] = "El campo email no es válido";
+        }
         $telefono = isset($datos['telefono']) ? $datos['telefono'] : null;
         if ( empty($telefono) ) {
             $result[] = "El campo telefono es obligatorio";
         }
+
+        if ( !preg_match('/^6[0-9]{8}$/', $telefono) 
+        && !preg_match('/^[9|8|6|7][0-9]{8}$/', $telefono) ) {
+            $result[] = "El campo telefono no es válido";
+        }
+
         $ciudad = isset($datos['ciudad']) ? $datos['ciudad'] : null;
         if ( empty($ciudad) ) {
             $result[] = "El campo ciudad es obligatorio";
+        }
+
+        if ( mb_strlen($direccion) > 12 ) {
+            $result[] = "El campo ciudad es demasiado largo (12 máx)";
         }
         $codigoPostal = isset($datos['codigoPostal']) ? $datos['codigoPostal'] : null;
         if ( empty($codigoPostal)) {
             $result[] = "El campo codigo Postal es obligatorio";
         }
+        if (!preg_match('/^[0-9]{5,5}([- ]?[0-9]{4,4})?$/', $codigoPostal) || mb_strlen($codigoPostal) > 5 ) {
+            $result[] = "El campo codigo Postal no es válido";
+        }
+
         $tarjetaCredito = isset($datos['tarjetaCredito']) ? $datos['tarjetaCredito'] : null;
         if ( empty($tarjetaCredito) ) {
             $result[] = "El campo tarjeta de Crédito es obligatorio";
         }
+        //^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35d{3})d{11})$
+
         
         if (count($result) === 0) {
             $user = Usuario::crea($nombre, $nombreUsuario, $password,  $dni, $direccion, $email, $telefono, $ciudad, $codigoPostal, $tarjetaCredito);

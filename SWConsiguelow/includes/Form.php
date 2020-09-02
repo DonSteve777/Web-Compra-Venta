@@ -84,7 +84,6 @@ class Form
       } else  {
         $result = $this->procesaFormulario($_POST);
         if ( is_array($result)) {
-          var_dump($result);
           // Error al procesar el formulario, volvemos a mostrarlo
           if ( ! $this->ajax ) {
             return $this->generaFormulario($result, $_POST);
