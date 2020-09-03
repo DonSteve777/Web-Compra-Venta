@@ -137,8 +137,8 @@ class Usuario
         return $result;
     }
 
-    public static function eliminaUsuario($nombreUsuario){
-        $user = self::buscaUsuario($nombreUsuario); 
+    public static function eliminaUsuario($idUsuario){
+        $user = self::getById($idUsuario); 
         if (!$user) {
             $html="No";
         }
