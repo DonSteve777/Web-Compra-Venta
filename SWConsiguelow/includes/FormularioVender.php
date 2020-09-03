@@ -100,6 +100,10 @@ EOF;
             $result[] = "Formato invalido o descripcion vacia .";
         }
 
+        if ( mb_strlen($descripcion) < 5 || mb_strlen($descripcion) > 105) {
+            $result[] = "La descripcion debe de tener entre 5 y 105 caracteres.";
+        }
+
         $precio = isset($datos['precio']) ? $datos['precio'] : null;
         if ( empty($precio) || is_numeric($precio)) {
             $result[] = "El precio no puede ser nulo o algo distinto de un numero.";

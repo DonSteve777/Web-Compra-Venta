@@ -53,8 +53,8 @@ EOF;
 
         $descrCat = isset($datos['descrCat']) ? $datos['descrCat'] : null;
 
-        if ( empty($descrCat) || mb_strlen($descrCat) < 2 || mb_strlen($descrCat) > 15) {
-            $result[] = "La descripcion tiene que tener entre 2 y 15 caracteres.";
+        if ( empty($descrCat) || mb_strlen($descrCat) < 2 || mb_strlen($descrCat) > 150) {
+            $result[] = "La descripcion tiene que tener entre 2 y 150 caracteres.";
         }
 
         if(!preg_match($patron_2, $descrCat)){

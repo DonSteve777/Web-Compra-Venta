@@ -24,6 +24,7 @@ $idVendedor=$producto->vendedor();
 $vendedor = Usuario::getById($idVendedor)->nombreUsuario();
 $htmlComprar='';
 $htmlCarrito='';
+$htmlBorrar='';
 $htmlVendedor ='';
 $htmlVendedor.= <<<EOF
 <form action="vistaVendedor.php" method="POST">
@@ -46,9 +47,9 @@ EOF;
             </form>
         EOF;
             }
-        else {
-            $htmlBorrar = '';
-        }
+            else {
+                $htmlBorrar.='';
+            }
     }
 
 if (App::getSingleton()->usuarioLogueado() && ($currentUser != $idVendedor)){
