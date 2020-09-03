@@ -99,7 +99,7 @@ class Pedido
     }
 
     public static function cancelaPedido($id){
-        $pedido = self::buscaPedido($id); 
+        $pedido = self::getById($id); 
         $html = 'No';
         if (!$pedido) {
             return $html;
@@ -216,7 +216,7 @@ class Pedido
             , $pedido->id);
         if ( $conn->query($query) ) {
             if ( $conn->affected_rows != 1) {
-                echo "No se ha podido actualizar el pedido: " . $usuario->id;
+                echo "No se ha podido actualizar el pedido: " . $pedido->id;
                 exit();
             }
         } else {
