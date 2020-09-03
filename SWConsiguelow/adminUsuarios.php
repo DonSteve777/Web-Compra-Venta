@@ -55,6 +55,12 @@ EOF;
     <title>Local Consiguelow</title>
     <link rel="icon" href="img/money.ico"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <!-- Custom styles for this template -->
+        <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script> 
+    <script src="js/caja.js"></script> 
 </head>
 
     <body>

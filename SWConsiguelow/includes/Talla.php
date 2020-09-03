@@ -11,13 +11,21 @@ class Talla{
         return self::$valores[$num];
     }
 
+    public function getString(){
+        return self::$valores[$this->talla];
+    }
+
     public function numValores(){
         return sizeof(self::$valores);
     }
 
     public function getTalla(){
         return $this->talla;
-    } 
+    }
+    
+    public function getStringtalla(){
+        return $this->talla;
+    }
 
     public function setTalla($valor){
         $this->talla = $valor;

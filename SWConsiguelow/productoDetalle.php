@@ -5,6 +5,8 @@ use es\fdi\ucm\aw\Producto;
 use es\fdi\ucm\aw\ImageUpload;
 use es\fdi\ucm\aw\Aplicacion as App;
 use es\fdi\ucm\aw\Pedido;
+use es\fdi\ucm\aw\Talla;
+
 use es\fdi\ucm\aw\Usuario as Usuario;
 
 $idproducto = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
@@ -12,6 +14,8 @@ if(!$idproducto) {
         exit();
     }
 $producto = Producto::getById($idproducto);
+$tallaObj = new Talla($producto->talla());
+$talla = $tallaObj->getString();
 $imgSrc = ImageUpload::getSource($idproducto);
 $img='';
 if ($imgSrc){
@@ -145,7 +149,7 @@ EOF;
 
                                 <div class="mb-2">
                                     <div class="d-inline p-2 font-weight-bold">Talla</div>
-                                    <div class="d-inline p-2 font-weight-ligh"><?php echo $producto->talla()?></div>
+                                    <div class="d-inline p-2 font-weight-ligh"><?php echo $talla?></div>
                                 </div>
                             </div>
 
