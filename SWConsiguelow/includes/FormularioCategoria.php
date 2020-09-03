@@ -39,17 +39,26 @@ EOF;
     protected function procesaFormulario($datos)
     {
         $result = array();
+        $patron_texto = "/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/";
+        $patron_2 = "/^[a-zA-Z0-9áéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/";
     
         $nombreCat = isset($datos['nombreCat']) ? $datos['nombreCat'] : null;
-
-        if ( empty($nombreCat) ) {
-            $result[] = "La categoria no puede estar vacía.";
+        
+        if ( empty($nombreCat) || mb_strlen($nombreCat) < 3 || mb_strlen($nombreCat) > 15) {
+            $result[] = "Longitud minima de categoria es 3 y máximo 10 caracteres.";
+        }
+        if(!preg_match($patron_texto, $nombreCat)){
+            $result[] = "Formato del nombre de categoria no valido. (No puede contener numeros)";
         }
 
         $descrCat = isset($datos['descrCat']) ? $datos['descrCat'] : null;
 
-        if ( empty($descrCat) ) {
-            $result[] = "La descr no puede estar vacía.";
+        if ( empty($descrCat) || mb_strlen($descrCat) < 2 || mb_strlen($descrCat) > 15) {
+            $result[] = "La descripcion tiene que tener entre 2 y 15 caracteres.";
+        }
+
+        if(!preg_match($patron_2, $descrCat)){
+            $result[] = "Formato descripcion no valido.";
         }
         
         if (count($result) === 0) {

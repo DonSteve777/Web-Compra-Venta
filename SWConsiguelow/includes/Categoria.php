@@ -4,7 +4,7 @@ namespace es\fdi\ucm\aw;
 class Categoria
 {
    
-    /*public static function buscaCat($nombreCat)
+    public static function buscaCat($nombreCat)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -24,7 +24,7 @@ class Categoria
             exit();
         }
         return $result;
-    }*/
+    }
 
     public static function getById($id)
     {
