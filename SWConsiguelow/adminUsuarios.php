@@ -23,9 +23,10 @@ if (is_array($users)){
                       <p>Usuario: $nombreUsuario</p>
                   </div>
                   <div class="p-2">
-                  <a class="btn btn-info align-bottom" href="eliminaUsuario.php?user=$idUsuario">
-                      Eliminar
-                  </a>
+                    <form action="eliminaUsuario.php" method="POST">
+                    <button type="submit" class="btn btn-danger role="link" name="deleteUsr" value="$idUsuario">Eliminar usuario</button>
+                    </form>
+                    </div>
               </div>
           </li>     
 EOF;
