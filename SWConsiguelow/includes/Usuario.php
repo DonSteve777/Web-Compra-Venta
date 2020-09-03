@@ -153,7 +153,7 @@ class Usuario
         $app = App::getSingleton();
         $conn = $app->conexionBd();
         $id = $usuario->id; 
-        $query=sprintf("DELETE FROM usuarios WHERE id ='$id'",$conn->real_escape_string($id));
+        $query=sprintf("DELETE FROM usuarios WHERE id ='%d'", $conn->real_escape_string($id));
         if ( $conn->query($query) ) {
             if ( $conn->affected_rows != 1) {
                 echo "No se ha podido borrar el usuario: " . $usuario->nombreUsuario;
