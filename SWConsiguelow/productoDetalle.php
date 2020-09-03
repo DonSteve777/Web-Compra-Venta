@@ -23,6 +23,8 @@ EOF;
 $idVendedor=$producto->vendedor();
 $vendedor = Usuario::getById($idVendedor)->nombreUsuario();
 $htmlComprar='';
+$htmlCarrito='';
+$htmlBorrar='';
 $htmlVendedor ='';
 $htmlVendedor.= <<<EOF
 <form action="vistaVendedor.php" method="POST">
@@ -33,23 +35,24 @@ EOF;
 $htmlComprar.=<<<EOF
     <button id="comprarBtn" value="$idproducto" type="button" class="btn btn-info btn-lg">Comprar</button>
 EOF;
+        if (App::getSingleton()->usuarioLogueado()){    
+        $currentUser = $_SESSION['userid'];
+            if($idVendedor === $currentUser){
+            $htmlComprar='';
+            $htmlCarrito='';
+            $htmlBorrar ='';
+            $htmlBorrar.=<<<EOF
+            <form action="eliminaProducto.php" method="POST">
+                <button type="submit" class="btn btn-danger role="link" name="delete" value="$idproducto">Eliminar producto</button>
+            </form>
+        EOF;
+            }
+            else {
+                $htmlBorrar.='';
+            }
+    }
 
-   /* $currentUser = $_SESSION['userid'];
-    if($idVendedor === $currentUser){
-    $htmlBorrar = '';
-    $htmlBorrar=<<<EOF
-    <form action="eliminaProducto.php" method="POST">
-        <button type="submit" class="btn btn-danger role="link" name="delete" value="$idproducto">Eliminar producto</button>
-    </form>
-EOF;
-}
-else {
-    $htmlBorrar = '';
-}*/
-$htmlCarrito='';
-
-
-if (App::getSingleton()->usuarioLogueado()){
+if (App::getSingleton()->usuarioLogueado() && ($currentUser != $idVendedor)){
     $carrito = Pedido::getCarrito();
     $i=0;
     $encontrado = false;
@@ -58,19 +61,19 @@ if (App::getSingleton()->usuarioLogueado()){
         $i++;
     }
     if ($encontrado){
-        $htmlCarrito=<<<EOF
+        $htmlCarrito.=<<<EOF
         <a href="carro.php" id="viewCart" type="button" class="btn btn-info btn-lg">Ver carrito</a>
 EOF;
     }else{
-        $htmlCarrito=<<<EOF
+        $htmlCarrito.=<<<EOF
         <button id="addCart" type="button" class="btn btn-info btn-lg" value="$idproducto">Añadir al carrito</button>
 EOF;
     }
-}else{
-    $htmlCarrito=<<<EOF
+}/*else{
+    $htmlCarrito.=<<<EOF
     <button id="addCart" type="button" class="btn btn-info btn-lg">Añadir al carrito</button>
 EOF; 
-}
+}*/
 
 
 
@@ -156,6 +159,9 @@ EOF;
                                     </div> 
                                     <div class="m-1">
                                             <?php echo $htmlCarrito?> 
+                                    </div>
+                                    <div class="m-1">
+                                            <?php echo $htmlBorrar?> 
                                     </div>
                                 </div>  
                             </div>  

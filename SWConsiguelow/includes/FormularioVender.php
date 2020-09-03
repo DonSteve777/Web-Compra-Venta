@@ -87,20 +87,26 @@ EOF;
 
     protected function procesaFormulario($datos)
     {
+        $patron_2 = "/^[a-zA-Z0-9áéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/";
+
        $result = array();
         $nombreProd = isset($datos['nombre']) ? $datos['nombre'] : null;
-        if (empty($nombreProd)) {
-            $result[] = "El nombre del producto no puede estar vacío";
+        if (empty($nombreProd) || !preg_match($patron_2, $nombreProd)){
+            $result[] = "Nombre invalido o vacio";
         }
         
         $descripcion = isset($datos['descripcion']) ? $datos['descripcion'] : null;
-        if ( empty($descripcion) ) {
-            $result[] = "La descripcion no puede estar vacía.";
+        if ( empty($descripcion) || !preg_match($patron_2, $nombreProd) ) {
+            $result[] = "Formato invalido o descripcion vacia .";
+        }
+
+        if ( mb_strlen($descripcion) < 5 || mb_strlen($descripcion) > 105) {
+            $result[] = "La descripcion debe de tener entre 5 y 105 caracteres.";
         }
 
         $precio = isset($datos['precio']) ? $datos['precio'] : null;
-        if ( empty($precio) ) {
-            $result[] = "El precio no puede ser nulo.";
+        if ( empty($precio) || is_numeric($precio)) {
+            $result[] = "El precio no puede ser nulo o algo distinto de un numero.";
         }
 
         $unidades = isset($datos['unidades']) ? $datos['unidades'] : null;      
@@ -110,7 +116,7 @@ EOF;
 
         $talla = isset($datos['talla']) ? $datos['talla'] : null;
         if ( empty($talla) ) {
-            $result[] = "La talla no puede estar vacía  .";
+            $result[] = "La talla no puede estar vacía.";
         }
         
         $categoria = isset($datos['categoria']) ? $datos['categoria'] : null;

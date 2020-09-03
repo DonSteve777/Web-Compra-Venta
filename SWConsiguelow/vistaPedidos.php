@@ -8,8 +8,17 @@ require_once __DIR__.'/includes/config.php';
 function listadoPedidos()
 {
   $user = $_SESSION['userid'];
+  $username = $_SESSION['nombre'];
   $html = '';
   $pedido= Pedido::getByUser($user);
+  $counter = count($pedido);
+  if($counter == 0){
+    $html.=<<<EOF
+    <div class="alert alert-info">
+    <strong>Hola $username!</strong> Aun no tienes pedido nada, compra algo.
+    </div>
+    EOF;   
+  }
   $html.=<<<EOF
   <ul class="list-group">
 EOF;
@@ -38,9 +47,6 @@ EOF;
   </ul>
 EOF;
     }
-    else{
-    $html.="No hay pedidos";
-}
   return $html;
 }
 ?>

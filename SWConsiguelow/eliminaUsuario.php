@@ -3,12 +3,16 @@ require_once __DIR__.'/includes/config.php';
 
 
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
-        $nombreUsuario = $_GET['user'];
-        if(Usuario::eliminaUsuario($nombreUsuario)){
-            echo '<script type="text/javascript">
-        alert("Usuario eliminado con exito");
-        window.location.assign("index.php");
-        </script>';
+        $idUsuario = isset($_POST['deleteUsr']) ? $_POST['deleteUsr'] : null;
+        var_dump($idUsuario);
+        if(isset($idUsuario)){
+            $eliminado = Usuario::eliminaUsuario($idUsuario);
+            if($eliminado){
+                echo '<script type="text/javascript">
+            alert("Usuario eliminado con exito");
+            window.location.assign("index.php");
+            </script>';
+            }
         }
     }
     else{
