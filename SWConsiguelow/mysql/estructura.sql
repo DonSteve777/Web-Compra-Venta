@@ -9,6 +9,8 @@ CREATE DATABASE IF NOT EXISTS `consiguelow` DEFAULT CHARSET=utf8mb4 COLLATE utf8
 CREATE USER 'consiguelow'@'localhost' IDENTIFIED BY 'consiguelow';
 GRANT ALL PRIVILEGES ON `consiguelow`.* TO 'consiguelow'@'localhost';
 
+USE `consiguelow`;
+
 /*create tables*/
 DROP TABLE IF EXISTS `usuarios`;
 DROP TABLE IF EXISTS `categorias`;

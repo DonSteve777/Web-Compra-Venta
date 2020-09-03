@@ -1,6 +1,7 @@
 /*
-  Recuerda que deshabilitar la opción "Enable foreign key checks" para evitar problemas a la hora de importar el script.
-  opción importa con la bdd 'consiguelow seleccionada: Importing into the database "consiguelow"
+  Recuerda que deshabilitar la opción "Enable foreign key checks" para evitar problemas a la hora de importar el script.*/
+  USE `consiguelow`;
+  /*
   La contraseña para ambos usuarios es '12345' 
   pasword_hash('$2y$10$0eR.KhfTH5ybn/jlB86hwe/1nQeCKXk2RcLEjBscJbpUaF504kSOi', PASSWORD_DEFAULT) == '12345'
 */
