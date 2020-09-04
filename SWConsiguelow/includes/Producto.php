@@ -112,7 +112,7 @@ public static function getByUser($idUsuario){
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM productos P WHERE P.nombre = '%s'", $conn->real_escape_string($nombreProd));
+        $query = sprintf("SELECT * FROM productos P WHERE P.nombre LIKE '%s%%'", $conn->real_escape_string($nombreProd));
         $rs = $conn->query($query);
         $result = [];
         if (!$nombreProd){
