@@ -4,7 +4,6 @@ require_once __DIR__.'/includes/config.php';
 
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
         $idUsuario = isset($_POST['deleteUsr']) ? $_POST['deleteUsr'] : null;
-        var_dump($idUsuario);
         if(isset($idUsuario)){
             $eliminado = Usuario::eliminaUsuario($idUsuario);
             if($eliminado){

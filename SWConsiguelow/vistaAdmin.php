@@ -34,7 +34,10 @@ require_once __DIR__.'/includes/config.php';
                             <a href='listaCategorias.php'>Ver categorias ya existentes</a>
                         </li>
                         <li class="list-group-item">
-                            <a href='adminUsuarios.php'>Ver todos los usuarios de la web</a>
+                            <a href='adminUsuarios.php'>Administrar usuarios de la web</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href='adminProductos.php'>Gestionar los productos de la web</a>
                         </li>
                     </ul>
                 </div>

@@ -58,6 +58,30 @@ public static function getAliens(){
     return $result;
 }
 
+public static function getAllProds(){ //funcion para ver todos los productos de la web
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM productos P");
+        $rs = $conn->query($query);
+        $result = [];
+        if ($rs) {
+            if ( $rs->num_rows > 0) {
+                while($fila = $rs->fetch_assoc()) {
+                    $result[]=new Producto($fila['nombre'], $fila['idVendedor'], $fila['descripcion'], $fila['precio'], $fila['unidades'],$fila['talla'],$fila['categoria'],  $fila['id']);
+
+                }
+                $rs->free();
+            } else {
+                echo 'No se ha cargado ningún producto';
+                exit();
+            } 
+        }else{
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        } 
+        return $result;
+}
+
 public static function getByUser($idUsuario){ 
     $app = Aplicacion::getSingleton();
     $conn = $app->conexionBd();
