@@ -116,7 +116,7 @@ EOF;
 
         $talla = isset($datos['talla']) ? $datos['talla'] : null;
         if ( empty($talla) ) {
-            $result[] = "La talla no puede estar vacía.";
+            $talla=0;
         }
         
         $categoria = isset($datos['categoria']) ? $datos['categoria'] : null;
