@@ -141,7 +141,7 @@ EOF;
             $result[] = "El campo ciudad es obligatorio";
         }
 
-        if ( mb_strlen($direccion) > 12 ) {
+        if ( mb_strlen($ciudad) > 12 ) {
             $result[] = "El campo ciudad es demasiado largo (12 máx)";
         }
         $codigoPostal = isset($datos['codigoPostal']) ? $datos['codigoPostal'] : null;

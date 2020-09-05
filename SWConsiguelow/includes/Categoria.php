@@ -216,34 +216,6 @@ EOF;
         return $categoria;
     }
 
-    /*private static function actualiza($cat)
-    {
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $query=sprintf("UPDATE `categorias` U SET nombre='%s', password='%s', nombreUsuario='%s',  dni='%s', direccion='%s', email='%s', telefono='%s', ciudad='%s', codigo postal='%s', carrito='%i', trajeta credito='%i'   WHERE U.id=%i"
-            , $conn->real_escape_string($usuario->nombreUsuario)
-            , $conn->real_escape_string($usuario->nombre)
-            , $conn->real_escape_string($usuario->password)
-            , $conn->real_escape_string($usuario->direccion)
-            , $conn->real_escape_string($usuario->email)
-            , $conn->real_escape_string($usuario->direccion)
-            , $conn->real_escape_string($usuario->telefono)
-            , $conn->real_escape_string($usuario->codigoPostal)
-            , $conn->real_escape_string($usuario->carrito )
-            , $conn->real_escape_string($usuario->tarjetaCredito )
-            , $usuario->id);
-        if ( $conn->query($query) ) {
-            if ( $conn->affected_rows != 1) {
-                echo "No se ha podido actualizar el usuario: " . $usuario->id;
-                exit();
-            }
-        } else {
-            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        
-        return $usuario;
-    }*/
 
 
     private $id;

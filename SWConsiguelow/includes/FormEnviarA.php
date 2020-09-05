@@ -7,6 +7,8 @@ use es\fdi\ucm\aw\Aplicacion as App;
 
 class FormEnviarA extends Form
 {
+    const HTML5_EMAIL_REGEXP = '^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$';
+
   public function __construct()
   {
    //$opciones['class'] =  'form-signin';
@@ -57,11 +59,25 @@ class FormEnviarA extends Form
                     <label>tarjeta credito:</label> <input class="form-control" name="tarjetaCredito" value="$tarjetaCredito"  type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"placeholder="xxxx xxxx xxxx xxxx" autocomplete="cc-number" maxlength="19" />
                 </div>
                 <div class="form-group text-center">
-                  <p><button class="btn btn-info" id="btnEnviarA" type="button">Confirmar</button></p>
+                  <button class="btn btn-info" id="btnEnviarA" type="button">Confirmar</button>
+                  <button class="btn btn-danger" id="btnCancelar" type="button">Cancelar</button>
+
                 </div>
             </fieldset>
         </div>
 EOF;
+        return $html;
+    }
+
+    protected function  generaHtmlErrores($datos){
+        $html = '';
+        if (is_array($datos)){
+            foreach($datos as $value){
+                $html.=<<<EOF
+                <p>$value</p>
+EOF;
+            }
+        }
         return $html;
     }
 
@@ -77,33 +93,53 @@ EOF;
     $userid = $app->userid();
 
     $nombre = isset($datos['nombre']) ? $datos['nombre'] : null;
-    if (empty($nombre)) {
-        $result[] = "El campo nombre no puede estar vacío";
+    if ( empty($nombre) || mb_strlen($nombre) < 5 || mb_strlen($nombre) > 30 ) {
+        $result[] = "El nombre tiene que tener una longitud de al menos 5 caracteres, y no más de 30";
     }
     $dni = isset($datos['dni']) ? $datos['dni'] : null;
     if (empty($dni)) {
         $result[] = "El campo dni no puede estar vacío";
     }
+    if (strlen($dni) != 9 || !preg_match('/^[XYZ]?([0-9]{7,8})([A-Z])$/i', $dni)){
+        $result[] = "Formato del dni incorrecto. Ejemplo 12345678Z";
+    }
     $direccion = isset($datos['direccion']) ? $datos['direccion'] : null;
     if (empty($direccion)) {
         $result[] = "El campo direccion no puede estar vacía";
+    }
+    if ( mb_strlen($direccion) > 100 ) {
+        $result[] = "El campo direccion es demasiado largo (100 máximo)";
     }
     $email = isset($datos['email']) ? $datos['email'] : null;
     if (empty($email)) {
         $result[] = "El campo email no puede estar vacío";
     }
+    if (!mb_ereg_match(self::HTML5_EMAIL_REGEXP, $email) ) {
+        $result[] = "El campo email no es válido";
+    }
     $telefono = isset($datos['telefono']) ? $datos['telefono'] : null;
     if (empty($telefono)) {
         $result[] = "El campo telefono no puede estar vacío";
     }
-    $ciudad = isset($datos['ciudad']) ? $datos['ciudad'] : null;
-    if (empty($ciudad)) {
-        $result[] = "El campo ciudad no puede estar vacío";
-    }
-    $codigoPostal = isset($datos['codigoPostal']) ? $datos['codigoPostal'] : null;
-    if (empty($codigoPostal)) {
-        $result[] = "El campo codigoPostal no puede estar vacío";
-    }
+    if ( !preg_match('/^6[0-9]{8}$/', $telefono) 
+        && !preg_match('/^[9|8|6|7][0-9]{8}$/', $telefono) ) {
+            $result[] = "El campo telefono no es válido";
+        }
+        $ciudad = isset($datos['ciudad']) ? $datos['ciudad'] : null;
+        if ( empty($ciudad) ) {
+            $result[] = "El campo ciudad es obligatorio";
+        }
+
+        if ( mb_strlen($ciudad) > 12 ) {
+            $result[] = "El campo ciudad es demasiado largo (12 máx)";
+        }
+        $codigoPostal = isset($datos['codigoPostal']) ? $datos['codigoPostal'] : null;
+        if ( empty($codigoPostal)) {
+            $result[] = "El campo codigo Postal es obligatorio";
+        }
+        if (!preg_match('/^[0-9]{5,5}([- ]?[0-9]{4,4})?$/', $codigoPostal) || mb_strlen($codigoPostal) > 5 ) {
+            $result[] = "El campo codigo Postal no es válido";
+        }
 
     $tarjetaCredito = isset($datos['tarjetaCredito']) ? $datos['tarjetaCredito'] : null;
     if (empty($tarjetaCredito)) {

@@ -7,9 +7,14 @@ $(function() {
             } 
             $("#btnEnviarA").click(function() {
                 $.post('enviarA.php', $('form#formEnviarA').serialize(), function(data, status) {
-                    $("#enviara").html(data);
+                    location.reload();
+                    //$("#enviara").html(data);
                 });
-            });  
+            }); 
+            $("#btnCancelar").click(function() {
+                location.reload();
+            });
+
         });
     });
     $("#pagarBtn").click(function() {
