@@ -7,9 +7,14 @@ use es\fdi\ucm\aw\Pedido;
 
 $html='';
 $prods = Producto::getAliens();
-foreach($prods as $value){
-    if (!Pedido::isPaid($value->id())){ $html.=$value->generaTarjeta();}
+if (is_array($prods)){
+    foreach($prods as $value){
+        if (!Pedido::isPaid($value->id())){ $html.=$value->generaTarjeta();}
+    }
+}else{
+    $html.=$prods;
 }
+
 ?>
 
 <!DOCTYPE html>
