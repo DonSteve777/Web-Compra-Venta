@@ -8,14 +8,14 @@ if (!App::getSingleton()->usuarioLogueado()){
     $html = <<<EOF
     <div class="alert alert-success text-center" role="alert">
     <strong>Hasta luego!</strong> Su sesión finalizó correctamente
-</div>
+    </div>
 EOF;
 }
 else{
     $html = <<<EOF
     <div class="alert alert-danger text-center" role="alert">
-  <strong>Oh vaya!</strong> No se ha finalizado la sesión
-</div>
+    <strong>Oh vaya!</strong> No se ha finalizado la sesión
+    </div>
 EOF;
 }
     
