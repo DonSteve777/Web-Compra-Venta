@@ -1,18 +1,18 @@
 <?php
     namespace es\fdi\ucm\aw;
+?>
 
-
+<?php
 function generaNavItems($categorias=array()){
     $html='';
    // if (is_array($categorias)){
         foreach($categorias as $cat){
-
             $nombre = $cat->nombre();   
             $id = $cat->id();
             if ($nombre!=='sin categoría'){
                 $html.=<<<EOF
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="categoria.php?id=$id&nombre=$nombre">$nombre</a>
+                    <a class="nav-link text-light" href="categoria.php?id=$id">$nombre</a>
                 </li>
 EOF;
             } 
@@ -124,10 +124,12 @@ $htmlNavCat= generaNavItems($categorias);
                             }
                             ?>
                 </ul>
+                
                 <form class="form-inline my-2 my-lg-0 d-sm-flex" action="filtrar.php" method="GET">
-                    <input class="form-control mr-sm-2" name="search" type="text" value='' placeholder="Type here"></input>
+                    <input class="form-control mr-sm-2" name="search" id="busqueda" type="text" value='' placeholder="Type here"></input>
                     <input class="btn btn-outline-info my-2 my-sm-0" type="submit" value="Search"></input>
                 </form>
+
             </div>
         </nav>
     </div>
