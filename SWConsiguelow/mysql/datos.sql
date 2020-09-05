@@ -45,7 +45,7 @@ VALUES ('4', 'producto4', '2', 'descripcion 4', '40.00', '3', '4', '2');
 INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`,`categoria`) 
 VALUES ('5', 'producto5', '1', 'descripcion 5', '20.00', '5', '5', '3');
 INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`, `categoria`) 
-VALUES ('6', 'producto6', '2', 'descripcion 6', '60.00', '3', '6', '4');
+VALUES ('6', 'producto6', '2', 'descripcion 6', '60.00', '3', '0', '4');
 /*vendedores
   alvarouser: producto 1, 3 y 5
   nestoruser: producto 2, 4, y 6
