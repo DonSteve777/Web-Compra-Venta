@@ -1,14 +1,27 @@
 <?php
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Producto;
+use es\fdi\ucm\aw\Categoria;
 
-$id = $_GET['id'];
-$nombre = $_GET['nombre'];
+
+if (isset($_GET['id'])){
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+    if (!$id){
+        echo 'Error en la validación de id: se esperaba un entero';
+        exit();
+    }   
+}
+$nombre = Categoria::getById($id)->nombre();
 $productos = Producto::getByCat($id);
 $html='';
-foreach($productos as $value){
-    $html.=$value->generaTarjeta();
+if (is_array($productos)){
+    foreach($productos as $value){
+        $html.=$value->generaTarjeta();
+    }
+}else {
+    $html= $productos;
 }
+
 ?>
 
 <!DOCTYPE html>
