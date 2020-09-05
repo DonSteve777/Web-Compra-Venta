@@ -1,0 +1,39 @@
+Funcionalidaddes
+	- index: muestra imágenes de productos disponibles para comprar por el usuario actual
+		cada foto es un enlace a la vista detallada del producto
+	- Vista detalle producto: 
+		- info del producto
+		- carga de la imagen subida
+		- añadir al carrito->Ver carrito. Se sustituye el html mediante js al pulsar añadir. Si ya estaba añadido antes se cargará 
+		directamente el botón ver carrito
+		- Comprar -> enlace a caja
+		- Enlace al usuario
+	- Cabecera
+		- Categorías: cada una es un enlace a la vista de los productos clasificados en esa categoría. No se muestran en la
+		cabecer las categorías sin productos.
+		- Dropdown con opciones de usuario
+			- 	vistaProdsUsuario
+			-	vistaPedidos
+			-	mi perfil
+			- Logout
+			- Login: placeholder de usuario y contrasseña correctos para más comodidad
+			- Registro
+				Se realiza una comprobación dinámica de la disponibilidad del nombre de usuario al estilo del ejercicio 4.
+				Se comprueban también símbolos no permitidos.
+				He caído en que el botón "check" puede hacer parecer que no es tan dinámico pero me parecía más amigable.
+		- Vender:
+			-	Carga de todas las categorías en el seleccionable
+			-	subida de imágenes: comprobación tipo MIME
+		- Carro: 
+			- Lista de items
+			- Lista de producto pedidos sin pagar. Si otro usuario lo compra actualiza la info del pedido, y deja de aparecer.
+			- Compra: enlace a caja
+			- Eliminar: lo elimina del carro del usuario
+		- Barra de búsqueda
+		-Administrar: solo para usuarios con el rol adecuado.-> en los datos de prueba, alvarouser tiene tal rol.
+			Añadir una categoria
+			Ver y eliminar categorias ya existentes
+			Ver y eliminar todos los usuarios de la web
+
+		
+	

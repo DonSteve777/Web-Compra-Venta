@@ -5,15 +5,15 @@ namespace es\fdi\ucm\aw;
  * @return void
  */
 
-define('BD_HOST', 'localhost');
+//define('BD_HOST', 'localhost');
 define('BD_NAME', 'consiguelow');
 define('BD_USER', 'consiguelow');
 define('BD_PASS', 'consiguelow');
 define("R_PATH", __DIR__);
 define("F_PATH", R_PATH.'\..\data\productos\\');
-define("IMG_PATH", R_PATH.'\..\img\\');
+//define("IMG_PATH", R_PATH.'\..\img\\');
 define('RUTA_APP', '');
-//define('BD_HOST', 'vm05.db.swarm.test');
+define('BD_HOST', 'vm05.db.swarm.test');
 //define("IMG_PATH", R_PATH.'/..\img/');
 //define("F_PATH", R_PATH.'/../data/productos/');
 define('INSTALADA', true );
