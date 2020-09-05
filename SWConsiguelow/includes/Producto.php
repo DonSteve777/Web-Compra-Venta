@@ -48,8 +48,7 @@ public static function getAliens(){
             }
             $rs->free();
         } else {
-            echo 'No se ha cargado ningún producto';
-            exit();
+            $result = 'No se ha cargado ningún producto';
         } 
     }else{
         echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
@@ -263,8 +262,7 @@ EOF;
                 }
                 $rs->free();
             } else {
-                echo 'No se ha cargado ningún producto';
-                exit();
+                $result =  'No se ha cargado ningún producto';
             } 
         }else{
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
