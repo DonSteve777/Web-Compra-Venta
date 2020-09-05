@@ -3,7 +3,13 @@ require_once __DIR__.'/includes/config.php';
 
 
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
-        $id = $_POST['item'];
+        if (isset($_POST['item'])){
+            $id = filter_input(INPUT_POST, 'item', FILTER_VALIDATE_INT);
+            if (!$id ){
+                echo 'Error en la validación del item enviado por http';
+                exit();
+            }
+        }
         if(isset($id)){
             $response ='';
             $cancelado = Pedido::cancelaPedido($id);
