@@ -7,7 +7,7 @@ require_once __DIR__.'/includes/config.php';
 function listadoCategorias()
 {
     $app = Aplicacion::getSingleton();
-    if ($app->tieneRol('admin', 'Acceso Denegado', 'No tienes permisos suficientes para administrar la web.')) {
+   if ($app->tieneRol('admin', 'Acceso Denegado', 'No tienes permisos suficientes para administrar la web.')) {
    $categorias= Categoria::getAll();
    $html='';
    $html.=<<<EOF

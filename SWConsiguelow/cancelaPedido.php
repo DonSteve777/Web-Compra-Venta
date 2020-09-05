@@ -22,8 +22,11 @@ EOF;
         echo $response;
     }
     else{
-        '<script type="text/javascript">
-        alert("No ha sido posible");
-        window.location.assign("login.php");
-        </script>';
+        $html ='';
+        $html.= <<<EOF
+        <div class="alert alert-info">
+        <strong>¡No has iniciado sesion!</strong> Deberias <a href="login.php" class="alert-link">ir a login</a>.
+        </div>
+EOF;
+        echo $html;
     }

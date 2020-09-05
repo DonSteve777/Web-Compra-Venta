@@ -105,7 +105,7 @@ EOF;
         }
 
         $precio = isset($datos['precio']) ? $datos['precio'] : null;
-        if ( empty($precio) || is_numeric($precio)) {
+        if ( empty($precio) || !is_numeric($precio)) {
             $result[] = "El precio no puede ser nulo o algo distinto de un numero.";
         }
 
