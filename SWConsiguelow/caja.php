@@ -12,6 +12,10 @@ $total = 0;
 $htmlListado = '';
 if (isset($_GET['id'])){
     $idProducto = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+    if (!$idProducto){
+        echo 'Se esperaba un identificador tipo entero del producto';
+        exit();
+    }
     $producto = Producto::getById($idProducto);
 }
 $app = Aplicacion::getSingleton();
