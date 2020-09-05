@@ -63,11 +63,12 @@ EOF;
         
         if (count($result) === 0) {
             $cat = Categoria::crea($nombreCat, $descrCat);
-            $result = $cat;
+            
             if ( ! $cat ) {
                 $result[] = "La categoria que intentas añadir ya existe";
             } else {
-                echo "Categoria añadida con exito";
+                //echo "Categoria añadida con exito";
+                $result = 'anadeCategoria.php';
             }
         }
         return $result;
