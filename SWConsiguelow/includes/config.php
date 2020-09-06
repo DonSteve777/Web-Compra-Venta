@@ -4,20 +4,20 @@ namespace es\fdi\ucm\aw;
  * @param string $class The fully-qualified class name.
  * @return void
  */
-
-//define('BD_HOST', 'localhost');
 define('BD_NAME', 'consiguelow');
 define('BD_USER', 'consiguelow');
 define('BD_PASS', 'consiguelow');
 define("R_PATH", __DIR__);
-define("F_PATH", R_PATH.'\..\data\productos\\');
-//define("IMG_PATH", R_PATH.'\..\img\\');
 define('RUTA_APP', '');
-define('BD_HOST', 'vm05.db.swarm.test');
-//define("IMG_PATH", R_PATH.'/..\img/');
-//define("F_PATH", R_PATH.'/../data/productos/');
 define('INSTALADA', true );
 define("F_SIZE", "4M");
+/***********LINUX**************/
+//define('BD_HOST', 'vm05.db.swarm.test');
+//define("F_PATH", R_PATH.'/../data/productos/');
+
+/***********WINDOWS**************/
+define('BD_HOST', 'localhost');
+define("F_PATH", R_PATH.'\..\data\productos\\');
 
 
 spl_autoload_register(function ($class) {
@@ -54,4 +54,3 @@ spl_autoload_register(function ($class) {
 /* */
 $app = Aplicacion::getSingleton();
 $app->init(array('host'=>BD_HOST, 'bd'=>BD_NAME, 'user'=>BD_USER, 'pass'=>BD_PASS), RUTA_APP, R_PATH);
-
