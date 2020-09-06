@@ -40,13 +40,16 @@ class FormularioVender extends Form
         <select class="category" name="categoria">
         <option selected="selected">elige categoría</option>
 EOF;
-        foreach($cat as $item){
-            $nombre = $item->nombre();
-            $id = $item->id();
-        $selectCategory .= <<<EOF
-            <option value="$id"> $nombre</option>
+        if (is_array($cat)){
+            foreach($cat as $item){
+                $nombre = $item->nombre();
+                $id = $item->id();
+            $selectCategory .= <<<EOF
+                <option value="$id"> $nombre</option>
 EOF;
+            }
         }
+
         $selectTalla='';
         for ($x = 0; $x < $talla->numValores(); $x++) {
             $texto = $talla->getValor($x);
@@ -121,8 +124,12 @@ EOF;
         
         $categoria = isset($datos['categoria']) ? $datos['categoria'] : null;
         $categoria = intval($categoria);
-        if ( empty($categoria) ) {
-            $result[] = "La categoria no puede estar vacía.";
+        if ( empty($categoria)) {
+            $sinCategoria = Categoria::crea('sin categoría', 'No pertenece a ninguna categoría');
+            if (!$sinCategoria){
+                $sinCategoria = Categoria::buscaCat('sin categoría');
+            }
+            $categoria = $sinCategoria->id();
         }
       if (count($result) === 0) {
             $app = Aplicacion::getSingleton();

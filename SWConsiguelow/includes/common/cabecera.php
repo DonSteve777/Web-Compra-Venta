@@ -17,13 +17,19 @@ function generaNavItems($categorias=array()){
 EOF;
             } 
         }
-    //}
     return $html;
 }
 
 $htmlNavCat = '';
 $categorias = Categoria::getNotEmpties();
-$htmlNavCat= generaNavItems($categorias);
+if (!is_array($categorias)){
+    $htmlNavCat=<<<EOF
+    <p class="text-white"> $categorias</p>
+EOF;
+}else{
+    $htmlNavCat= generaNavItems($categorias);
+}
+
 ?>
 
 

@@ -32,7 +32,7 @@ class Categoria
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM categorias c WHERE c.id = '%d'", $conn->real_escape_string($id));
         $rs = $conn->query($query);
-       
+        $result = null;
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
@@ -63,8 +63,7 @@ class Categoria
                 }
                 $rs->free();
             } else {
-                echo 'No se ha cargado ninguna categoría';
-                exit();
+                $result= 'No se ha cargado ninguna categoría';
             } 
         }else{
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
@@ -88,8 +87,7 @@ class Categoria
                 }
                 $rs->free();
             } else {
-                echo 'No se ha cargado ninguna categoría';
-                exit();
+                $result = 'No se ha cargado ninguna categoría';
             } 
         }else{
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
@@ -97,55 +95,7 @@ class Categoria
         } 
         return $result;
     }
-      /*  public static function muestraTodasCategorias(){ //funcion que muestra todos los productos disponibles
-            $app = Aplicacion::getSingleton();
-            $conn = $app->conexionBd();
-            $query = sprintf("SELECT * FROM categorias C");
-            $rs = $conn->query($query);
-            $result = false;
-            $i=0;
-            $html='';
-            if ($rs) {
-                if ( $rs->num_rows > 0) {
-                    while ($array=$rs->fetch_array()){
-                        $claves = array_keys($array);
-                        foreach($claves as $clave){
-                            $arrayauxliar[$i][$clave]=$array[$clave];
-                        }           
-                        $i++;
-                        $cat = $arrayauxliar;
-                       
-                    }
-                    $rs->free();
-                    $html.=<<<EOF
-                        <ul class="list-group">
-EOF;
-                    foreach($cat as $key => $fila){
-                        $nombre = $fila['nombre'];
-                        $html.=<<<EOF
-                            <li class="list-group-item"> 
-                                <div class="d-flex justify-content-between">
-                                    <div class="p-2">Nombre Cat: $nombre</div>
-                                    <div class="p-2">
-                                        <a class="btn btn-info align-bottom" href="eliminaCat.php?categoria=$nombre">
-                                            Eliminar
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-EOF;
-                    }
-                    $html.=<<<EOF
-                        </ul>
-EOF;
-                } 
-        }else{
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        
-        } 
-    return $html;
-}*/
+      
         public static function eliminaCat($cat){
             $cat = self::getById($cat); 
             if (!$cat) {

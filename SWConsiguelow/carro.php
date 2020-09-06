@@ -17,7 +17,7 @@ $counter = count($pedidos);
 $htmlListado = '';
 $total = 0;
 $htmlTotal =<<<EOF
-<div class="col-3 mb-4" >
+<div class="col-md-3 col-12 mb-4" >
         <h4 class="d-flex justify-content-between align-items-center mb-3">
             <span class="text-muted">Lista de items</span>
             <span class="badge badge-secondary badge-pill"  id='counter'>$counter</span>
@@ -64,8 +64,8 @@ EOF;
                 <div class="d-flex flex-fill justify-content-end">
                     <div class="d-flex flex-column">
                         $precio €
-                        <div class="d-inline mt-2">
-                            <button type="button" class="btn comprar btn-primary" value=$id>Comprar este artículo</button>
+                        <div class="d-flex flex-row m-2">
+                            <button type="button" class="btn comprar mr-2 btn-primary" value=$id>Comprar este artículo</button>
                             <button type="button" class="btn eliminar btn-primary" value=$idPedido>Eliminar</button>
                         </div>
                     </div>

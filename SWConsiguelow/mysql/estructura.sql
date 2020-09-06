@@ -3,12 +3,13 @@ IMPORTAR ESTE SCRIPT Y EL DE datos.sql
   Este script crea la Bdd, el usuario con privilegios sobre ella, y las tablas vacías
   Recuerda  deshabilitar la opción "Enable foreign key checks" para evitar problemas a la hora de importar el script.
 */
-/*create db*/
+/**
+      //create db
 CREATE DATABASE IF NOT EXISTS `consiguelow` DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
-/*create user*/
+      //create user
 CREATE USER 'consiguelow'@'localhost' IDENTIFIED BY 'consiguelow';
 GRANT ALL PRIVILEGES ON `consiguelow`.* TO 'consiguelow'@'localhost';
-
+*/
 USE `consiguelow`;
 
 /*create tables*/

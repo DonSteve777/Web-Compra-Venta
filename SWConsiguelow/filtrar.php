@@ -29,8 +29,12 @@ $nombreProd=$_GET['search'];
     <title>Local Consiguelow</title>
     <link rel="icon" href="img/money.ico"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-</head>
 
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script> 
+    <script src="js/carro.js"></script>
+</head>
 
     <body>
         <?php

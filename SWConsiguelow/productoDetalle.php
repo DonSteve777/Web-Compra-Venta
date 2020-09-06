@@ -39,22 +39,23 @@ EOF;
 $htmlComprar.=<<<EOF
     <button id="comprarBtn" value="$idproducto" type="button" class="btn btn-info btn-lg">Comprar</button>
 EOF;
-        if (App::getSingleton()->usuarioLogueado()){    
-        $currentUser = $_SESSION['userid'];
-            if($idVendedor === $currentUser){
-            $htmlComprar='';
-            $htmlCarrito='';
-            $htmlBorrar ='';
-            $htmlBorrar.=<<<EOF
-            <form action="eliminaProducto.php" method="POST">
-                <button type="submit" class="btn btn-danger role="link" name="delete" value="$idproducto">Eliminar producto</button>
-            </form>
-        EOF;
-            }
-            else {
-                $htmlBorrar.='';
-            }
+
+if (App::getSingleton()->usuarioLogueado()){    
+    $currentUser = $_SESSION['userid'];
+    if($idVendedor == $currentUser){
+        $htmlComprar='';
+        $htmlCarrito='';
+        $htmlBorrar ='';
+        $htmlBorrar.=<<<EOF
+    <form action="eliminaProducto.php" method="POST">
+        <button type="submit" class="btn btn-danger role="link" name="delete" value="$idproducto">Eliminar producto</button>
+    </form>
+EOF;
     }
+    else {
+        $htmlBorrar.='';
+    }
+}
 
 if (App::getSingleton()->usuarioLogueado() && ($currentUser != $idVendedor)){
     $carrito = Pedido::getCarrito();

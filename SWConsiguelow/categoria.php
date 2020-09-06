@@ -11,7 +11,12 @@ if (isset($_GET['id'])){
         exit();
     }   
 }
-$nombre = Categoria::getById($id)->nombre();
+$categoria = Categoria::getById($id);
+if (is_null($categoria)){
+    echo 'No se ha encontrado ninguna categoría con el id '.$id;
+    exit();
+}
+$nombre = $categoria->nombre();
 $productos = Producto::getByCat($id);
 $html='';
 if (is_array($productos)){
