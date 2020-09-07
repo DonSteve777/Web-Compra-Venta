@@ -147,7 +147,24 @@ VALUES ('31', 'producto31', '3', 'descripcion 4', '2.00', '3', '4', '1');
 INSERT INTO `productos` (`id`, `nombre`, `idVendedor`, `descripcion`, `precio`, `unidades`, `talla`,  `categoria`) 
 VALUES ('32', 'producto32', '3', 'descripcion 4', '0.50', '3', '4', '1');
 
+/***  pedidos ****/
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('1', '4', '1', '1');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('2', '6', '1', '1');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('3', '9', '1', '1');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('4', '10', '0', '1');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('5', '11', '0', '1');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('6', '23', '0', '1');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('7', '24', '0', '1');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('8', '25', '0', '1');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('9', '26', '0', '1');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('10', '27', '1', '0');
 
+
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('11', '12', '1', '2');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('12', '13', '0', '2');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('13', '14', '0', '2');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('14', '15', '0', '2');
+INSERT INTO `pedidos` (`id`, `producto`, `pagado`, `comprador`) VALUES ('15', '16', '0', '2');
 
 INSERT INTO `uploads` (`id`, `producto`, `name`, `mime_type`) VALUES ('1', '1', 'imagen1.tmp', 'image/jpeg');
 INSERT INTO `uploads` (`id`, `producto`, `name`, `mime_type`) VALUES ('2', '2', 'imagen2.tmp', 'image/jpeg');

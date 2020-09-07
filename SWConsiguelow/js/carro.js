@@ -6,6 +6,13 @@ $(function() {
             "id" : idPedido,
           };
         $.post(url,JSON.stringify(e),function(data,status){
+          if (data=='error1'){
+            alert('Se esperaba una petición post');
+          }else if(data=='error2'){
+            alert('error en el json recibido. No es un objeto');
+          }else if(data=='error3'){
+            alert('error, no se ha eliminado del carro');
+          }else{
             var counter = parseInt($('#counter').text()); 
             counter = counter -1;
             $('#counter').text(counter);
@@ -15,21 +22,19 @@ $(function() {
       
             totalnumber = totalnumber - precio;
             $('#total').text(totalnumber);
-        })
-        .done(function() {
             $('#' + idPedido).remove();
             $('#' + idPedido + 'li').remove();
-          })
-  
+          }
+        })
           .fail(function() {
-            alert( "error. No se ha eliminado" );
+            alert( "error, la petición http falló" );
           });
     });
     
     $(".comprar").click(function() {
       var producto = $(this).val();
       url = "caja.php?id="+producto;
-                window.location.href= url;
+      window.location.href= url;
     });
 
 

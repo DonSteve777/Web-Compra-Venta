@@ -27,23 +27,5 @@ $(document).ready(function() {
 			//$("#regexpr").html('El nombre de usuario sólo puede contener símbolos alfanuméricos');
 		}
   });
-	
-	/*$("#campoUser").change(function(){
-		var url = "comprobarUsuario.php?user=" + $("#campoUser").val();
-		var usernameRegex = /^[a-zA-Z0-9]+$/;
-		if (usernameRegex.test($("#campoUser").val())){
-			$.get(url,function(data,status){
-				//style.property="nuevo valor"
-				if (data === 'disponible'){
-					$("#userOK").html('&#x2714');
-				}
-				else	
-					$("#userOK").html('&#x26a0');
-				$("#userOK").show();
-				//alert("Data: " + data + "\nStatus: " + status);
-			});
-		}else{
-			$("#regexpr").html('El nombre de usuario sólo puede contener símbolos alfanuméricos');
-		}
-  });*/
+
 });

@@ -50,7 +50,7 @@ CREATE TABLE `productos` (
   `nombre` varchar(50) NOT NULL,
   `idVendedor` int(11) NOT NULL,
   `descripcion` varchar(500) NOT NULL,
-  `precio` decimal(4,2) NOT NULL,
+  `precio` decimal(8,2) NOT NULL,
   `unidades` int(10) UNSIGNED NOT NULL,
   `talla` int(3) NOT NULL,
   `categoria` INT(11) NOT NULL,

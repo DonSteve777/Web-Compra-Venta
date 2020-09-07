@@ -2,12 +2,17 @@
 require_once __DIR__.'/includes/config.php';
 use es\fdi\ucm\aw\Pedido;
 
+if (!($_SERVER['REQUEST_METHOD']=='POST')){
+    echo 'error1';// Se esperaba un petición POST.';
+    die();
+}
+else{
     if(isset($_SESSION['login']) && $_SESSION['login'] == true){
         $entityBody = file_get_contents('php://input');
         $dictionary = json_decode($entityBody);
         if (!is_object($dictionary)) {
-            echo 'No se ha enviado un objeto';
-            exit();
+            echo 'error2';//No se ha enviado un objeto';
+            die();
             //throw new ParametroNoValidoException('El cuerpo de la petición no es valido');
         }
         $dictionary = json_decode($entityBody, true);
@@ -59,4 +64,6 @@ EOF;
         }
         echo $response;
     }
+}
+    
     
