@@ -1,1 +1,9 @@
 DROP DATABASE consiguelow;
+
+DROP TABLE IF EXISTS `usuarios`;
+DROP TABLE IF EXISTS `categorias`;
+DROP TABLE IF EXISTS `productos`;
+DROP TABLE IF EXISTS `uploads`;
+DROP TABLE IF EXISTS `roles`;
+DROP TABLE IF EXISTS `rolesUsuario`;
+DROP TABLE IF EXISTS `pedidos`;
