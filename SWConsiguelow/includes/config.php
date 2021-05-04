@@ -12,12 +12,12 @@ define('RUTA_APP', '');
 define('INSTALADA', true );
 define("F_SIZE", "4M");
 /***********LINUX**************/
-define('BD_HOST', 'vm05.db.swarm.test');
-define("F_PATH", R_PATH.'/../data/productos/');
+//define('BD_HOST', 'vm05.db.swarm.test');
+//define("F_PATH", R_PATH.'/../data/productos/');
 
-/***********WINDOWS**************//*
+/***********WINDOWS**************/
 define('BD_HOST', 'localhost');
-define("F_PATH", R_PATH.'\..\data\productos\\');*/
+define("F_PATH", R_PATH.'\..\data\productos\\');
 
 
 spl_autoload_register(function ($class) {
