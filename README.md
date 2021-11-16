@@ -1,4 +1,10 @@
 Proyecto relativo a la asignatura de sistemas web (Universidad Complutense de Madrid)
+Entorno:
+- Back-end en PHP
+- Estilos de bootstrap (componentes individuales, no un template entero).
+- HTML5
+- jQuery
+- MariaDB
 
 La web ha sido implementada usando el servidor Apache de xampp y el sistema de gestión de bases de datos MySQL,
 y está pensada en este repositorio para desplegarla localmente (localhost).
