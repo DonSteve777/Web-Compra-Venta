@@ -1,6 +1,6 @@
 Proyecto relativo a la asignatura de sistemas web (Universidad Complutense de Madrid)
-Entorno:
-- Back-end en PHP
+Entorno: paquete XAMPP para windows
+- Back-end en PHP 7
 - Estilos de bootstrap (componentes individuales, no un template entero).
 - HTML5
 - jQuery
